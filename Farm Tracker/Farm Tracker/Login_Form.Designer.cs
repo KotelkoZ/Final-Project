@@ -43,6 +43,7 @@
             this.button1.TabIndex = 8;
             this.button1.Text = "Login";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // password_TextBox
             // 
@@ -76,7 +77,7 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "Operator ID";
             // 
-            // Form1
+            // Login_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -86,7 +87,7 @@
             this.Controls.Add(this.operator_ID_Textbox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
+            this.Name = "Login_Form";
             this.Text = "Login";
             this.ResumeLayout(false);
             this.PerformLayout();

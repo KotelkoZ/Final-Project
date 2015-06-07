@@ -14,8 +14,13 @@ namespace Farm_Tracker
     {
         public Login_Form()
         {
-            //Put some stuff here
+            //Put some stuff here. Ok ill put some stuff here. ZK Zak
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
