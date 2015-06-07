@@ -14,6 +14,7 @@ namespace Farm_Tracker
     {
         public Login_Form()
         {
+            //Put some stuff here
             InitializeComponent();
         }
     }
