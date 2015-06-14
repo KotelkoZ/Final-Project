@@ -15,6 +15,8 @@ namespace Farm_Tracker
         public Operator_Form()
         {
             InitializeComponent();
+            set_Text_Visibility(false);
+            set_Label_Visibility(true);
         }
 
         private void update_Password_Button_Click(object sender, EventArgs e)

@@ -160,9 +160,9 @@
             // update_Password_Button
             // 
             this.update_Password_Button.BackColor = System.Drawing.Color.OliveDrab;
-            this.update_Password_Button.Location = new System.Drawing.Point(361, 481);
+            this.update_Password_Button.Location = new System.Drawing.Point(361, 469);
             this.update_Password_Button.Name = "update_Password_Button";
-            this.update_Password_Button.Size = new System.Drawing.Size(129, 63);
+            this.update_Password_Button.Size = new System.Drawing.Size(129, 75);
             this.update_Password_Button.TabIndex = 13;
             this.update_Password_Button.Text = "Update Password";
             this.update_Password_Button.UseVisualStyleBackColor = false;
@@ -171,9 +171,9 @@
             // update_Operator_Button
             // 
             this.update_Operator_Button.BackColor = System.Drawing.Color.OliveDrab;
-            this.update_Operator_Button.Location = new System.Drawing.Point(496, 481);
+            this.update_Operator_Button.Location = new System.Drawing.Point(496, 469);
             this.update_Operator_Button.Name = "update_Operator_Button";
-            this.update_Operator_Button.Size = new System.Drawing.Size(129, 63);
+            this.update_Operator_Button.Size = new System.Drawing.Size(129, 75);
             this.update_Operator_Button.TabIndex = 14;
             this.update_Operator_Button.Text = "Update Operator";
             this.update_Operator_Button.UseVisualStyleBackColor = false;
@@ -182,9 +182,9 @@
             // save_Button
             // 
             this.save_Button.BackColor = System.Drawing.Color.OliveDrab;
-            this.save_Button.Location = new System.Drawing.Point(553, 374);
+            this.save_Button.Location = new System.Drawing.Point(553, 371);
             this.save_Button.Name = "save_Button";
-            this.save_Button.Size = new System.Drawing.Size(207, 40);
+            this.save_Button.Size = new System.Drawing.Size(207, 43);
             this.save_Button.TabIndex = 15;
             this.save_Button.TabStop = false;
             this.save_Button.Text = "Save";
@@ -195,9 +195,9 @@
             // new_Operator_Button
             // 
             this.new_Operator_Button.BackColor = System.Drawing.Color.OliveDrab;
-            this.new_Operator_Button.Location = new System.Drawing.Point(631, 481);
+            this.new_Operator_Button.Location = new System.Drawing.Point(631, 469);
             this.new_Operator_Button.Name = "new_Operator_Button";
-            this.new_Operator_Button.Size = new System.Drawing.Size(129, 63);
+            this.new_Operator_Button.Size = new System.Drawing.Size(129, 75);
             this.new_Operator_Button.TabIndex = 16;
             this.new_Operator_Button.Text = "New Operator";
             this.new_Operator_Button.UseVisualStyleBackColor = false;
@@ -246,7 +246,7 @@
             this.cancel_Button.BackColor = System.Drawing.Color.OliveDrab;
             this.cancel_Button.Location = new System.Drawing.Point(553, 420);
             this.cancel_Button.Name = "cancel_Button";
-            this.cancel_Button.Size = new System.Drawing.Size(207, 40);
+            this.cancel_Button.Size = new System.Drawing.Size(207, 43);
             this.cancel_Button.TabIndex = 21;
             this.cancel_Button.TabStop = false;
             this.cancel_Button.Text = "Cancel";

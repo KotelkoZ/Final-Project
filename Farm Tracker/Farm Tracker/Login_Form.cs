@@ -18,9 +18,15 @@ namespace Farm_Tracker
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void login_Button_Click(object sender, EventArgs e)
         {
+            main_Menu mainWindow = new main_Menu();
+            mainWindow.Owner = this;
+            mainWindow.Visible = true;
 
+            this.Visible = false;
+
+            return;
         }
     }
 }
