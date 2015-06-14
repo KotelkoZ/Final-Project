@@ -47,7 +47,8 @@
             this.password_Label = new System.Windows.Forms.Label();
             this.password_TextBox = new System.Windows.Forms.TextBox();
             this.confirm_Password_Label = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.confirm_Password_TextBox = new System.Windows.Forms.TextBox();
+            this.cancel_Button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBox1
@@ -174,9 +175,9 @@
             // 
             // save_Button
             // 
-            this.save_Button.Location = new System.Drawing.Point(573, 412);
+            this.save_Button.Location = new System.Drawing.Point(553, 374);
             this.save_Button.Name = "save_Button";
-            this.save_Button.Size = new System.Drawing.Size(187, 40);
+            this.save_Button.Size = new System.Drawing.Size(207, 40);
             this.save_Button.TabIndex = 15;
             this.save_Button.TabStop = false;
             this.save_Button.Text = "Save";
@@ -191,6 +192,7 @@
             this.new_Operator_Button.TabIndex = 16;
             this.new_Operator_Button.Text = "New Operator";
             this.new_Operator_Button.UseVisualStyleBackColor = true;
+            this.new_Operator_Button.Click += new System.EventHandler(this.new_Operator_Button_Click);
             // 
             // password_Label
             // 
@@ -220,20 +222,32 @@
             this.confirm_Password_Label.Text = "Confirm Password";
             this.confirm_Password_Label.Visible = false;
             // 
-            // textBox1
+            // confirm_Password_TextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(553, 324);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(207, 31);
-            this.textBox1.TabIndex = 20;
-            this.textBox1.Visible = false;
+            this.confirm_Password_TextBox.Location = new System.Drawing.Point(553, 324);
+            this.confirm_Password_TextBox.Name = "confirm_Password_TextBox";
+            this.confirm_Password_TextBox.Size = new System.Drawing.Size(207, 31);
+            this.confirm_Password_TextBox.TabIndex = 20;
+            this.confirm_Password_TextBox.Visible = false;
+            // 
+            // cancel_Button
+            // 
+            this.cancel_Button.Location = new System.Drawing.Point(553, 420);
+            this.cancel_Button.Name = "cancel_Button";
+            this.cancel_Button.Size = new System.Drawing.Size(207, 40);
+            this.cancel_Button.TabIndex = 21;
+            this.cancel_Button.TabStop = false;
+            this.cancel_Button.Text = "Cancel";
+            this.cancel_Button.UseVisualStyleBackColor = true;
+            this.cancel_Button.Visible = false;
             // 
             // Operator_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 570);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.cancel_Button);
+            this.Controls.Add(this.confirm_Password_TextBox);
             this.Controls.Add(this.confirm_Password_Label);
             this.Controls.Add(this.password_TextBox);
             this.Controls.Add(this.password_Label);
@@ -281,6 +295,7 @@
         private System.Windows.Forms.Label password_Label;
         private System.Windows.Forms.TextBox password_TextBox;
         private System.Windows.Forms.Label confirm_Password_Label;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox confirm_Password_TextBox;
+        private System.Windows.Forms.Button cancel_Button;
     }
 }
