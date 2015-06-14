@@ -17,14 +17,68 @@ namespace Farm_Tracker
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void update_Password_Button_Click(object sender, EventArgs e)
         {
+            set_Password_Visibility(true);
+            set_Save_Cancel_Visibility(true);
+            set_Main_Button_Visibility(false);
 
+            return;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void update_Operator_Button_Click(object sender, EventArgs e)
         {
+            set_Label_Visibility(false);
+            set_Text_Visibility(true);
+            set_Save_Cancel_Visibility(true);
+            set_Main_Button_Visibility(false);
 
+            return;
+        }
+
+
+        private void new_Operator_Button_Click(object sender, EventArgs e)
+        {
+            set_Label_Visibility(false);
+            set_Text_Visibility(true);
+            set_Password_Visibility(true);
+            set_Save_Cancel_Visibility(true);
+            set_Main_Button_Visibility(false);
+
+            return;
+        }
+
+        private void cancel_Button_Click(object sender, EventArgs e)
+        {
+            clear_Text_Fields();
+            set_Label_Visibility(true);
+            set_Text_Visibility(false);
+            set_Password_Visibility(false);
+            set_Save_Cancel_Visibility(false);
+            set_Main_Button_Visibility(true);
+
+            return;
+        }
+
+        private void save_Button_Click(object sender, EventArgs e)
+        {
+            set_Text_Visibility(false);
+            set_Label_Visibility(true);
+            set_Password_Visibility(false);
+            set_Save_Cancel_Visibility(false);
+            clear_Text_Fields();
+            set_Main_Button_Visibility(true);
+
+            return;
+        }
+
+        private void set_Main_Button_Visibility(bool value)
+        {
+            this.update_Password_Button.Visible = value;
+            this.update_Operator_Button.Visible = value;
+            this.new_Operator_Button.Visible = value;
+
+            return;
         }
 
         private void clear_Text_Fields()
@@ -72,11 +126,6 @@ namespace Farm_Tracker
             this.language_Label.Visible = value;
 
             return;
-        }
-
-        private void new_Operator_Button_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

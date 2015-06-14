@@ -53,6 +53,7 @@
             // 
             // listBox1
             // 
+            this.listBox1.BackColor = System.Drawing.Color.LightYellow;
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 25;
             this.listBox1.Location = new System.Drawing.Point(12, 65);
@@ -134,6 +135,7 @@
             // 
             // first_Name_TextBox
             // 
+            this.first_Name_TextBox.BackColor = System.Drawing.Color.LightYellow;
             this.first_Name_TextBox.Location = new System.Drawing.Point(553, 111);
             this.first_Name_TextBox.Name = "first_Name_TextBox";
             this.first_Name_TextBox.Size = new System.Drawing.Size(207, 31);
@@ -141,6 +143,7 @@
             // 
             // last_Name_TextBox
             // 
+            this.last_Name_TextBox.BackColor = System.Drawing.Color.LightYellow;
             this.last_Name_TextBox.Location = new System.Drawing.Point(553, 166);
             this.last_Name_TextBox.Name = "last_Name_TextBox";
             this.last_Name_TextBox.Size = new System.Drawing.Size(207, 31);
@@ -148,6 +151,7 @@
             // 
             // language_TextBox
             // 
+            this.language_TextBox.BackColor = System.Drawing.Color.LightYellow;
             this.language_TextBox.Location = new System.Drawing.Point(553, 222);
             this.language_TextBox.Name = "language_TextBox";
             this.language_TextBox.Size = new System.Drawing.Size(207, 31);
@@ -155,43 +159,48 @@
             // 
             // update_Password_Button
             // 
+            this.update_Password_Button.BackColor = System.Drawing.Color.OliveDrab;
             this.update_Password_Button.Location = new System.Drawing.Point(361, 481);
             this.update_Password_Button.Name = "update_Password_Button";
             this.update_Password_Button.Size = new System.Drawing.Size(129, 63);
             this.update_Password_Button.TabIndex = 13;
             this.update_Password_Button.Text = "Update Password";
-            this.update_Password_Button.UseVisualStyleBackColor = true;
-            this.update_Password_Button.Click += new System.EventHandler(this.button1_Click);
+            this.update_Password_Button.UseVisualStyleBackColor = false;
+            this.update_Password_Button.Click += new System.EventHandler(this.update_Password_Button_Click);
             // 
             // update_Operator_Button
             // 
+            this.update_Operator_Button.BackColor = System.Drawing.Color.OliveDrab;
             this.update_Operator_Button.Location = new System.Drawing.Point(496, 481);
             this.update_Operator_Button.Name = "update_Operator_Button";
             this.update_Operator_Button.Size = new System.Drawing.Size(129, 63);
             this.update_Operator_Button.TabIndex = 14;
             this.update_Operator_Button.Text = "Update Operator";
-            this.update_Operator_Button.UseVisualStyleBackColor = true;
-            this.update_Operator_Button.Click += new System.EventHandler(this.button2_Click);
+            this.update_Operator_Button.UseVisualStyleBackColor = false;
+            this.update_Operator_Button.Click += new System.EventHandler(this.update_Operator_Button_Click);
             // 
             // save_Button
             // 
+            this.save_Button.BackColor = System.Drawing.Color.OliveDrab;
             this.save_Button.Location = new System.Drawing.Point(553, 374);
             this.save_Button.Name = "save_Button";
             this.save_Button.Size = new System.Drawing.Size(207, 40);
             this.save_Button.TabIndex = 15;
             this.save_Button.TabStop = false;
             this.save_Button.Text = "Save";
-            this.save_Button.UseVisualStyleBackColor = true;
+            this.save_Button.UseVisualStyleBackColor = false;
             this.save_Button.Visible = false;
+            this.save_Button.Click += new System.EventHandler(this.save_Button_Click);
             // 
             // new_Operator_Button
             // 
+            this.new_Operator_Button.BackColor = System.Drawing.Color.OliveDrab;
             this.new_Operator_Button.Location = new System.Drawing.Point(631, 481);
             this.new_Operator_Button.Name = "new_Operator_Button";
             this.new_Operator_Button.Size = new System.Drawing.Size(129, 63);
             this.new_Operator_Button.TabIndex = 16;
             this.new_Operator_Button.Text = "New Operator";
-            this.new_Operator_Button.UseVisualStyleBackColor = true;
+            this.new_Operator_Button.UseVisualStyleBackColor = false;
             this.new_Operator_Button.Click += new System.EventHandler(this.new_Operator_Button_Click);
             // 
             // password_Label
@@ -206,6 +215,7 @@
             // 
             // password_TextBox
             // 
+            this.password_TextBox.BackColor = System.Drawing.Color.LightYellow;
             this.password_TextBox.Location = new System.Drawing.Point(553, 279);
             this.password_TextBox.Name = "password_TextBox";
             this.password_TextBox.Size = new System.Drawing.Size(207, 31);
@@ -224,6 +234,7 @@
             // 
             // confirm_Password_TextBox
             // 
+            this.confirm_Password_TextBox.BackColor = System.Drawing.Color.LightYellow;
             this.confirm_Password_TextBox.Location = new System.Drawing.Point(553, 324);
             this.confirm_Password_TextBox.Name = "confirm_Password_TextBox";
             this.confirm_Password_TextBox.Size = new System.Drawing.Size(207, 31);
@@ -232,19 +243,22 @@
             // 
             // cancel_Button
             // 
+            this.cancel_Button.BackColor = System.Drawing.Color.OliveDrab;
             this.cancel_Button.Location = new System.Drawing.Point(553, 420);
             this.cancel_Button.Name = "cancel_Button";
             this.cancel_Button.Size = new System.Drawing.Size(207, 40);
             this.cancel_Button.TabIndex = 21;
             this.cancel_Button.TabStop = false;
             this.cancel_Button.Text = "Cancel";
-            this.cancel_Button.UseVisualStyleBackColor = true;
+            this.cancel_Button.UseVisualStyleBackColor = false;
             this.cancel_Button.Visible = false;
+            this.cancel_Button.Click += new System.EventHandler(this.cancel_Button_Click);
             // 
             // Operator_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Olive;
             this.ClientSize = new System.Drawing.Size(800, 570);
             this.Controls.Add(this.cancel_Button);
             this.Controls.Add(this.confirm_Password_TextBox);
