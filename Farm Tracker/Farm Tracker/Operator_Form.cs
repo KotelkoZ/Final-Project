@@ -129,5 +129,10 @@ namespace Farm_Tracker
 
             return;
         }
+
+        private void phone_Number_TextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

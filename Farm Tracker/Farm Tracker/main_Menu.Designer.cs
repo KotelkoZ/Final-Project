@@ -31,11 +31,12 @@
             this.operators_Button = new System.Windows.Forms.Button();
             this.equipment_Button = new System.Windows.Forms.Button();
             this.logout_Button = new System.Windows.Forms.Button();
+            this.overview_Button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // operators_Button
             // 
-            this.operators_Button.Location = new System.Drawing.Point(12, 57);
+            this.operators_Button.Location = new System.Drawing.Point(12, 117);
             this.operators_Button.Name = "operators_Button";
             this.operators_Button.Size = new System.Drawing.Size(430, 55);
             this.operators_Button.TabIndex = 0;
@@ -45,7 +46,7 @@
             // 
             // equipment_Button
             // 
-            this.equipment_Button.Location = new System.Drawing.Point(12, 260);
+            this.equipment_Button.Location = new System.Drawing.Point(12, 192);
             this.equipment_Button.Name = "equipment_Button";
             this.equipment_Button.Size = new System.Drawing.Size(430, 55);
             this.equipment_Button.TabIndex = 1;
@@ -62,11 +63,21 @@
             this.logout_Button.UseVisualStyleBackColor = true;
             this.logout_Button.Click += new System.EventHandler(this.logout_Button_Click);
             // 
+            // overview_Button
+            // 
+            this.overview_Button.Location = new System.Drawing.Point(12, 46);
+            this.overview_Button.Name = "overview_Button";
+            this.overview_Button.Size = new System.Drawing.Size(430, 55);
+            this.overview_Button.TabIndex = 3;
+            this.overview_Button.Text = "Overview";
+            this.overview_Button.UseVisualStyleBackColor = true;
+            // 
             // main_Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 559);
+            this.Controls.Add(this.overview_Button);
             this.Controls.Add(this.logout_Button);
             this.Controls.Add(this.equipment_Button);
             this.Controls.Add(this.operators_Button);
@@ -81,5 +92,6 @@
         private System.Windows.Forms.Button operators_Button;
         private System.Windows.Forms.Button equipment_Button;
         private System.Windows.Forms.Button logout_Button;
+        private System.Windows.Forms.Button overview_Button;
     }
 }
