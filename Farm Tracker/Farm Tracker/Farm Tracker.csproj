@@ -63,6 +63,7 @@
     <Compile Include="main_Menu.Designer.cs">
       <DependentUpon>main_Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="myFunctions.cs" />
     <Compile Include="Operator_Form.cs">
       <SubType>Form</SubType>
     </Compile>

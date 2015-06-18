@@ -64,6 +64,22 @@ namespace Farm_Tracker
 
         private void save_Button_Click(object sender, EventArgs e)
         {
+            string queryString = "insert into Operators (Operators.First_Name, Operators.Last_Name, Operators.Position, Operators.Language, Operators.Email, Operators.Phone_Number, Operators.Password) " +
+                "values ('" + this.first_Name_TextBox.Text.ToString().Trim() + "','" +
+                                this.last_Name_TextBox.Text.ToString().Trim() + "','" +
+                                this.language_TextBox.Text.ToString().Trim() + "','" +
+                                this.position_TextBox.Text.ToString().Trim() + "','" +
+                                this.email_TextBox.Text.ToString().Trim() + "','" +
+                                this.phone_Number_TextBox.Text.ToString().Trim() + "','" +
+                                myFunctions.Encrypt(this.password_TextBox.Text.ToString().Trim()) +
+                                "')";
+
+            string queryMessage = "Insert operator";
+            string querySuccess = "Operator has been created.";
+            string queryFail = "There was a problem, the operator was not created.";
+
+            myFunctions.insertQuery(queryString, queryMessage, querySuccess, queryFail);
+
             set_Text_Visibility(false);
             set_Label_Visibility(true);
             set_Password_Visibility(false);
@@ -128,11 +144,6 @@ namespace Farm_Tracker
             this.language_Label.Visible = value;
 
             return;
-        }
-
-        private void phone_Number_TextBox_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

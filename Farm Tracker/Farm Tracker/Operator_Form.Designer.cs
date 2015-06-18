@@ -55,6 +55,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.email_Label = new System.Windows.Forms.Label();
             this.phone_Number_Label = new System.Windows.Forms.Label();
+            this.position_TextBox = new System.Windows.Forms.TextBox();
+            this.position_Label = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // operator_ListBox
@@ -64,7 +67,7 @@
             this.operator_ListBox.ItemHeight = 25;
             this.operator_ListBox.Location = new System.Drawing.Point(12, 12);
             this.operator_ListBox.Name = "operator_ListBox";
-            this.operator_ListBox.Size = new System.Drawing.Size(343, 579);
+            this.operator_ListBox.Size = new System.Drawing.Size(343, 529);
             this.operator_ListBox.TabIndex = 0;
             // 
             // label1
@@ -97,7 +100,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(432, 116);
+            this.label3.Location = new System.Drawing.Point(432, 98);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(115, 25);
             this.label3.TabIndex = 5;
@@ -124,7 +127,7 @@
             // last_Name_Label
             // 
             this.last_Name_Label.AutoSize = true;
-            this.last_Name_Label.Location = new System.Drawing.Point(548, 119);
+            this.last_Name_Label.Location = new System.Drawing.Point(548, 101);
             this.last_Name_Label.Name = "last_Name_Label";
             this.last_Name_Label.Size = new System.Drawing.Size(115, 25);
             this.last_Name_Label.TabIndex = 8;
@@ -150,7 +153,7 @@
             // last_Name_TextBox
             // 
             this.last_Name_TextBox.BackColor = System.Drawing.Color.LightYellow;
-            this.last_Name_TextBox.Location = new System.Drawing.Point(553, 113);
+            this.last_Name_TextBox.Location = new System.Drawing.Point(553, 95);
             this.last_Name_TextBox.Name = "last_Name_TextBox";
             this.last_Name_TextBox.Size = new System.Drawing.Size(207, 31);
             this.last_Name_TextBox.TabIndex = 2;
@@ -166,7 +169,7 @@
             // update_Password_Button
             // 
             this.update_Password_Button.BackColor = System.Drawing.Color.OliveDrab;
-            this.update_Password_Button.Location = new System.Drawing.Point(361, 516);
+            this.update_Password_Button.Location = new System.Drawing.Point(361, 452);
             this.update_Password_Button.Name = "update_Password_Button";
             this.update_Password_Button.Size = new System.Drawing.Size(129, 75);
             this.update_Password_Button.TabIndex = 10;
@@ -177,7 +180,7 @@
             // update_Operator_Button
             // 
             this.update_Operator_Button.BackColor = System.Drawing.Color.OliveDrab;
-            this.update_Operator_Button.Location = new System.Drawing.Point(496, 516);
+            this.update_Operator_Button.Location = new System.Drawing.Point(496, 452);
             this.update_Operator_Button.Name = "update_Operator_Button";
             this.update_Operator_Button.Size = new System.Drawing.Size(129, 75);
             this.update_Operator_Button.TabIndex = 11;
@@ -188,7 +191,7 @@
             // save_Button
             // 
             this.save_Button.BackColor = System.Drawing.Color.OliveDrab;
-            this.save_Button.Location = new System.Drawing.Point(553, 418);
+            this.save_Button.Location = new System.Drawing.Point(553, 354);
             this.save_Button.Name = "save_Button";
             this.save_Button.Size = new System.Drawing.Size(207, 43);
             this.save_Button.TabIndex = 8;
@@ -201,7 +204,7 @@
             // new_Operator_Button
             // 
             this.new_Operator_Button.BackColor = System.Drawing.Color.OliveDrab;
-            this.new_Operator_Button.Location = new System.Drawing.Point(631, 516);
+            this.new_Operator_Button.Location = new System.Drawing.Point(631, 452);
             this.new_Operator_Button.Name = "new_Operator_Button";
             this.new_Operator_Button.Size = new System.Drawing.Size(129, 75);
             this.new_Operator_Button.TabIndex = 12;
@@ -212,7 +215,7 @@
             // password_Label
             // 
             this.password_Label.AutoSize = true;
-            this.password_Label.Location = new System.Drawing.Point(441, 329);
+            this.password_Label.Location = new System.Drawing.Point(441, 283);
             this.password_Label.Name = "password_Label";
             this.password_Label.Size = new System.Drawing.Size(106, 25);
             this.password_Label.TabIndex = 17;
@@ -222,7 +225,7 @@
             // password_TextBox
             // 
             this.password_TextBox.BackColor = System.Drawing.Color.LightYellow;
-            this.password_TextBox.Location = new System.Drawing.Point(553, 326);
+            this.password_TextBox.Location = new System.Drawing.Point(553, 280);
             this.password_TextBox.Name = "password_TextBox";
             this.password_TextBox.Size = new System.Drawing.Size(207, 31);
             this.password_TextBox.TabIndex = 6;
@@ -231,7 +234,7 @@
             // confirm_Password_Label
             // 
             this.confirm_Password_Label.AutoSize = true;
-            this.confirm_Password_Label.Location = new System.Drawing.Point(361, 374);
+            this.confirm_Password_Label.Location = new System.Drawing.Point(361, 320);
             this.confirm_Password_Label.Name = "confirm_Password_Label";
             this.confirm_Password_Label.Size = new System.Drawing.Size(186, 25);
             this.confirm_Password_Label.TabIndex = 19;
@@ -241,7 +244,7 @@
             // confirm_Password_TextBox
             // 
             this.confirm_Password_TextBox.BackColor = System.Drawing.Color.LightYellow;
-            this.confirm_Password_TextBox.Location = new System.Drawing.Point(553, 371);
+            this.confirm_Password_TextBox.Location = new System.Drawing.Point(553, 317);
             this.confirm_Password_TextBox.Name = "confirm_Password_TextBox";
             this.confirm_Password_TextBox.Size = new System.Drawing.Size(207, 31);
             this.confirm_Password_TextBox.TabIndex = 7;
@@ -250,7 +253,7 @@
             // cancel_Button
             // 
             this.cancel_Button.BackColor = System.Drawing.Color.OliveDrab;
-            this.cancel_Button.Location = new System.Drawing.Point(553, 467);
+            this.cancel_Button.Location = new System.Drawing.Point(553, 403);
             this.cancel_Button.Name = "cancel_Button";
             this.cancel_Button.Size = new System.Drawing.Size(207, 43);
             this.cancel_Button.TabIndex = 9;
@@ -263,7 +266,7 @@
             // email_TextBox
             // 
             this.email_TextBox.BackColor = System.Drawing.Color.LightYellow;
-            this.email_TextBox.Location = new System.Drawing.Point(553, 224);
+            this.email_TextBox.Location = new System.Drawing.Point(553, 206);
             this.email_TextBox.Name = "email_TextBox";
             this.email_TextBox.Size = new System.Drawing.Size(207, 31);
             this.email_TextBox.TabIndex = 4;
@@ -271,16 +274,15 @@
             // phone_Number_TextBox
             // 
             this.phone_Number_TextBox.BackColor = System.Drawing.Color.LightYellow;
-            this.phone_Number_TextBox.Location = new System.Drawing.Point(553, 278);
+            this.phone_Number_TextBox.Location = new System.Drawing.Point(553, 243);
             this.phone_Number_TextBox.Name = "phone_Number_TextBox";
             this.phone_Number_TextBox.Size = new System.Drawing.Size(207, 31);
             this.phone_Number_TextBox.TabIndex = 5;
-            this.phone_Number_TextBox.TextChanged += new System.EventHandler(this.phone_Number_TextBox_TextChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(474, 227);
+            this.label5.Location = new System.Drawing.Point(475, 209);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(73, 25);
             this.label5.TabIndex = 24;
@@ -289,7 +291,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(392, 281);
+            this.label6.Location = new System.Drawing.Point(392, 246);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(155, 25);
             this.label6.TabIndex = 25;
@@ -298,7 +300,7 @@
             // email_Label
             // 
             this.email_Label.AutoSize = true;
-            this.email_Label.Location = new System.Drawing.Point(553, 227);
+            this.email_Label.Location = new System.Drawing.Point(554, 209);
             this.email_Label.Name = "email_Label";
             this.email_Label.Size = new System.Drawing.Size(73, 25);
             this.email_Label.TabIndex = 26;
@@ -307,18 +309,47 @@
             // phone_Number_Label
             // 
             this.phone_Number_Label.AutoSize = true;
-            this.phone_Number_Label.Location = new System.Drawing.Point(553, 281);
+            this.phone_Number_Label.Location = new System.Drawing.Point(553, 246);
             this.phone_Number_Label.Name = "phone_Number_Label";
             this.phone_Number_Label.Size = new System.Drawing.Size(155, 25);
             this.phone_Number_Label.TabIndex = 27;
             this.phone_Number_Label.Text = "Phone Number";
+            // 
+            // position_TextBox
+            // 
+            this.position_TextBox.BackColor = System.Drawing.Color.LightYellow;
+            this.position_TextBox.Location = new System.Drawing.Point(553, 132);
+            this.position_TextBox.Name = "position_TextBox";
+            this.position_TextBox.Size = new System.Drawing.Size(207, 31);
+            this.position_TextBox.TabIndex = 28;
+            // 
+            // position_Label
+            // 
+            this.position_Label.AutoSize = true;
+            this.position_Label.Location = new System.Drawing.Point(549, 135);
+            this.position_Label.Name = "position_Label";
+            this.position_Label.Size = new System.Drawing.Size(89, 25);
+            this.position_Label.TabIndex = 30;
+            this.position_Label.Text = "Position";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(458, 135);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(89, 25);
+            this.label8.TabIndex = 29;
+            this.label8.Text = "Position";
             // 
             // Operator_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Olive;
-            this.ClientSize = new System.Drawing.Size(775, 604);
+            this.ClientSize = new System.Drawing.Size(775, 555);
+            this.Controls.Add(this.position_TextBox);
+            this.Controls.Add(this.position_Label);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.phone_Number_TextBox);
             this.Controls.Add(this.email_TextBox);
             this.Controls.Add(this.phone_Number_Label);
@@ -382,5 +413,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label email_Label;
         private System.Windows.Forms.Label phone_Number_Label;
+        private System.Windows.Forms.TextBox position_TextBox;
+        private System.Windows.Forms.Label position_Label;
+        private System.Windows.Forms.Label label8;
     }
 }
