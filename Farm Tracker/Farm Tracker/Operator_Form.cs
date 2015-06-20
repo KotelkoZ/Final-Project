@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace Farm_Tracker
 {
@@ -17,6 +18,8 @@ namespace Farm_Tracker
             InitializeComponent();
             set_Text_Visibility(false);
             set_Label_Visibility(true);
+
+            populate_Operator_List();
         }
 
         private void update_Password_Button_Click(object sender, EventArgs e)
@@ -64,21 +67,112 @@ namespace Farm_Tracker
 
         private void save_Button_Click(object sender, EventArgs e)
         {
-            string queryString = "insert into Operators (Operators.First_Name, Operators.Last_Name, Operators.Position, Operators.Language, Operators.Email, Operators.Phone_Number, Operators.Password) " +
-                "values ('" + this.first_Name_TextBox.Text.ToString().Trim() + "','" +
-                                this.last_Name_TextBox.Text.ToString().Trim() + "','" +
-                                this.language_TextBox.Text.ToString().Trim() + "','" +
-                                this.position_TextBox.Text.ToString().Trim() + "','" +
-                                this.email_TextBox.Text.ToString().Trim() + "','" +
-                                this.phone_Number_TextBox.Text.ToString().Trim() + "','" +
-                                myFunctions.Encrypt(this.password_TextBox.Text.ToString().Trim()) +
-                                "')";
+            
+            //NEW OPERATOR
+            if (this.first_Name_TextBox.Visible == true && this.password_TextBox.Visible == true)
+            {
+                if (this.password_TextBox.Text.Trim().Equals("") || 
+                    this.first_Name_TextBox.Text.Trim().Equals("") || 
+                    this.last_Name_TextBox.Text.Trim().Equals("") || 
+                    this.position_TextBox.Text.Trim().Equals("") ||
+                    this.language_TextBox.Text.Trim().Equals("")
+                    )
+                {
+                    MessageBox.Show("Please enter the required information. (First Name, Last Name, Position, Language and Password)");
+                    return;
+                }
+                if (this.password_TextBox.Text.Trim().ToString() != this.confirm_Password_TextBox.Text.Trim().ToString())
+                {
+                    MessageBox.Show("The passwords entered did not match.");
+                    this.password_TextBox.Clear();
+                    this.confirm_Password_TextBox.Clear();
+                    return;
+                }
 
-            string queryMessage = "Insert operator";
-            string querySuccess = "Operator has been created.";
-            string queryFail = "There was a problem, the operator was not created.";
+                string queryString = "insert into Operators (Operators.First_Name, Operators.Last_Name, Operators.Position, Operators.Language,";
+                
+                if (this.email_TextBox.Text.ToString().Trim() != "")
+                {
+                    queryString += "Operators.Email,";
+                }
+                if (this.phone_Number_TextBox.Text.ToString().Trim() != "") 
+                {
+                    queryString += "Operators.Phone_Number,";
+                }
+                
+                queryString += "Operators.Password) " +
+                    "values ('" + this.first_Name_TextBox.Text.ToString().Trim() + "','" +
+                                    this.last_Name_TextBox.Text.ToString().Trim() + "','" +
+                                    this.language_TextBox.Text.ToString().Trim() + "','" +
+                                    this.position_TextBox.Text.ToString().Trim() + "','";
 
-            myFunctions.insertQuery(queryString, queryMessage, querySuccess, queryFail);
+                if (this.email_TextBox.Text.ToString().Trim() != "")
+                {
+                    queryString += this.first_Name_TextBox.Text.ToString().Trim() + "','";
+                }
+                if (this.phone_Number_TextBox.Text.ToString().Trim() != "") 
+                {
+                    queryString += this.phone_Number_TextBox.Text.ToString().Trim() + "','";
+                }
+                
+                queryString += myFunctions.Encrypt(this.password_TextBox.Text.ToString().Trim()) + "')";
+
+                MessageBox.Show(queryString);
+
+                string queryMessage = "Insert operator";
+                string querySuccess = "Operator has been created.";
+                string queryFail = "There was a problem, the operator was not created.";
+
+                myFunctions.insertQuery(queryString, queryMessage, querySuccess, queryFail);
+            }
+            //UPDATE PASSWORD
+            else if (this.password_TextBox.Visible == true && this.first_Name_TextBox.Visible == false)
+            {
+                if (this.password_TextBox.Text.Trim().Equals(""))
+                {
+                    MessageBox.Show("No password has been entered.");
+                    return;
+                }
+                if (this.password_TextBox.Text.Trim().ToString() != this.confirm_Password_TextBox.Text.Trim().ToString())
+                {
+                    MessageBox.Show("The passwords entered do not match.");
+                    return;
+                }
+                
+                string queryString = "update Operators set Operators.Password = '" +
+                                    myFunctions.Encrypt(this.password_TextBox.Text.ToString().Trim()) +
+                                    "' where Operators.Operator_ID = '" + this.first_Name_Label.Text.ToString().Trim() + "')";
+
+                string queryMessage = "Update operator password";
+                string querySuccess = "Operator password has been updated.";
+                string queryFail = "There was a problem, the operator password was not updated.";
+
+                myFunctions.insertQuery(queryString, queryMessage, querySuccess, queryFail);
+            }
+            //UPDATE OPERATOR
+            else
+            {
+                if (this.password_TextBox.Text.Trim().Equals(""))
+                {
+                    MessageBox.Show("No password has been entered.");
+                    return;
+                }
+                if (this.password_TextBox.Text.Trim().ToString() != this.confirm_Password_TextBox.Text.Trim().ToString())
+                {
+                    MessageBox.Show("The passwords entered do not match.");
+                    return;
+                }
+
+                string queryString = "update Operators set Operators.Password = '" +
+                                    myFunctions.Encrypt(this.password_TextBox.Text.ToString().Trim()) +
+                                    "')";
+
+                string queryMessage = "Insert operator";
+                string querySuccess = "Operator has been created.";
+                string queryFail = "There was a problem, the operator was not created.";
+
+                myFunctions.insertQuery(queryString, queryMessage, querySuccess, queryFail);
+            }
 
             set_Text_Visibility(false);
             set_Label_Visibility(true);
@@ -103,7 +197,10 @@ namespace Farm_Tracker
         {
             this.first_Name_TextBox.Clear();
             this.last_Name_TextBox.Clear();
+            this.position_TextBox.Clear();
             this.language_TextBox.Clear();
+            this.email_TextBox.Clear();
+            this.phone_Number_TextBox.Clear();
             this.password_TextBox.Clear();
             this.confirm_Password_TextBox.Clear();
 
@@ -114,7 +211,10 @@ namespace Farm_Tracker
         {
             this.first_Name_TextBox.Visible = value;
             this.last_Name_TextBox.Visible = value;
+            this.position_TextBox.Visible = value;
             this.language_TextBox.Visible = value;
+            this.email_TextBox.Visible = value;
+            this.phone_Number_TextBox.Visible = value;
 
             return;
         }
@@ -145,5 +245,74 @@ namespace Farm_Tracker
 
             return;
         }
+
+        private void operator_ListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            populate_Operator_Info();
+        }
+
+        private void populate_Operator_List()
+        {
+            String queryString = "select Operators.Operator_ID, Operators.First_Name, Operators.Last_Name from Operators ";
+
+            using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
+            {
+
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(queryString, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            this.operator_ListBox.Items.Add(reader[0].ToString().Trim() + "\t" +
+                                                            reader[1].ToString().Trim() + "\t" +
+                                                            reader[2].ToString().Trim());
+                        }
+                        reader.Close();
+                    }
+                }
+                connection.Close();
+            }
+        }
+
+        private void populate_Operator_Info()
+        {
+
+            string operatorID = "";
+            string temp = this.operator_ListBox.SelectedItem.ToString().Trim();
+
+            for (int i = 0; temp[i] != '\t'; i++)
+            {
+                operatorID += temp[i];
+            }
+
+            String queryString = "select * from Operators where Operators.Operator_ID = " + operatorID;
+
+            using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
+            {
+
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(queryString, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                            this.operator_ID_Label.Text = reader[0].ToString().Trim();
+                            this.first_Name_Label.Text = reader[1].ToString().Trim();
+                            this.last_Name_Label.Text = reader[2].ToString().Trim();
+                            this.position_Label.Text = reader[3].ToString().Trim();
+                            this.language_Label.Text = reader[4].ToString().Trim();
+                            this.email_Label.Text = reader[5].ToString().Trim();
+                            this.phone_Number_Label.Text = reader[6].ToString().Trim();
+                    
+                        reader.Close();
+                    }
+                }
+                connection.Close();
+            }
+        }
+
     }
 }
