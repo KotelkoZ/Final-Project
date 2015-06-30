@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Data;
 
 namespace Farm_Tracker
 {
@@ -57,7 +58,7 @@ namespace Farm_Tracker
             return cipherText;
         }
 
-        public static void insertQuery(string insertString, string queryMessage, string successMessage, string failMessage)
+        public static void queryExecute(string insertString, string queryMessage, string successMessage, string failMessage)
         {
 
             using (SqlConnection myconnection = new SqlConnection(Variables.CONNECTIONSTRING))
@@ -107,5 +108,6 @@ namespace Farm_Tracker
 
             return;
         }
+
     }
 }

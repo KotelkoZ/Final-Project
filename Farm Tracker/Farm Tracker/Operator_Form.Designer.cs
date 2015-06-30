@@ -58,6 +58,7 @@
             this.position_TextBox = new System.Windows.Forms.TextBox();
             this.position_Label = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.delete_Button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // operator_ListBox
@@ -344,12 +345,26 @@
             this.label8.TabIndex = 29;
             this.label8.Text = "Position";
             // 
+            // delete_Button
+            // 
+            this.delete_Button.BackColor = System.Drawing.Color.OliveDrab;
+            this.delete_Button.Location = new System.Drawing.Point(361, 403);
+            this.delete_Button.Name = "delete_Button";
+            this.delete_Button.Size = new System.Drawing.Size(187, 43);
+            this.delete_Button.TabIndex = 31;
+            this.delete_Button.TabStop = false;
+            this.delete_Button.Text = "Delete";
+            this.delete_Button.UseVisualStyleBackColor = false;
+            this.delete_Button.Visible = false;
+            this.delete_Button.Click += new System.EventHandler(this.delete_Button_Click);
+            // 
             // Operator_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Olive;
             this.ClientSize = new System.Drawing.Size(775, 555);
+            this.Controls.Add(this.delete_Button);
             this.Controls.Add(this.position_TextBox);
             this.Controls.Add(this.position_Label);
             this.Controls.Add(this.label8);
@@ -419,5 +434,6 @@
         private System.Windows.Forms.TextBox position_TextBox;
         private System.Windows.Forms.Label position_Label;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button delete_Button;
     }
 }

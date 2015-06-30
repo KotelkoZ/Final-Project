@@ -26,20 +26,27 @@ namespace Farm_Tracker
             return;
         }
 
+        private void crops_Button_Click(object sender, EventArgs e)
+        {
+            Crop_Form cropWindow = new Crop_Form();
+            cropWindow.Owner = this;
+            cropWindow.Visible = true;
+
+            return;
+        }
+
         private void logout_Button_Click(object sender, EventArgs e)
         {
             foreach (Form aForm in this.OwnedForms)
             {
-                aForm.Close();
-                aForm.Close();
-                aForm.Close();
                 aForm.Close();
             }
 
             this.Owner.Visible = true;
             
             this.Close();
-            
+
+            return;
         }
     }
 }

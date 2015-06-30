@@ -19,6 +19,8 @@ namespace Farm_Tracker
             set_Text_Visibility(false);
             set_Label_Visibility(true);
 
+            this.operator_ListBox.SetSelected(1, true);
+
             populate_Operator_List();
         }
 
@@ -37,6 +39,14 @@ namespace Farm_Tracker
             set_Text_Visibility(true);
             set_Save_Cancel_Visibility(true);
             set_Main_Button_Visibility(false);
+            this.delete_Button.Visible = true;
+
+            this.first_Name_TextBox.Text = this.first_Name_Label.Text;
+            this.last_Name_TextBox.Text = this.last_Name_Label.Text;
+            this.position_TextBox.Text = this.position_Label.Text;
+            this.language_TextBox.Text = this.language_Label.Text;
+            this.email_TextBox.Text = this.email_Label.Text;
+            this.phone_Number_TextBox.Text = this.phone_Number_Label.Text;
 
             return;
         }
@@ -61,6 +71,7 @@ namespace Farm_Tracker
             set_Password_Visibility(false);
             set_Save_Cancel_Visibility(false);
             set_Main_Button_Visibility(true);
+            this.delete_Button.Visible = false;
 
             return;
         }
@@ -123,11 +134,14 @@ namespace Farm_Tracker
                 string querySuccess = "Operator has been created.";
                 string queryFail = "There was a problem, the operator was not created.";
 
-                myFunctions.insertQuery(queryString, queryMessage, querySuccess, queryFail);
+                myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+
+                populate_Operator_List();
             }
             //UPDATE PASSWORD
             else if (this.password_TextBox.Visible == true && this.first_Name_TextBox.Visible == false)
             {
+
                 if (this.password_TextBox.Text.Trim().Equals(""))
                 {
                     MessageBox.Show("No password has been entered.");
@@ -147,31 +161,59 @@ namespace Farm_Tracker
                 string querySuccess = "Operator password has been updated.";
                 string queryFail = "There was a problem, the operator password was not updated.";
 
-                myFunctions.insertQuery(queryString, queryMessage, querySuccess, queryFail);
+                myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
             }
             //UPDATE OPERATOR
             else
             {
-                if (this.password_TextBox.Text.Trim().Equals(""))
+
+
+                if (this.first_Name_TextBox.Text.Trim().Equals("") ||
+                    this.last_Name_TextBox.Text.Trim().Equals("") ||
+                    this.position_TextBox.Text.Trim().Equals("") ||
+                    this.language_TextBox.Text.Trim().Equals("")
+                    )
                 {
-                    MessageBox.Show("No password has been entered.");
+                    MessageBox.Show("Please enter the required information. (First Name, Last Name, Position and Language)");
                     return;
                 }
-                if (this.password_TextBox.Text.Trim().ToString() != this.confirm_Password_TextBox.Text.Trim().ToString())
+
+                string queryString = "insert into Operators (Operators.First_Name, Operators.Last_Name, Operators.Position, Operators.Language,";
+
+                if (this.email_TextBox.Text.ToString().Trim() != "")
                 {
-                    MessageBox.Show("The passwords entered do not match.");
-                    return;
+                    queryString += "Operators.Email,";
+                }
+                if (this.phone_Number_TextBox.Text.ToString().Trim() != "")
+                {
+                    queryString += "Operators.Phone_Number,";
                 }
 
-                string queryString = "update Operators set Operators.Password = '" +
-                                    myFunctions.Encrypt(this.password_TextBox.Text.ToString().Trim()) +
-                                    "')";
+                queryString += ") " +
+                    "values ('" + this.first_Name_TextBox.Text.ToString().Trim() + "','" +
+                                    this.last_Name_TextBox.Text.ToString().Trim() + "','" +
+                                    this.language_TextBox.Text.ToString().Trim() + "','" +
+                                    this.position_TextBox.Text.ToString().Trim() + "','";
 
-                string queryMessage = "Insert operator";
-                string querySuccess = "Operator has been created.";
-                string queryFail = "There was a problem, the operator was not created.";
+                if (this.email_TextBox.Text.ToString().Trim() != "")
+                {
+                    queryString += this.first_Name_TextBox.Text.ToString().Trim() + "','";
+                }
+                if (this.phone_Number_TextBox.Text.ToString().Trim() != "")
+                {
+                    queryString += this.phone_Number_TextBox.Text.ToString().Trim() + "','";
+                }
 
-                myFunctions.insertQuery(queryString, queryMessage, querySuccess, queryFail);
+               queryString += "')";
+
+
+                string queryMessage = "Update operator";
+                string querySuccess = "Operator has been updated.";
+                string queryFail = "There was a problem, the operator was not updated.";
+
+                myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+
+                populate_Operator_List();
             }
 
             set_Text_Visibility(false);
@@ -180,6 +222,7 @@ namespace Farm_Tracker
             set_Save_Cancel_Visibility(false);
             clear_Text_Fields();
             set_Main_Button_Visibility(true);
+            this.delete_Button.Visible = false;
 
             return;
         }
@@ -253,7 +296,10 @@ namespace Farm_Tracker
 
         private void populate_Operator_List()
         {
+            this.operator_ListBox.Items.Clear();
+           
             String queryString = "select Operators.Operator_ID, Operators.First_Name, Operators.Last_Name from Operators ";
+
 
             using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
             {
@@ -299,19 +345,44 @@ namespace Farm_Tracker
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        reader.Read();
+
                             this.operator_ID_Label.Text = reader[0].ToString().Trim();
                             this.first_Name_Label.Text = reader[1].ToString().Trim();
                             this.last_Name_Label.Text = reader[2].ToString().Trim();
                             this.position_Label.Text = reader[3].ToString().Trim();
-                            this.language_Label.Text = reader[4].ToString().Trim();
-                            this.email_Label.Text = reader[5].ToString().Trim();
-                            this.phone_Number_Label.Text = reader[6].ToString().Trim();
+                            this.language_Label.Text = reader[6].ToString().Trim();
+                            this.email_Label.Text = reader[4].ToString().Trim();
+                            this.phone_Number_Label.Text = reader[5].ToString().Trim();
                     
                         reader.Close();
                     }
                 }
                 connection.Close();
             }
+        }
+
+        private void delete_Button_Click(object sender, EventArgs e)
+        {
+            string queryString = "delete from Operators where Operators.Operator_ID = '" + this.operator_ID_Label.Text.ToString().Trim() + "'";
+
+            string queryMessage = "Delete operator";
+            string querySuccess = "Operator has been deleted.";
+            string queryFail = "There was a problem, the operator was not Deleted.";
+
+            myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+
+            populate_Operator_List();
+
+            set_Text_Visibility(false);
+            set_Label_Visibility(true);
+            set_Password_Visibility(false);
+            set_Save_Cancel_Visibility(false);
+            this.delete_Button.Visible = false;
+            clear_Text_Fields();
+            set_Main_Button_Visibility(true);
+
+            return;
         }
 
     }

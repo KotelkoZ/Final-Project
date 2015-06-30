@@ -45,11 +45,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crop_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Crop_Form.Designer.cs">
+      <DependentUpon>Crop_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Equipment.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Equipment.Designer.cs">
       <DependentUpon>Equipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Farm_TrackerDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Farm_TrackerDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Field_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Field_Form.Designer.cs">
+      <DependentUpon>Field_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Login_Form.cs">
       <SubType>Form</SubType>
@@ -63,6 +80,12 @@
     <Compile Include="main_Menu.Designer.cs">
       <DependentUpon>main_Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="managementOverview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="managementOverview.Designer.cs">
+      <DependentUpon>managementOverview.cs</DependentUpon>
+    </Compile>
     <Compile Include="myFunctions.cs" />
     <Compile Include="Operator_Form.cs">
       <SubType>Form</SubType>
@@ -73,14 +96,23 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Variables.cs" />
+    <EmbeddedResource Include="Crop_Form.resx">
+      <DependentUpon>Crop_Form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Equipment.resx">
       <DependentUpon>Equipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Field_Form.resx">
+      <DependentUpon>Field_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login_Form.resx">
       <DependentUpon>Login_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="main_Menu.resx">
       <DependentUpon>main_Menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="managementOverview.resx">
+      <DependentUpon>managementOverview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Operator_Form.resx">
       <DependentUpon>Operator_Form.cs</DependentUpon>
@@ -94,6 +126,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Farm_TrackerDataSet.xsc">
+      <DependentUpon>Farm_TrackerDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Farm_TrackerDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Farm_TrackerDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Farm_TrackerDataSet.xss">
+      <DependentUpon>Farm_TrackerDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
