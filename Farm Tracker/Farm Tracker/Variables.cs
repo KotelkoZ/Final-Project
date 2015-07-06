@@ -8,7 +8,10 @@ namespace Farm_Tracker
 {
     class Variables
     {
-        public static string CONNECTIONSTRING = "Data Source=ZAKS-XPS15\\FINALPROJECT;Initial Catalog=\"Farm Tracker\";Integrated Security=True";
+        public static string CONNECTIONSTRING = "Data Source=ZAKS-XPS15\\FARM;Initial Catalog=\"Farm Tracker\";Integrated Security=True";
+        public static string WEATHERAPIKEY = "c8774e2ddcdb5242";
+        public static string GOOGLEMAPSAPIKEY = "";
+    
     }
 
     

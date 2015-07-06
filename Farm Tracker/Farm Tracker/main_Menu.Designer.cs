@@ -53,6 +53,7 @@
             this.equipment_Button.TabIndex = 1;
             this.equipment_Button.Text = "Equipment";
             this.equipment_Button.UseVisualStyleBackColor = true;
+            this.equipment_Button.Click += new System.EventHandler(this.equipment_Button_Click);
             // 
             // logout_Button
             // 

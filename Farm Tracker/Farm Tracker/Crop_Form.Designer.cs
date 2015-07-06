@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.delete_Button = new System.Windows.Forms.Button();
-            this.manufacturer_TextBox = new System.Windows.Forms.TextBox();
-            this.manufacturer_Label = new System.Windows.Forms.Label();
+            this.brand_TextBox = new System.Windows.Forms.TextBox();
+            this.brand_Label = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.cancel_Button = new System.Windows.Forms.Button();
             this.new_Crop_Button = new System.Windows.Forms.Button();
@@ -65,32 +65,32 @@
             this.delete_Button.Visible = false;
             this.delete_Button.Click += new System.EventHandler(this.delete_Button_Click);
             // 
-            // manufacturer_TextBox
+            // brand_TextBox
             // 
-            this.manufacturer_TextBox.BackColor = System.Drawing.Color.LightYellow;
-            this.manufacturer_TextBox.Location = new System.Drawing.Point(553, 187);
-            this.manufacturer_TextBox.Name = "manufacturer_TextBox";
-            this.manufacturer_TextBox.Size = new System.Drawing.Size(207, 31);
-            this.manufacturer_TextBox.TabIndex = 37;
-            this.manufacturer_TextBox.Visible = false;
+            this.brand_TextBox.BackColor = System.Drawing.Color.LightYellow;
+            this.brand_TextBox.Location = new System.Drawing.Point(553, 187);
+            this.brand_TextBox.Name = "brand_TextBox";
+            this.brand_TextBox.Size = new System.Drawing.Size(207, 31);
+            this.brand_TextBox.TabIndex = 37;
+            this.brand_TextBox.Visible = false;
             // 
-            // manufacturer_Label
+            // brand_Label
             // 
-            this.manufacturer_Label.AutoSize = true;
-            this.manufacturer_Label.Location = new System.Drawing.Point(548, 190);
-            this.manufacturer_Label.Name = "manufacturer_Label";
-            this.manufacturer_Label.Size = new System.Drawing.Size(139, 25);
-            this.manufacturer_Label.TabIndex = 61;
-            this.manufacturer_Label.Text = "Manufacturer";
+            this.brand_Label.AutoSize = true;
+            this.brand_Label.Location = new System.Drawing.Point(548, 190);
+            this.brand_Label.Name = "brand_Label";
+            this.brand_Label.Size = new System.Drawing.Size(69, 25);
+            this.brand_Label.TabIndex = 61;
+            this.brand_Label.Text = "Brand";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(403, 190);
+            this.label8.Location = new System.Drawing.Point(473, 190);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(139, 25);
+            this.label8.Size = new System.Drawing.Size(69, 25);
             this.label8.TabIndex = 60;
-            this.label8.Text = "Manufacturer";
+            this.label8.Text = "Brand";
             // 
             // cancel_Button
             // 
@@ -103,6 +103,7 @@
             this.cancel_Button.Text = "Cancel";
             this.cancel_Button.UseVisualStyleBackColor = false;
             this.cancel_Button.Visible = false;
+            this.cancel_Button.Click += new System.EventHandler(this.cancel_Button_Click);
             // 
             // new_Crop_Button
             // 
@@ -126,6 +127,7 @@
             this.save_Button.Text = "Save";
             this.save_Button.UseVisualStyleBackColor = false;
             this.save_Button.Visible = false;
+            this.save_Button.Click += new System.EventHandler(this.save_Button_Click);
             // 
             // update_Crop_Button
             // 
@@ -136,6 +138,7 @@
             this.update_Crop_Button.TabIndex = 52;
             this.update_Crop_Button.Text = "Update Crop";
             this.update_Crop_Button.UseVisualStyleBackColor = false;
+            this.update_Crop_Button.Click += new System.EventHandler(this.update_Crop_Button_Click);
             // 
             // variety_TextBox
             // 
@@ -277,8 +280,8 @@
             this.Controls.Add(this.notes_RichTextBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.delete_Button);
-            this.Controls.Add(this.manufacturer_TextBox);
-            this.Controls.Add(this.manufacturer_Label);
+            this.Controls.Add(this.brand_TextBox);
+            this.Controls.Add(this.brand_Label);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.cancel_Button);
             this.Controls.Add(this.new_Crop_Button);
@@ -303,8 +306,8 @@
         #endregion
 
         private System.Windows.Forms.Button delete_Button;
-        private System.Windows.Forms.TextBox manufacturer_TextBox;
-        private System.Windows.Forms.Label manufacturer_Label;
+        private System.Windows.Forms.TextBox brand_TextBox;
+        private System.Windows.Forms.Label brand_Label;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button cancel_Button;
         private System.Windows.Forms.Button new_Crop_Button;

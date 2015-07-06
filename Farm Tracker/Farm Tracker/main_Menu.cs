@@ -34,6 +34,14 @@ namespace Farm_Tracker
 
             return;
         }
+        private void equipment_Button_Click(object sender, EventArgs e)
+        {
+            Equipment equipmentWindow = new Equipment();
+            equipmentWindow.Owner = this;
+            equipmentWindow.Visible = true;
+
+            return;
+        }
 
         private void logout_Button_Click(object sender, EventArgs e)
         {
@@ -48,5 +56,7 @@ namespace Farm_Tracker
 
             return;
         }
+
+        
     }
 }

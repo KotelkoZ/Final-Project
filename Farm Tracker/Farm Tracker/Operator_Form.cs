@@ -19,9 +19,11 @@ namespace Farm_Tracker
             set_Text_Visibility(false);
             set_Label_Visibility(true);
 
-            this.operator_ListBox.SetSelected(1, true);
+           
 
             populate_Operator_List();
+
+            this.operator_ListBox.SelectedIndex = 0;
         }
 
         private void update_Password_Button_Click(object sender, EventArgs e)
@@ -29,6 +31,8 @@ namespace Farm_Tracker
             set_Password_Visibility(true);
             set_Save_Cancel_Visibility(true);
             set_Main_Button_Visibility(false);
+
+            this.operator_ListBox.Enabled = false;
 
             return;
         }
@@ -48,6 +52,8 @@ namespace Farm_Tracker
             this.email_TextBox.Text = this.email_Label.Text;
             this.phone_Number_TextBox.Text = this.phone_Number_Label.Text;
 
+            this.operator_ListBox.Enabled = false;
+
             return;
         }
 
@@ -59,6 +65,10 @@ namespace Farm_Tracker
             set_Password_Visibility(true);
             set_Save_Cancel_Visibility(true);
             set_Main_Button_Visibility(false);
+
+            this.operator_ListBox.Enabled = false;
+
+            this.operator_ID_Label.Text = "X";
 
             return;
         }
@@ -72,6 +82,17 @@ namespace Farm_Tracker
             set_Save_Cancel_Visibility(false);
             set_Main_Button_Visibility(true);
             this.delete_Button.Visible = false;
+
+            this.operator_ListBox.Enabled = true;
+
+            if (this.operator_ListBox.Items.Count != 0)
+            {
+                populate_Operator_Info();
+            }
+            else
+            {
+                this.operator_ID_Label.Text = "Operator ID";
+            }
 
             return;
         }
@@ -100,30 +121,30 @@ namespace Farm_Tracker
                     return;
                 }
 
-                string queryString = "insert into Operators (Operators.First_Name, Operators.Last_Name, Operators.Position, Operators.Language,";
+                string queryString = "insert into Operators (Operators.First_Name, Operators.Last_Name, Operators.Position, Operators.Language, ";
                 
                 if (this.email_TextBox.Text.ToString().Trim() != "")
                 {
-                    queryString += "Operators.Email,";
+                    queryString += "Operators.Email, ";
                 }
                 if (this.phone_Number_TextBox.Text.ToString().Trim() != "") 
                 {
-                    queryString += "Operators.Phone_Number,";
+                    queryString += "Operators.Phone_Number, ";
                 }
-                
-                queryString += "Operators.Password) " +
-                    "values ('" + this.first_Name_TextBox.Text.ToString().Trim() + "','" +
-                                    this.last_Name_TextBox.Text.ToString().Trim() + "','" +
-                                    this.language_TextBox.Text.ToString().Trim() + "','" +
-                                    this.position_TextBox.Text.ToString().Trim() + "','";
 
+                queryString += "Operators.Password) " +
+                    "values ('" + this.first_Name_TextBox.Text.ToString().Trim() + "', '" +
+                                    this.last_Name_TextBox.Text.ToString().Trim() + "', '" +
+                                    this.position_TextBox.Text.ToString().Trim() + "', '" +
+                                    this.language_TextBox.Text.ToString().Trim() + "', '";
+                                    
                 if (this.email_TextBox.Text.ToString().Trim() != "")
                 {
-                    queryString += this.first_Name_TextBox.Text.ToString().Trim() + "','";
+                    queryString += this.email_TextBox.Text.ToString().Trim() + "', '";
                 }
                 if (this.phone_Number_TextBox.Text.ToString().Trim() != "") 
                 {
-                    queryString += this.phone_Number_TextBox.Text.ToString().Trim() + "','";
+                    queryString += this.phone_Number_TextBox.Text.ToString().Trim() + "', '";
                 }
                 
                 queryString += myFunctions.Encrypt(this.password_TextBox.Text.ToString().Trim()) + "')";
@@ -135,8 +156,7 @@ namespace Farm_Tracker
                 string queryFail = "There was a problem, the operator was not created.";
 
                 myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
-
-                populate_Operator_List();
+                
             }
             //UPDATE PASSWORD
             else if (this.password_TextBox.Visible == true && this.first_Name_TextBox.Visible == false)
@@ -155,7 +175,7 @@ namespace Farm_Tracker
                 
                 string queryString = "update Operators set Operators.Password = '" +
                                     myFunctions.Encrypt(this.password_TextBox.Text.ToString().Trim()) +
-                                    "' where Operators.Operator_ID = '" + this.first_Name_Label.Text.ToString().Trim() + "')";
+                                    "' where Operators.Operator_ID = '" + this.operator_ID_Label.Text.ToString().Trim() + "'";
 
                 string queryMessage = "Update operator password";
                 string querySuccess = "Operator password has been updated.";
@@ -167,7 +187,6 @@ namespace Farm_Tracker
             else
             {
 
-
                 if (this.first_Name_TextBox.Text.Trim().Equals("") ||
                     this.last_Name_TextBox.Text.Trim().Equals("") ||
                     this.position_TextBox.Text.Trim().Equals("") ||
@@ -178,34 +197,21 @@ namespace Farm_Tracker
                     return;
                 }
 
-                string queryString = "insert into Operators (Operators.First_Name, Operators.Last_Name, Operators.Position, Operators.Language,";
+                string queryString = "update Operators set Operators.First_Name = '" + this.first_Name_TextBox.Text.ToString().Trim() +
+                                            "', Operators.Last_Name = '" + this.last_Name_TextBox.Text.ToString().Trim() +
+                                            "', Operators.Position = '" + this.position_TextBox.Text.ToString().Trim() +
+                                            "', Operators.Language = '" + this.language_TextBox.Text.ToString().Trim() + "'";
 
                 if (this.email_TextBox.Text.ToString().Trim() != "")
                 {
-                    queryString += "Operators.Email,";
+                    queryString += ", Operators.Email = '" + this.email_TextBox.Text.ToString().Trim() + "'";
                 }
                 if (this.phone_Number_TextBox.Text.ToString().Trim() != "")
                 {
-                    queryString += "Operators.Phone_Number,";
+                    queryString += ", Operators.Phone_Number = '" + this.phone_Number_TextBox.Text.ToString().Trim() + "'";
                 }
 
-                queryString += ") " +
-                    "values ('" + this.first_Name_TextBox.Text.ToString().Trim() + "','" +
-                                    this.last_Name_TextBox.Text.ToString().Trim() + "','" +
-                                    this.language_TextBox.Text.ToString().Trim() + "','" +
-                                    this.position_TextBox.Text.ToString().Trim() + "','";
-
-                if (this.email_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += this.first_Name_TextBox.Text.ToString().Trim() + "','";
-                }
-                if (this.phone_Number_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += this.phone_Number_TextBox.Text.ToString().Trim() + "','";
-                }
-
-               queryString += "')";
-
+               queryString += " Where Operators.Operator_ID = " + this.operator_ID_Label.Text.ToString().Trim(); 
 
                 string queryMessage = "Update operator";
                 string querySuccess = "Operator has been updated.";
@@ -213,7 +219,6 @@ namespace Farm_Tracker
 
                 myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
 
-                populate_Operator_List();
             }
 
             set_Text_Visibility(false);
@@ -223,6 +228,14 @@ namespace Farm_Tracker
             clear_Text_Fields();
             set_Main_Button_Visibility(true);
             this.delete_Button.Visible = false;
+
+            this.operator_ListBox.Enabled = true;
+
+            populate_Operator_List();
+            
+            this.operator_ListBox.SelectedIndex = 0;
+
+            populate_Operator_Info();
 
             return;
         }
@@ -351,9 +364,9 @@ namespace Farm_Tracker
                             this.first_Name_Label.Text = reader[1].ToString().Trim();
                             this.last_Name_Label.Text = reader[2].ToString().Trim();
                             this.position_Label.Text = reader[3].ToString().Trim();
-                            this.language_Label.Text = reader[6].ToString().Trim();
-                            this.email_Label.Text = reader[4].ToString().Trim();
-                            this.phone_Number_Label.Text = reader[5].ToString().Trim();
+                            this.language_Label.Text = reader[4].ToString().Trim();
+                            this.email_Label.Text = reader[5].ToString().Trim();
+                            this.phone_Number_Label.Text = reader[6].ToString().Trim();
                     
                         reader.Close();
                     }
@@ -381,6 +394,8 @@ namespace Farm_Tracker
             this.delete_Button.Visible = false;
             clear_Text_Fields();
             set_Main_Button_Visibility(true);
+
+            this.operator_ListBox.Enabled = true;
 
             return;
         }
