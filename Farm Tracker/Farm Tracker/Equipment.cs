@@ -19,9 +19,10 @@ namespace Farm_Tracker
             InitializeComponent();
 
             populate_Equipment_List();
-
-            this.equipment_ListBox.SelectedIndex = 0;
-
+            if (this.equipment_ListBox.Items.Count != 0)
+            {
+                this.equipment_ListBox.SelectedIndex = 0;
+            }
         }
         private void update_Button_Click(object sender, EventArgs e)
         {
@@ -75,7 +76,7 @@ namespace Farm_Tracker
 
             if (this.equipment_ListBox.Items.Count != 0)
             {
-                populate_Operator_Info();
+                populate_Equipment_Info();
             }
             else
             {
@@ -87,7 +88,7 @@ namespace Farm_Tracker
 
         private void save_Button_Click(object sender, EventArgs e)
         {
-            //NEW OPERATOR
+            //NEW EQUIPMENT
             if (this.equipment_ID_Label.Text.ToString().Trim() == "X")
             {
                 if (this.equipment_Type_TextBox.Text.Trim().Equals("") ||
@@ -102,70 +103,169 @@ namespace Farm_Tracker
                     return;
                 }
 
-                string queryString = "insert into Equipment (Equipment.Equipment_Type, Equipment.Year, Equipment.Brand, Equipment.Serial_Number, Equipment.Model_Number, Equipment.Hours ";
+                using (SqlConnection myconnection = new SqlConnection(Variables.CONNECTIONSTRING))
+                {
+                    myconnection.Open();
 
-                if (this.horsepower_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ", Equipment.Horsepower";
-                }
-                if (this.number_Of_Tanks_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ", Equipment.Number_Of_Tanks";
-                }
-                if (this.tank_Size_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ", Equipment.Tank_Size";
-                }
-                if (this.width_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ", Equipment.Width";
-                }
-                if (this.shank_Spacing_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ", Equipment.Shank_Spacing";
-                }
+                    SqlCommand mycommand = myconnection.CreateCommand();
+                    SqlTransaction mytransaction;
 
-                queryString += ", Equipment.Operational) " + 
-                    " values ('" + this.equipment_Type_TextBox.Text.ToString().Trim() + "', '" +
-                                    this.year_TextBox.Text.ToString().Trim() + "', '" +
-                                    this.brand_TextBox.Text.ToString().Trim() + "', '" +
-                                    this.serial_Number_Textbox.Text.ToString().Trim() + "', '" +
-                                    this.model_Number_TextBox.Text.ToString().Trim() + "', '" +
-                                    this.hours_TextBox.Text.ToString().Trim() + "'";
+                    mytransaction = myconnection.BeginTransaction("Insert Equipment");
 
-                if (this.horsepower_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ",'" + this.horsepower_TextBox.Text.ToString().Trim() + "'";
-                }
-                if (this.number_Of_Tanks_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ",'" + this.number_Of_Tanks_TextBox.Text.ToString().Trim() + "'";
-                }
-                if (this.tank_Size_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ",'" + this.tank_Size_TextBox.Text.ToString().Trim() + "'";
-                }
-                if (this.width_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ",'" + width_TextBox.Text.ToString().Trim() + "'";
-                }
-                if (this.shank_Spacing_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ",'" + this.shank_Spacing_TextBox.Text.ToString().Trim() + "'";
-                }
+                    mycommand.Connection = myconnection;
+                    mycommand.Transaction = mytransaction;
 
-                queryString += ", 1)";
+                    try
+                    {
 
-                MessageBox.Show(queryString);
+                        string queryString = "INSERT INTO Equipment(Equipment_Type,Year,Brand,Serial_Number,Model_Number,Hours ";
 
-                string queryMessage = "Insert Equipment";
-                string querySuccess = "Equipment has been created.";
-                string queryFail = "There was a problem, the equipment was not created.";
+                        if (this.horsepower_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ",Horsepower";
+                        }
+                        if (this.number_Of_Tanks_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ",Number_Of_Tanks";
+                        }
+                        if (this.tank_Size_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ",Tank_Size";
+                        }
+                        if (this.width_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ",Width";
+                        }
+                        if (this.shank_Spacing_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ",Shank_Spacing";
+                        }
+                        if (this.equipment_PictureBox.Image != null)
+                        {
+                            queryString += ",Image";
+                        }
 
-                myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+                        queryString += ",Operational) ";
+
+                        queryString += " values(@Equipment_Type" +
+                                            ",@Year" +
+                                            ",@Brand" +
+                                            ",@Serial_Number" +
+                                            ",@Model_Number" +
+                                            ",@Hours";
+
+                        if (this.horsepower_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ",@Horsepower";
+                        }
+                        if (this.number_Of_Tanks_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ",@Number_Of_Tanks";
+                        }
+                        if (this.tank_Size_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ",@Tank_Size";
+                        }
+                        if (this.width_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ",@Width";
+                        }
+                        if (this.shank_Spacing_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ",@Shank_Spacing";
+                        }
+                        if (this.equipment_PictureBox.Image != null)
+                        {
+                            queryString += ",@Image";
+                        }
+
+                        queryString += ",@Operational)";
+
+                        mycommand.CommandText = queryString;
+
+                        mycommand.Parameters.Add("@Equipment_Type", SqlDbType.NChar, 20);
+                        mycommand.Parameters["@Equipment_Type"].Value = this.equipment_Type_TextBox.Text;
+
+                        mycommand.Parameters.Add("@Year", SqlDbType.Int, 4);
+                        mycommand.Parameters["@Year"].Value = this.year_TextBox.Text;
+
+                        mycommand.Parameters.Add("@Brand", SqlDbType.NChar, 10);
+                        mycommand.Parameters["@Brand"].Value = this.brand_TextBox.Text;
+
+                        mycommand.Parameters.Add("@Serial_Number", SqlDbType.NChar, 25);
+                        mycommand.Parameters["@Serial_Number"].Value = this.serial_Number_Textbox.Text;
+
+                        mycommand.Parameters.Add("@Model_Number", SqlDbType.NChar, 15);
+                        mycommand.Parameters["@Model_Number"].Value = this.model_Number_TextBox.Text;
+
+                        mycommand.Parameters.Add("@Hours", SqlDbType.Int, 4);
+                        mycommand.Parameters["@Hours"].Value = this.hours_TextBox.Text;
+
+                        if (this.horsepower_TextBox.Text.ToString().Trim() != "")
+                        {
+                            mycommand.Parameters.Add("@Horsepower", SqlDbType.Int, 4);
+                            mycommand.Parameters["@Horsepower"].Value = this.horsepower_TextBox.Text;
+                        }
+                        if (this.number_Of_Tanks_TextBox.Text.ToString().Trim() != "")
+                        {
+                            mycommand.Parameters.Add("@Number_Of_Tanks", SqlDbType.Int, 4);
+                            mycommand.Parameters["@Number_Of_Tanks"].Value = this.number_Of_Tanks_TextBox;
+                        }
+                        if (this.tank_Size_TextBox.Text.ToString().Trim() != "")
+                        {
+                            mycommand.Parameters.Add("@Tank_Size", SqlDbType.Int, 4);
+                            mycommand.Parameters["@Tank_Size"].Value = this.tank_Size_TextBox.Text;
+                        }
+                        if (this.width_TextBox.Text.ToString().Trim() != "")
+                        {
+                            mycommand.Parameters.Add("@Width", SqlDbType.Int, 4);
+                            mycommand.Parameters["@Width"].Value = width_TextBox.Text;
+                        }
+                        if (this.shank_Spacing_TextBox.Text.ToString().Trim() != "")
+                        {
+                            mycommand.Parameters.Add("@Shank_Spacing", SqlDbType.Int, 4);
+                            mycommand.Parameters["@Shank_Spacing"].Value = this.shank_Spacing_TextBox.Text;
+                        }
+                        if (this.equipment_PictureBox.Image != null)
+                        {
+                            mycommand.Parameters.Add("@Image", SqlDbType.Image);
+                            mycommand.Parameters["@Image"].Value = myFunctions.ImageToByteArray(this.equipment_PictureBox.Image, this.equipment_PictureBox);
+                        }
+
+                        mycommand.Parameters.Add("@Operational", SqlDbType.Bit);
+                        mycommand.Parameters["@Operational"].Value = 1;
+
+                        mycommand.ExecuteNonQuery();
+
+                        // Attempt to commit the transaction. 
+                        mytransaction.Commit();
+                        MessageBox.Show("Equipment has been created.");
+                        myconnection.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("There was a problem, the equipment was not created.");
+                        Console.WriteLine("Commit Exception Type: {0}", ex.GetType());
+                        Console.WriteLine("  Message: {0}", ex.Message);
+
+                        // Attempt to roll back the transaction.  
+                        try
+                        {
+                            mytransaction.Rollback();
+                        }
+                        catch (Exception ex2)
+                        {
+                            // This catch block will handle any errors that may have occurred  
+                            // on the server that would cause the rollback to fail, such as  
+                            // a closed connection. 
+                            Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
+                            Console.WriteLine("  Message: {0}", ex2.Message);
+                        }
+                    }
+                }
 
             }
-            //UPDATE OPERATOR
+            //UPDATE EQUIPMENT
             else
             {
 
@@ -181,65 +281,169 @@ namespace Farm_Tracker
                     return;
                 }
 
-                string queryString = "update Equipment set Equipment.Equipment_Type = '" + this.equipment_Type_TextBox.Text.ToString().Trim() +
-                                            "', Equipment.Year = '" + this.year_TextBox.Text.ToString().Trim() +
-                                            "', Equipment.Brand = '" + this.brand_TextBox.Text.ToString().Trim() +
-                                            "', Equipment.Serial_Number = '" + this.serial_Number_Textbox.Text.ToString().Trim() +
-                                            "', Equipment.Model_Number = '" + this.model_Number_TextBox.Text.ToString().Trim() +
-                                            "', Equipment.Hours = '" + this.hours_TextBox.Text.ToString().Trim() + "'";
+                using (SqlConnection myconnection = new SqlConnection(Variables.CONNECTIONSTRING))
+                {
+                    myconnection.Open();
 
-                if (this.horsepower_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ", Equipment.Horsepower = '" + this.horsepower_TextBox.Text.ToString().Trim() + "'";
-                }
-                if (this.number_Of_Tanks_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ", Equipment.Number_Of_Tanks = '" + this.number_Of_Tanks_TextBox.Text.ToString().Trim() + "'";
-                }
-                if (this.tank_Size_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ", Equipment.tank_Size = '" + this.tank_Size_TextBox.Text.ToString().Trim() + "'";
-                }
-                if (this.width_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ", Equipment.Width = '" + this.width_TextBox.Text.ToString().Trim() + "'";
-                }
-                if (this.shank_Spacing_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += ", Equipment.Shank_Spacing = '" + this.shank_Spacing_TextBox.Text.ToString().Trim() + "'";
-                }
-                if (this.equipment_PictureBox.Image != null)
-                {
-                    queryString += ", Equipment.Image = '" + this.equipment_PictureBox. + "'";
+                    SqlCommand mycommand = myconnection.CreateCommand();
+                    SqlTransaction mytransaction;
+
+                    mytransaction = myconnection.BeginTransaction("Update Equipment");
+
+                    mycommand.Connection = myconnection;
+                    mycommand.Transaction = mytransaction;
+
+                    try
+                    {
+
+
+                        string queryString = "update Equipment set Equipment.Equipment_Type = @Equipment_Type" +
+                                                    ", Equipment.Year = @Year" +
+                                                    ", Equipment.Brand = @Brand" +
+                                                    ", Equipment.Serial_Number = @Serial_Number" +
+                                                    ", Equipment.Model_Number = @Model_Number" +
+                                                    ", Equipment.Hours = @Hours";
+
+                        if (this.horsepower_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ", Equipment.Horsepower = @Horsepower";
+                        }
+                        if (this.number_Of_Tanks_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ", Equipment.Number_Of_Tanks = @Number_Of_Tanks";
+                        }
+                        if (this.tank_Size_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ", Equipment.tank_Size = @Tank_Size";
+                        }
+                        if (this.width_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ", Equipment.Width = @Width";
+                        }
+                        if (this.shank_Spacing_TextBox.Text.ToString().Trim() != "")
+                        {
+                            queryString += ", Equipment.Shank_Spacing = @Shank_Spacing";
+                        }
+                        if (this.equipment_PictureBox.Image != null)
+                        {
+                            queryString += ", Equipment.Image = @Image";
+                        }
+
+                        queryString += " Where Equipment.Equipment_ID = @ID";
+
+                        mycommand.CommandText = queryString;
+
+                        
+
+                        mycommand.Parameters.Add("@Equipment_Type", SqlDbType.NChar, 20);
+                        mycommand.Parameters["@Equipment_Type"].Value = this.equipment_Type_TextBox.Text;
+                        
+                        MessageBox.Show("Here 1");
+
+                        mycommand.Parameters.Add("@Year", SqlDbType.Int, 4);
+                        mycommand.Parameters["@Year"].Value = this.year_TextBox.Text;
+
+                        mycommand.Parameters.Add("@Brand", SqlDbType.NChar, 10);
+                        mycommand.Parameters["@Brand"].Value = this.brand_TextBox.Text;
+
+                        mycommand.Parameters.Add("@Serial_Number", SqlDbType.NChar, 25);
+                        mycommand.Parameters["@Serial_Number"].Value = this.serial_Number_Textbox.Text;
+
+                        mycommand.Parameters.Add("@Model_Number", SqlDbType.NChar, 15);
+                        mycommand.Parameters["@Model_Number"].Value = this.model_Number_TextBox.Text;
+
+                        mycommand.Parameters.Add("@Hours", SqlDbType.Int, 4);
+                        mycommand.Parameters["@Hours"].Value = this.hours_TextBox.Text;
+                        
+                        MessageBox.Show("Here 2");
+
+                        if (this.horsepower_TextBox.Text.ToString().Trim() != "")
+                        {
+                            mycommand.Parameters.Add("@Horsepower", SqlDbType.Int, 4);
+                            mycommand.Parameters["@Horsepower"].Value = this.horsepower_TextBox.Text;
+                        }
+                        if (this.number_Of_Tanks_TextBox.Text.ToString().Trim() != "")
+                        {
+                            mycommand.Parameters.Add("@Number_Of_Tanks", SqlDbType.Int, 4);
+                            mycommand.Parameters["@Number_Of_Tanks"].Value = this.number_Of_Tanks_TextBox;
+                        }
+                        if (this.tank_Size_TextBox.Text.ToString().Trim() != "")
+                        {
+                            mycommand.Parameters.Add("@Tank_Size", SqlDbType.Int, 4);
+                            mycommand.Parameters["@Tank_Size"].Value = this.tank_Size_TextBox.Text;
+                        }
+                        if (this.width_TextBox.Text.ToString().Trim() != "")
+                        {
+                            mycommand.Parameters.Add("@Width", SqlDbType.Int, 4);
+                            mycommand.Parameters["@Width"].Value = width_TextBox.Text;
+                        }
+                        if (this.shank_Spacing_TextBox.Text.ToString().Trim() != "")
+                        {
+                            mycommand.Parameters.Add("@Shank_Spacing", SqlDbType.Int, 4);
+                            mycommand.Parameters["@Shank_Spacing"].Value = this.shank_Spacing_TextBox.Text;
+                        }
+                        if (this.equipment_PictureBox.Image != null)
+                        {
+                            mycommand.Parameters.Add("@Image", SqlDbType.Image);
+                            mycommand.Parameters["@Image"].Value = myFunctions.ImageToByteArray(this.equipment_PictureBox.Image, this.equipment_PictureBox);
+                        }
+
+                        mycommand.Parameters.Add("@ID", SqlDbType.Int, 4);
+                        mycommand.Parameters["@ID"].Value = this.equipment_ID_Label.Text;
+
+                        MessageBox.Show("Here 3");
+
+                        mycommand.ExecuteNonQuery();
+
+                        MessageBox.Show("Here 4");
+                        // Attempt to commit the transaction. 
+                        mytransaction.Commit();
+                        MessageBox.Show("Equipment has been updated.");
+                        myconnection.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("There was a problem, the equipment was not updated.");
+                        Console.WriteLine("Commit Exception Type: {0}", ex.GetType());
+                        Console.WriteLine("  Message: {0}", ex.Message);
+
+                        // Attempt to roll back the transaction.  
+                        try
+                        {
+                            mytransaction.Rollback();
+                        }
+                        catch (Exception ex2)
+                        {
+                            // This catch block will handle any errors that may have occurred  
+                            // on the server that would cause the rollback to fail, such as  
+                            // a closed connection. 
+                            Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
+                            Console.WriteLine("  Message: {0}", ex2.Message);
+                        }
+                    }
                 }
 
-                queryString += " Where Equipment.Equipment_ID = " + this.equipment_ID_Label.Text.ToString().Trim();
+                set_Text_Visibility(false);
+                set_Label_Visibility(true);
 
-                string queryMessage = "Update equipment";
-                string querySuccess = "Equipment has been updated.";
-                string queryFail = "There was a problem, the equipment was not updated.";
+                set_Save_Cancel_Visibility(false);
+                clear_Text_Fields();
+                set_Main_Button_Visibility(true);
+                this.delete_Button.Visible = false;
 
-                myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+                this.equipment_ListBox.Enabled = true;
 
+                populate_Equipment_List();
+
+                if (this.equipment_ListBox.Items.Count != 0)
+                {
+                    this.equipment_ListBox.SelectedIndex = 0;
+                }
+
+                populate_Equipment_Info();
+
+                return;
             }
-
-            set_Text_Visibility(false);
-            set_Label_Visibility(true);
-
-            set_Save_Cancel_Visibility(false);
-            clear_Text_Fields();
-            set_Main_Button_Visibility(true);
-            this.delete_Button.Visible = false;
-
-            this.equipment_ListBox.Enabled = true;
-
-            populate_Equipment_List();
-
-            this.equipment_ListBox.SelectedIndex = 0;
-
-            populate_Operator_Info();
-
-            return;
         }
 
         private void delete_Button_Click(object sender, EventArgs e)
@@ -336,7 +540,7 @@ namespace Farm_Tracker
         }
         private void equipment_ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            populate_Operator_Info();
+            populate_Equipment_Info();
         }
 
         private void populate_Equipment_List()
@@ -368,8 +572,12 @@ namespace Farm_Tracker
             }
         }
 
-        private void populate_Operator_Info()
+        private void populate_Equipment_Info()
         {
+            if (this.equipment_ListBox.Items.Count == 0)
+            {
+                return;
+            }
 
             string operatorID = "";
             string temp = this.equipment_ListBox.SelectedItem.ToString().Trim();
@@ -405,6 +613,10 @@ namespace Farm_Tracker
                         this.width_Label.Text = reader[10].ToString().Trim();
                         this.shank_Spacing_Label.Text = reader[11].ToString().Trim();
 
+                        byte[] arr = (byte[])reader[12];
+
+                        this.equipment_PictureBox.Image = myFunctions.GetDataToImage(arr);
+
                         reader.Close();
                     }
                 }
@@ -422,7 +634,10 @@ namespace Farm_Tracker
             if (dialogBox.ShowDialog() == DialogResult.OK)
             {
                 Image img = new Bitmap(dialogBox.FileName);
-                equipment_PictureBox.Image = myFunctions.ResizeImage(img,244,286) ;
+
+                
+
+                equipment_PictureBox.Image = myFunctions.ResizeImage(img,286,244) ;
             }
         }
 
