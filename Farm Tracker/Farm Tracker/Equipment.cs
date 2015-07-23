@@ -22,6 +22,7 @@ namespace Farm_Tracker
             if (this.equipment_ListBox.Items.Count != 0)
             {
                 this.equipment_ListBox.SelectedIndex = 0;
+                populate_Repairs_List();
             }
         }
         private void update_Button_Click(object sender, EventArgs e)
@@ -77,6 +78,7 @@ namespace Farm_Tracker
             if (this.equipment_ListBox.Items.Count != 0)
             {
                 populate_Equipment_Info();
+                populate_Repairs_List();
             }
             else
             {
@@ -295,8 +297,6 @@ namespace Farm_Tracker
 
                     try
                     {
-
-
                         string queryString = "update Equipment set Equipment.Equipment_Type = @Equipment_Type" +
                                                     ", Equipment.Year = @Year" +
                                                     ", Equipment.Brand = @Brand" +
@@ -333,13 +333,9 @@ namespace Farm_Tracker
 
                         mycommand.CommandText = queryString;
 
-                        
-
                         mycommand.Parameters.Add("@Equipment_Type", SqlDbType.NChar, 20);
                         mycommand.Parameters["@Equipment_Type"].Value = this.equipment_Type_TextBox.Text;
                         
-                        MessageBox.Show("Here 1");
-
                         mycommand.Parameters.Add("@Year", SqlDbType.Int, 4);
                         mycommand.Parameters["@Year"].Value = this.year_TextBox.Text;
 
@@ -355,8 +351,6 @@ namespace Farm_Tracker
                         mycommand.Parameters.Add("@Hours", SqlDbType.Int, 4);
                         mycommand.Parameters["@Hours"].Value = this.hours_TextBox.Text;
                         
-                        MessageBox.Show("Here 2");
-
                         if (this.horsepower_TextBox.Text.ToString().Trim() != "")
                         {
                             mycommand.Parameters.Add("@Horsepower", SqlDbType.Int, 4);
@@ -391,11 +385,8 @@ namespace Farm_Tracker
                         mycommand.Parameters.Add("@ID", SqlDbType.Int, 4);
                         mycommand.Parameters["@ID"].Value = this.equipment_ID_Label.Text;
 
-                        MessageBox.Show("Here 3");
-
                         mycommand.ExecuteNonQuery();
 
-                        MessageBox.Show("Here 4");
                         // Attempt to commit the transaction. 
                         mytransaction.Commit();
                         MessageBox.Show("Equipment has been updated.");
@@ -441,7 +432,8 @@ namespace Farm_Tracker
                 }
 
                 populate_Equipment_Info();
-
+                populate_Repairs_List();
+                
                 return;
             }
         }
@@ -469,7 +461,6 @@ namespace Farm_Tracker
 
             return;
         }
-
 
         private void set_Main_Button_Visibility(bool value)
         {
@@ -541,6 +532,7 @@ namespace Farm_Tracker
         private void equipment_ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             populate_Equipment_Info();
+            populate_Repairs_List();
         }
 
         private void populate_Equipment_List()
@@ -564,6 +556,42 @@ namespace Farm_Tracker
                             this.equipment_ListBox.Items.Add(reader[0].ToString().Trim() + "\t" +
                                                             reader[1].ToString().Trim() + "\t" +
                                                             reader[2].ToString().Trim());
+                        }
+                        reader.Close();
+                    }
+                }
+                connection.Close();
+            }
+        }
+
+        private void populate_Repairs_List()
+        {
+            this.repairs_ListBox.Items.Clear();
+
+            String queryString = "SELECT Date, Repaired from Breakdowns where Equipment_ID = " + this.equipment_ID_Label.Text.ToString().Trim();
+
+            using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
+            {
+
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(queryString, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+
+                            if ((bool)reader[1])
+                            {
+                                this.repairs_ListBox.Items.Add(Convert.ToDateTime(reader[0].ToString().Trim()).ToShortDateString() + "\tFixed");
+                            }
+                            else
+                            {
+                                this.repairs_ListBox.Items.Add(Convert.ToDateTime(reader[0].ToString().Trim()).ToShortDateString() + "\tBroken");
+                            }
+
                         }
                         reader.Close();
                     }
@@ -642,6 +670,11 @@ namespace Farm_Tracker
         }
 
         private void equipment_PictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Equipment_Load(object sender, EventArgs e)
         {
 
         }

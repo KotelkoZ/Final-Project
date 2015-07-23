@@ -42,6 +42,14 @@ namespace Farm_Tracker
 
             return;
         }
+        private void fields_Button_Click(object sender, EventArgs e)
+        {
+            Field_Form fieldWindow = new Field_Form();
+            fieldWindow.Owner = this;
+            fieldWindow.Visible = true;
+
+            return;
+        }
 
         private void logout_Button_Click(object sender, EventArgs e)
         {
@@ -56,6 +64,8 @@ namespace Farm_Tracker
 
             return;
         }
+
+      
 
         
     }

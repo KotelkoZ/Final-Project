@@ -33,6 +33,7 @@
             this.logout_Button = new System.Windows.Forms.Button();
             this.overview_Button = new System.Windows.Forms.Button();
             this.crops_Button = new System.Windows.Forms.Button();
+            this.fields_Button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // operators_Button
@@ -84,11 +85,22 @@
             this.crops_Button.UseVisualStyleBackColor = true;
             this.crops_Button.Click += new System.EventHandler(this.crops_Button_Click);
             // 
+            // fields_Button
+            // 
+            this.fields_Button.Location = new System.Drawing.Point(12, 340);
+            this.fields_Button.Name = "fields_Button";
+            this.fields_Button.Size = new System.Drawing.Size(430, 55);
+            this.fields_Button.TabIndex = 5;
+            this.fields_Button.Text = "Fields";
+            this.fields_Button.UseVisualStyleBackColor = true;
+            this.fields_Button.Click += new System.EventHandler(this.fields_Button_Click);
+            // 
             // main_Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 559);
+            this.Controls.Add(this.fields_Button);
             this.Controls.Add(this.crops_Button);
             this.Controls.Add(this.overview_Button);
             this.Controls.Add(this.logout_Button);
@@ -107,5 +119,6 @@
         private System.Windows.Forms.Button logout_Button;
         private System.Windows.Forms.Button overview_Button;
         private System.Windows.Forms.Button crops_Button;
+        private System.Windows.Forms.Button fields_Button;
     }
 }

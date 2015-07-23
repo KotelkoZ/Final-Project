@@ -377,13 +377,7 @@ namespace Farm_Tracker
 
         private void delete_Button_Click(object sender, EventArgs e)
         {
-            string queryString = "delete from Operators where Operators.Operator_ID = '" + this.operator_ID_Label.Text.ToString().Trim() + "'";
-
-            string queryMessage = "Delete operator";
-            string querySuccess = "Operator has been deleted.";
-            string queryFail = "There was a problem, the operator was not Deleted.";
-
-            myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            API_Functions.deleteOperator(Convert.ToInt16(this.operator_ID_Label.Text));
 
             populate_Operator_List();
 

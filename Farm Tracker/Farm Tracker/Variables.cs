@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,9 @@ namespace Farm_Tracker
     {
         public static string CONNECTIONSTRING = "Data Source=ZAKS-XPS15\\FARM;Initial Catalog=\"Farm Tracker\";Integrated Security=True";
         public static string WEATHERAPIKEY = "c8774e2ddcdb5242";
-        public static string GOOGLEMAPSAPIKEY = "";
-    
+        public static string GOOGLEMAPSAPIKEY = "AIzaSyDQJ8G5EUiElI3gDrsKo9eYCMtSzq1Oc4c";
+
+
     }
 
     

@@ -558,6 +558,7 @@
             this.Controls.Add(this.label10);
             this.Name = "Equipment";
             this.Text = "Equipment";
+            this.Load += new System.EventHandler(this.Equipment_Load);
             ((System.ComponentModel.ISupportInitialize)(this.equipment_PictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
