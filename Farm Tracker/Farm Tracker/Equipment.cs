@@ -105,7 +105,7 @@ namespace Farm_Tracker
                     return;
                 }
 
-                using (SqlConnection myconnection = new SqlConnection(Variables.CONNECTIONSTRING))
+                using (SqlConnection myconnection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
                 {
                     myconnection.Open();
 
@@ -231,7 +231,7 @@ namespace Farm_Tracker
                         if (this.equipment_PictureBox.Image != null)
                         {
                             mycommand.Parameters.Add("@Image", SqlDbType.Image);
-                            mycommand.Parameters["@Image"].Value = myFunctions.ImageToByteArray(this.equipment_PictureBox.Image, this.equipment_PictureBox);
+                            mycommand.Parameters["@Image"].Value = Utility_Functions.ImageToByteArray(this.equipment_PictureBox.Image, this.equipment_PictureBox);
                         }
 
                         mycommand.Parameters.Add("@Operational", SqlDbType.Bit);
@@ -283,7 +283,7 @@ namespace Farm_Tracker
                     return;
                 }
 
-                using (SqlConnection myconnection = new SqlConnection(Variables.CONNECTIONSTRING))
+                using (SqlConnection myconnection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
                 {
                     myconnection.Open();
 
@@ -379,7 +379,7 @@ namespace Farm_Tracker
                         if (this.equipment_PictureBox.Image != null)
                         {
                             mycommand.Parameters.Add("@Image", SqlDbType.Image);
-                            mycommand.Parameters["@Image"].Value = myFunctions.ImageToByteArray(this.equipment_PictureBox.Image, this.equipment_PictureBox);
+                            mycommand.Parameters["@Image"].Value = Utility_Functions.ImageToByteArray(this.equipment_PictureBox.Image, this.equipment_PictureBox);
                         }
 
                         mycommand.Parameters.Add("@ID", SqlDbType.Int, 4);
@@ -446,7 +446,7 @@ namespace Farm_Tracker
             string querySuccess = "Equipment has been deleted.";
             string queryFail = "There was a problem, the equipment was not Deleted.";
 
-            myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
 
             populate_Equipment_List();
 
@@ -542,7 +542,7 @@ namespace Farm_Tracker
             String queryString = "select Equipment.Equipment_ID, Equipment.Equipment_Type, Equipment.Brand from Equipment ";
 
 
-            using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
+            using (SqlConnection connection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
             {
 
                 connection.Open();
@@ -570,7 +570,7 @@ namespace Farm_Tracker
 
             String queryString = "SELECT Date, Repaired from Breakdowns where Equipment_ID = " + this.equipment_ID_Label.Text.ToString().Trim();
 
-            using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
+            using (SqlConnection connection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
             {
 
                 connection.Open();
@@ -617,7 +617,7 @@ namespace Farm_Tracker
 
             String queryString = "select * from Equipment where Equipment.Equipment_ID = " + operatorID;
 
-            using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
+            using (SqlConnection connection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
             {
 
                 connection.Open();
@@ -643,7 +643,7 @@ namespace Farm_Tracker
 
                         byte[] arr = (byte[])reader[12];
 
-                        this.equipment_PictureBox.Image = myFunctions.GetDataToImage(arr);
+                        this.equipment_PictureBox.Image = Utility_Functions.GetDataToImage(arr);
 
                         reader.Close();
                     }
@@ -665,7 +665,7 @@ namespace Farm_Tracker
 
                 
 
-                equipment_PictureBox.Image = myFunctions.ResizeImage(img,286,244) ;
+                equipment_PictureBox.Image = Utility_Functions.ResizeImage(img,286,244) ;
             }
         }
 

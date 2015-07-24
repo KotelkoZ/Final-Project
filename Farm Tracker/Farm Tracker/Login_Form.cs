@@ -18,6 +18,7 @@ namespace Farm_Tracker
         {
             //Put some stuff here. Ok ill put some stuff here. ZK Zak
             InitializeComponent();
+
         }
 
         private void login_Button_Click(object sender, EventArgs e)
@@ -35,7 +36,7 @@ namespace Farm_Tracker
 
             String queryString = "select Operators.Operator_ID, Operators.Password, Operators.Position from Operators where Operators.Operator_ID = '" + this.operator_ID_Textbox.Text.ToString().Trim() + "'";
 
-            using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
+            using (SqlConnection connection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
             {
 
                 connection.Open();
@@ -50,7 +51,7 @@ namespace Farm_Tracker
 
                             MessageBox.Show(reader[2].ToString().Trim() + "\n" + reader[0].ToString());
 
-                            if (myFunctions.Decrypt(reader[1].ToString().Trim()) == this.password_TextBox.Text.ToString().Trim())
+                            if (Utility_Functions.Decrypt(reader[1].ToString().Trim()) == this.password_TextBox.Text.ToString().Trim())
                             {
 
                                 //MessageBox.Show(reader[2].ToString().Trim() + "\n" + reader[2].ToString().Equals("Manager"));

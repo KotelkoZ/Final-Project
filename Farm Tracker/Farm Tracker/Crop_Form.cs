@@ -141,7 +141,7 @@ namespace Farm_Tracker
             String queryString = "select Crops.Crop_ID, Crops.Crop_Name, Crops.Species from Crops ";
 
 
-            using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
+            using (SqlConnection connection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
             {
 
                 connection.Open();
@@ -176,7 +176,7 @@ namespace Farm_Tracker
 
             String queryString = "select * from Crops where Crops.Crop_ID = " + operatorID;
 
-            using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
+            using (SqlConnection connection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
             {
 
                 connection.Open();
@@ -209,7 +209,7 @@ namespace Farm_Tracker
             string querySuccess = "Crop has been deleted.";
             string queryFail = "There was a problem, the crop was not deleted.";
 
-            myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
 
             populate_Crop_List();
 
@@ -265,7 +265,7 @@ namespace Farm_Tracker
                 string querySuccess = "Crop has been created.";
                 string queryFail = "There was a problem, the crop was not created.";
 
-                myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+                Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
 
             }
             //UPDATE CROP
@@ -299,7 +299,7 @@ namespace Farm_Tracker
                 string querySuccess = "Crop has been updated.";
                 string queryFail = "There was a problem, the srop was not updated.";
 
-                myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+                Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
 
             }
 

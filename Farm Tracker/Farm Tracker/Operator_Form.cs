@@ -121,104 +121,88 @@ namespace Farm_Tracker
                     return;
                 }
 
-                string queryString = "insert into Operators (Operators.First_Name, Operators.Last_Name, Operators.Position, Operators.Language, ";
+                API.farmOperator updatePerson = new API.farmOperator();
+
+                updatePerson.first_Name = this.first_Name_TextBox.Text.ToString().Trim();
+                updatePerson.last_Name = this.last_Name_TextBox.Text.ToString().Trim();
+                updatePerson.position = this.position_TextBox.Text.ToString().Trim();
+                updatePerson.language = this.language_TextBox.Text.ToString().Trim();
                 
                 if (this.email_TextBox.Text.ToString().Trim() != "")
                 {
-                    queryString += "Operators.Email, ";
+                    updatePerson.email = this.email_TextBox.Text.ToString().Trim();    
                 }
                 if (this.phone_Number_TextBox.Text.ToString().Trim() != "") 
                 {
-                    queryString += "Operators.Phone_Number, ";
+                    updatePerson.phone_Number = this.phone_Number_TextBox.Text.ToString().Trim();
                 }
 
-                queryString += "Operators.Password) " +
-                    "values ('" + this.first_Name_TextBox.Text.ToString().Trim() + "', '" +
-                                    this.last_Name_TextBox.Text.ToString().Trim() + "', '" +
-                                    this.position_TextBox.Text.ToString().Trim() + "', '" +
-                                    this.language_TextBox.Text.ToString().Trim() + "', '";
-                                    
-                if (this.email_TextBox.Text.ToString().Trim() != "")
-                {
-                    queryString += this.email_TextBox.Text.ToString().Trim() + "', '";
-                }
-                if (this.phone_Number_TextBox.Text.ToString().Trim() != "") 
-                {
-                    queryString += this.phone_Number_TextBox.Text.ToString().Trim() + "', '";
-                }
+                updatePerson.password = Utility_Functions.Encrypt(this.password_TextBox.Text.ToString().Trim());
                 
-                queryString += myFunctions.Encrypt(this.password_TextBox.Text.ToString().Trim()) + "')";
-
-                MessageBox.Show(queryString);
-
-                string queryMessage = "Insert operator";
-                string querySuccess = "Operator has been created.";
-                string queryFail = "There was a problem, the operator was not created.";
-
-                myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+                API.createOperator(updatePerson);
                 
             }
-            //UPDATE PASSWORD
-            else if (this.password_TextBox.Visible == true && this.first_Name_TextBox.Visible == false)
-            {
-
-                if (this.password_TextBox.Text.Trim().Equals(""))
-                {
-                    MessageBox.Show("No password has been entered.");
-                    return;
-                }
-                if (this.password_TextBox.Text.Trim().ToString() != this.confirm_Password_TextBox.Text.Trim().ToString())
-                {
-                    MessageBox.Show("The passwords entered do not match.");
-                    return;
-                }
-                
-                string queryString = "update Operators set Operators.Password = '" +
-                                    myFunctions.Encrypt(this.password_TextBox.Text.ToString().Trim()) +
-                                    "' where Operators.Operator_ID = '" + this.operator_ID_Label.Text.ToString().Trim() + "'";
-
-                string queryMessage = "Update operator password";
-                string querySuccess = "Operator password has been updated.";
-                string queryFail = "There was a problem, the operator password was not updated.";
-
-                myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
-            }
-            //UPDATE OPERATOR
             else
             {
-
-                if (this.first_Name_TextBox.Text.Trim().Equals("") ||
-                    this.last_Name_TextBox.Text.Trim().Equals("") ||
-                    this.position_TextBox.Text.Trim().Equals("") ||
-                    this.language_TextBox.Text.Trim().Equals("")
-                    )
+                if (this.password_TextBox.Visible)
                 {
-                    MessageBox.Show("Please enter the required information. (First Name, Last Name, Position and Language)");
-                    return;
+                    if (this.password_TextBox.Text.Trim().Equals(""))
+                    {
+                        MessageBox.Show("No password has been entered.");
+                        return;
+                    }
+                    if (this.password_TextBox.Text.Trim().ToString() != this.confirm_Password_TextBox.Text.Trim().ToString())
+                    {
+                        MessageBox.Show("The passwords entered do not match.");
+                        return;
+                    }
+                }
+                if (this.first_Name_TextBox.Visible)
+                {
+                    if (this.first_Name_TextBox.Text.Trim().Equals("") ||
+                        this.last_Name_TextBox.Text.Trim().Equals("") ||
+                        this.position_TextBox.Text.Trim().Equals("") ||
+                        this.language_TextBox.Text.Trim().Equals("")
+                        )
+                    {
+                        MessageBox.Show("Please enter the required information. (First Name, Last Name, Position and Language)");
+                        return;
+                    }
                 }
 
-                string queryString = "update Operators set Operators.First_Name = '" + this.first_Name_TextBox.Text.ToString().Trim() +
-                                            "', Operators.Last_Name = '" + this.last_Name_TextBox.Text.ToString().Trim() +
-                                            "', Operators.Position = '" + this.position_TextBox.Text.ToString().Trim() +
-                                            "', Operators.Language = '" + this.language_TextBox.Text.ToString().Trim() + "'";
 
-                if (this.email_TextBox.Text.ToString().Trim() != "")
+                API.farmOperator updatePerson = new API.farmOperator();
+                updatePerson.ID = Convert.ToInt16(this.operator_ID_Label.Text.ToString().Trim());
+                if (this.first_Name_TextBox.Modified)
                 {
-                    queryString += ", Operators.Email = '" + this.email_TextBox.Text.ToString().Trim() + "'";
+                    updatePerson.first_Name = this.first_Name_TextBox.Text.ToString().Trim();
                 }
-                if (this.phone_Number_TextBox.Text.ToString().Trim() != "")
+                if (this.last_Name_TextBox.Modified)
                 {
-                    queryString += ", Operators.Phone_Number = '" + this.phone_Number_TextBox.Text.ToString().Trim() + "'";
+                updatePerson.last_Name = this.last_Name_TextBox.Text.ToString().Trim();
+                }
+                if (this.position_TextBox.Modified)
+                {
+                updatePerson.position = this.position_TextBox.Text.ToString().Trim();
+                }
+                if (this.language_TextBox.Modified)
+                {
+                updatePerson.language = this.language_TextBox.Text.ToString().Trim();
+                }
+                if (this.email_TextBox.Modified)
+                {
+                    updatePerson.email = this.email_TextBox.Text.ToString().Trim();
+                }
+                if (this.phone_Number_TextBox.Modified)
+                {
+                    updatePerson.phone_Number = this.phone_Number_TextBox.Text.ToString().Trim();
+                }
+                if (this.password_TextBox.Modified)
+                {
+                    updatePerson.password = this.password_TextBox.Text.ToString().Trim();
                 }
 
-               queryString += " Where Operators.Operator_ID = " + this.operator_ID_Label.Text.ToString().Trim(); 
-
-                string queryMessage = "Update operator";
-                string querySuccess = "Operator has been updated.";
-                string queryFail = "There was a problem, the operator was not updated.";
-
-                myFunctions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
-
+                API.updateOperator(updatePerson);
             }
 
             set_Text_Visibility(false);
@@ -314,7 +298,7 @@ namespace Farm_Tracker
             String queryString = "select Operators.Operator_ID, Operators.First_Name, Operators.Last_Name from Operators ";
 
 
-            using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
+            using (SqlConnection connection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
             {
 
                 connection.Open();
@@ -349,7 +333,7 @@ namespace Farm_Tracker
 
             String queryString = "select * from Operators where Operators.Operator_ID = " + operatorID;
 
-            using (SqlConnection connection = new SqlConnection(Variables.CONNECTIONSTRING))
+            using (SqlConnection connection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
             {
 
                 connection.Open();
@@ -377,7 +361,7 @@ namespace Farm_Tracker
 
         private void delete_Button_Click(object sender, EventArgs e)
         {
-            API_Functions.deleteOperator(Convert.ToInt16(this.operator_ID_Label.Text));
+            API.deleteOperator(Convert.ToInt16(this.operator_ID_Label.Text));
 
             populate_Operator_List();
 

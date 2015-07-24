@@ -15,7 +15,7 @@ using System.Drawing.Imaging;
 
 namespace Farm_Tracker
 {
-    public static class myFunctions
+    public static class Utility_Functions
     {
         public static string Encrypt(string clearText)
         {
@@ -64,7 +64,7 @@ namespace Farm_Tracker
         public static void queryExecute(string insertString, string queryMessage, string successMessage, string failMessage)
         {
 
-            using (SqlConnection myconnection = new SqlConnection(Variables.CONNECTIONSTRING))
+            using (SqlConnection myconnection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
             {
 
                 myconnection.Open();

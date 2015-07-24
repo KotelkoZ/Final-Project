@@ -36,6 +36,10 @@
     <Reference Include="Json">
       <HintPath>..\packages\JSON.1.0.1\lib\net40\Json.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API_Functions.cs" />
+    <Compile Include="API.cs" />
     <Compile Include="Crop_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,7 +94,7 @@
     <Compile Include="managementOverview.Designer.cs">
       <DependentUpon>managementOverview.cs</DependentUpon>
     </Compile>
-    <Compile Include="myFunctions.cs" />
+    <Compile Include="Utility_Functions.cs" />
     <Compile Include="Operator_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,7 +103,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Variables.cs" />
+    <Compile Include="Global_Variables.cs" />
     <EmbeddedResource Include="Crop_Form.resx">
       <DependentUpon>Crop_Form.cs</DependentUpon>
     </EmbeddedResource>

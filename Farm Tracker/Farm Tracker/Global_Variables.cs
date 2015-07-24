@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Farm_Tracker
 {
-    class Variables
+    class Global_Variables
     {
         public static string CONNECTIONSTRING = "Data Source=ZAKS-XPS15\\FARM;Initial Catalog=\"Farm Tracker\";Integrated Security=True";
         public static string WEATHERAPIKEY = "c8774e2ddcdb5242";
