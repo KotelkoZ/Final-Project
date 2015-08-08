@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using Newtonsoft.Json.Linq;
 
 namespace Farm_Tracker
 {
@@ -19,11 +20,15 @@ namespace Farm_Tracker
             set_Text_Visibility(false);
             set_Label_Visibility(true);
 
-           
+            API.retrieveOperator();
 
             populate_Operator_List();
 
-            this.operator_ListBox.SelectedIndex = 0;
+            if (this.operator_ListBox.Items.Count > 0)
+            {
+                this.operator_ListBox.SelectedIndex = 0;
+            }
+            
         }
 
         private void update_Password_Button_Click(object sender, EventArgs e)
@@ -123,8 +128,8 @@ namespace Farm_Tracker
 
                 API.farmOperator updatePerson = new API.farmOperator();
 
-                updatePerson.first_Name = this.first_Name_TextBox.Text.ToString().Trim();
-                updatePerson.last_Name = this.last_Name_TextBox.Text.ToString().Trim();
+                updatePerson.firstName = this.first_Name_TextBox.Text.ToString().Trim();
+                updatePerson.lastName = this.last_Name_TextBox.Text.ToString().Trim();
                 updatePerson.position = this.position_TextBox.Text.ToString().Trim();
                 updatePerson.language = this.language_TextBox.Text.ToString().Trim();
                 
@@ -134,7 +139,7 @@ namespace Farm_Tracker
                 }
                 if (this.phone_Number_TextBox.Text.ToString().Trim() != "") 
                 {
-                    updatePerson.phone_Number = this.phone_Number_TextBox.Text.ToString().Trim();
+                    updatePerson.phoneNumber = this.phone_Number_TextBox.Text.ToString().Trim();
                 }
 
                 updatePerson.password = Utility_Functions.Encrypt(this.password_TextBox.Text.ToString().Trim());
@@ -175,11 +180,11 @@ namespace Farm_Tracker
                 updatePerson.ID = Convert.ToInt16(this.operator_ID_Label.Text.ToString().Trim());
                 if (this.first_Name_TextBox.Modified)
                 {
-                    updatePerson.first_Name = this.first_Name_TextBox.Text.ToString().Trim();
+                    updatePerson.firstName = this.first_Name_TextBox.Text.ToString().Trim();
                 }
                 if (this.last_Name_TextBox.Modified)
                 {
-                updatePerson.last_Name = this.last_Name_TextBox.Text.ToString().Trim();
+                updatePerson.lastName = this.last_Name_TextBox.Text.ToString().Trim();
                 }
                 if (this.position_TextBox.Modified)
                 {
@@ -195,7 +200,7 @@ namespace Farm_Tracker
                 }
                 if (this.phone_Number_TextBox.Modified)
                 {
-                    updatePerson.phone_Number = this.phone_Number_TextBox.Text.ToString().Trim();
+                    updatePerson.phoneNumber = this.phone_Number_TextBox.Text.ToString().Trim();
                 }
                 if (this.password_TextBox.Modified)
                 {
@@ -294,29 +299,20 @@ namespace Farm_Tracker
         private void populate_Operator_List()
         {
             this.operator_ListBox.Items.Clear();
-           
-            String queryString = "select Operators.Operator_ID, Operators.First_Name, Operators.Last_Name from Operators ";
 
-
-            using (SqlConnection connection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
+            var objects = JArray.Parse(API.retrieveOperator());
+            foreach (JObject root in objects)
             {
 
-                connection.Open();
+                StringBuilder operatorString = new StringBuilder();
+                operatorString.Append(root.GetValue("Operator_ID").ToString().Trim());
+                operatorString.Append("\t");
+                operatorString.Append(root.GetValue("First_Name").ToString().Trim());
+                operatorString.Append(" ");
+                operatorString.Append(root.GetValue("Last_Name").ToString().Trim());
 
-                using (SqlCommand command = new SqlCommand(queryString, connection))
-                {
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            this.operator_ListBox.Items.Add(reader[0].ToString().Trim() + "\t" +
-                                                            reader[1].ToString().Trim() + "\t" +
-                                                            reader[2].ToString().Trim());
-                        }
-                        reader.Close();
-                    }
-                }
-                connection.Close();
+                this.operator_ListBox.Items.Add(operatorString);
+                
             }
         }
 
@@ -331,31 +327,18 @@ namespace Farm_Tracker
                 operatorID += temp[i];
             }
 
-            String queryString = "select * from Operators where Operators.Operator_ID = " + operatorID;
-
-            using (SqlConnection connection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
+            var objects = JArray.Parse(API.retrieveOneOperator(operatorID));
+            foreach (JObject root in objects)
             {
 
-                connection.Open();
-
-                using (SqlCommand command = new SqlCommand(queryString, connection))
-                {
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        reader.Read();
-
-                            this.operator_ID_Label.Text = reader[0].ToString().Trim();
-                            this.first_Name_Label.Text = reader[1].ToString().Trim();
-                            this.last_Name_Label.Text = reader[2].ToString().Trim();
-                            this.position_Label.Text = reader[3].ToString().Trim();
-                            this.language_Label.Text = reader[4].ToString().Trim();
-                            this.email_Label.Text = reader[5].ToString().Trim();
-                            this.phone_Number_Label.Text = reader[6].ToString().Trim();
-                    
-                        reader.Close();
-                    }
-                }
-                connection.Close();
+                this.operator_ID_Label.Text = root.GetValue("Operator_ID").ToString().Trim();
+                this.first_Name_Label.Text = root.GetValue("First_Name").ToString().Trim();
+                this.last_Name_Label.Text = root.GetValue("Last_Name").ToString().Trim();
+                this.position_Label.Text = root.GetValue("Position").ToString().Trim();
+                this.language_Label.Text = root.GetValue("Language").ToString().Trim();
+                this.email_Label.Text = root.GetValue("Email").ToString().Trim();
+                this.phone_Number_Label.Text = root.GetValue("Phone_Number").ToString().Trim();
+                
             }
         }
 

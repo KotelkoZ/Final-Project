@@ -262,7 +262,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1398, 1160);
+            this.ClientSize = new System.Drawing.Size(1300, 1146);
             this.Controls.Add(this.new_Field_Button);
             this.Controls.Add(this.notes_RichTextBox);
             this.Controls.Add(this.label8);
