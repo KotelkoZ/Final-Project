@@ -108,7 +108,7 @@ namespace Farm_Tracker
 
         private void button1_Click(object sender, EventArgs e)
         {
-            API.retrieveOperator();
+            API.retrieveAllOperators();
         }
     }
 }

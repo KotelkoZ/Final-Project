@@ -20,7 +20,7 @@ namespace Farm_Tracker
             set_Text_Visibility(false);
             set_Label_Visibility(true);
 
-            API.retrieveOperator();
+            API.retrieveAllOperators();
 
             populate_Operator_List();
 
@@ -31,6 +31,103 @@ namespace Farm_Tracker
             
         }
 
+        private void clear_Text_Fields()
+        {
+            this.first_Name_TextBox.Clear();
+            this.last_Name_TextBox.Clear();
+            this.position_TextBox.Clear();
+            this.language_TextBox.Clear();
+            this.email_TextBox.Clear();
+            this.phone_Number_TextBox.Clear();
+            this.password_TextBox.Clear();
+            this.confirm_Password_TextBox.Clear();
+
+            return;
+        }
+        private void set_Main_Button_Visibility(bool value)
+        {
+            this.update_Password_Button.Visible = value;
+            this.update_Operator_Button.Visible = value;
+            this.new_Operator_Button.Visible = value;
+
+            return;
+        }
+        private void set_Text_Visibility(bool value)
+        {
+            this.first_Name_TextBox.Visible = value;
+            this.last_Name_TextBox.Visible = value;
+            this.position_TextBox.Visible = value;
+            this.language_TextBox.Visible = value;
+            this.email_TextBox.Visible = value;
+            this.phone_Number_TextBox.Visible = value;
+
+            return;
+        }
+        private void set_Password_Visibility(bool value)
+        {
+            this.password_Label.Visible = value;
+            this.password_TextBox.Visible = value;
+            this.confirm_Password_Label.Visible = value;
+            this.confirm_Password_TextBox.Visible = value;
+
+            return;
+        }
+        private void set_Save_Cancel_Visibility(bool value)
+        {
+            this.save_Button.Visible = value;
+            this.cancel_Button.Visible = value;
+
+            return;
+        }
+        private void set_Label_Visibility(bool value)
+        {
+            this.first_Name_Label.Visible = value;
+            this.last_Name_Label.Visible = value;
+            this.language_Label.Visible = value;
+
+            return;
+        }
+        private void populate_Operator_List()
+        {
+            this.operator_ListBox.Items.Clear();
+
+            var objects = JArray.Parse(API.retrieveAllOperators());
+            foreach (JObject root in objects)
+            {
+
+                StringBuilder operatorString = new StringBuilder();
+                operatorString.Append(root.GetValue("Operator_ID").ToString().Trim());
+                operatorString.Append("\t");
+                operatorString.Append(root.GetValue("First_Name").ToString().Trim());
+                operatorString.Append(" ");
+                operatorString.Append(root.GetValue("Last_Name").ToString().Trim());
+
+                this.operator_ListBox.Items.Add(operatorString);
+                
+            }
+        }
+        private void populate_Operator_Info()
+        {
+            string operatorID = "";
+            string temp = this.operator_ListBox.SelectedItem.ToString().Trim();
+
+            for (int i = 0; temp[i] != '\t'; i++)
+            {
+                operatorID += temp[i];
+            }
+
+            var objects = JArray.Parse(API.retrieveOperator(operatorID));
+            foreach (JObject root in objects)
+            {
+                this.operator_ID_Label.Text = root.GetValue("Operator_ID").ToString().Trim();
+                this.first_Name_Label.Text = root.GetValue("First_Name").ToString().Trim();
+                this.last_Name_Label.Text = root.GetValue("Last_Name").ToString().Trim();
+                this.position_Label.Text = root.GetValue("Position").ToString().Trim();
+                this.language_Label.Text = root.GetValue("Language").ToString().Trim();
+                this.email_Label.Text = root.GetValue("Email").ToString().Trim();
+                this.phone_Number_Label.Text = root.GetValue("Phone_Number").ToString().Trim();
+            }
+        }
         private void update_Password_Button_Click(object sender, EventArgs e)
         {
             set_Password_Visibility(true);
@@ -41,7 +138,6 @@ namespace Farm_Tracker
 
             return;
         }
-
         private void update_Operator_Button_Click(object sender, EventArgs e)
         {
             set_Label_Visibility(false);
@@ -61,8 +157,6 @@ namespace Farm_Tracker
 
             return;
         }
-
-
         private void new_Operator_Button_Click(object sender, EventArgs e)
         {
             set_Label_Visibility(false);
@@ -77,7 +171,6 @@ namespace Farm_Tracker
 
             return;
         }
-
         private void cancel_Button_Click(object sender, EventArgs e)
         {
             clear_Text_Fields();
@@ -101,7 +194,6 @@ namespace Farm_Tracker
 
             return;
         }
-
         private void save_Button_Click(object sender, EventArgs e)
         {
             
@@ -126,25 +218,25 @@ namespace Farm_Tracker
                     return;
                 }
 
-                API.farmOperator updatePerson = new API.farmOperator();
+                API.farmOperator newPerson = new API.farmOperator();
 
-                updatePerson.firstName = this.first_Name_TextBox.Text.ToString().Trim();
-                updatePerson.lastName = this.last_Name_TextBox.Text.ToString().Trim();
-                updatePerson.position = this.position_TextBox.Text.ToString().Trim();
-                updatePerson.language = this.language_TextBox.Text.ToString().Trim();
+                newPerson.firstName = this.first_Name_TextBox.Text.ToString().Trim();
+                newPerson.lastName = this.last_Name_TextBox.Text.ToString().Trim();
+                newPerson.position = this.position_TextBox.Text.ToString().Trim();
+                newPerson.language = this.language_TextBox.Text.ToString().Trim();
                 
                 if (this.email_TextBox.Text.ToString().Trim() != "")
                 {
-                    updatePerson.email = this.email_TextBox.Text.ToString().Trim();    
+                    newPerson.email = this.email_TextBox.Text.ToString().Trim();    
                 }
                 if (this.phone_Number_TextBox.Text.ToString().Trim() != "") 
                 {
-                    updatePerson.phoneNumber = this.phone_Number_TextBox.Text.ToString().Trim();
+                    newPerson.phoneNumber = this.phone_Number_TextBox.Text.ToString().Trim();
                 }
 
-                updatePerson.password = Utility_Functions.Encrypt(this.password_TextBox.Text.ToString().Trim());
+                newPerson.password = Utility_Functions.Encrypt(this.password_TextBox.Text.ToString().Trim());
                 
-                API.createOperator(updatePerson);
+                API.createOperator(newPerson);
                 
             }
             else
@@ -174,7 +266,6 @@ namespace Farm_Tracker
                         return;
                     }
                 }
-
 
                 API.farmOperator updatePerson = new API.farmOperator();
                 updatePerson.ID = Convert.ToInt16(this.operator_ID_Label.Text.ToString().Trim());
@@ -228,120 +319,10 @@ namespace Farm_Tracker
 
             return;
         }
-
-        private void set_Main_Button_Visibility(bool value)
-        {
-            this.update_Password_Button.Visible = value;
-            this.update_Operator_Button.Visible = value;
-            this.new_Operator_Button.Visible = value;
-
-            return;
-        }
-
-        private void clear_Text_Fields()
-        {
-            this.first_Name_TextBox.Clear();
-            this.last_Name_TextBox.Clear();
-            this.position_TextBox.Clear();
-            this.language_TextBox.Clear();
-            this.email_TextBox.Clear();
-            this.phone_Number_TextBox.Clear();
-            this.password_TextBox.Clear();
-            this.confirm_Password_TextBox.Clear();
-
-            return;
-        }
-
-        private void set_Text_Visibility(bool value)
-        {
-            this.first_Name_TextBox.Visible = value;
-            this.last_Name_TextBox.Visible = value;
-            this.position_TextBox.Visible = value;
-            this.language_TextBox.Visible = value;
-            this.email_TextBox.Visible = value;
-            this.phone_Number_TextBox.Visible = value;
-
-            return;
-        }
-
-        private void set_Password_Visibility(bool value)
-        {
-            this.password_Label.Visible = value;
-            this.password_TextBox.Visible = value;
-            this.confirm_Password_Label.Visible = value;
-            this.confirm_Password_TextBox.Visible = value;
-
-            return;
-        }
-
-        private void set_Save_Cancel_Visibility(bool value)
-        {
-            this.save_Button.Visible = value;
-            this.cancel_Button.Visible = value;
-
-            return;
-        }
-
-        private void set_Label_Visibility(bool value)
-        {
-            this.first_Name_Label.Visible = value;
-            this.last_Name_Label.Visible = value;
-            this.language_Label.Visible = value;
-
-            return;
-        }
-
         private void operator_ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             populate_Operator_Info();
         }
-
-        private void populate_Operator_List()
-        {
-            this.operator_ListBox.Items.Clear();
-
-            var objects = JArray.Parse(API.retrieveOperator());
-            foreach (JObject root in objects)
-            {
-
-                StringBuilder operatorString = new StringBuilder();
-                operatorString.Append(root.GetValue("Operator_ID").ToString().Trim());
-                operatorString.Append("\t");
-                operatorString.Append(root.GetValue("First_Name").ToString().Trim());
-                operatorString.Append(" ");
-                operatorString.Append(root.GetValue("Last_Name").ToString().Trim());
-
-                this.operator_ListBox.Items.Add(operatorString);
-                
-            }
-        }
-
-        private void populate_Operator_Info()
-        {
-
-            string operatorID = "";
-            string temp = this.operator_ListBox.SelectedItem.ToString().Trim();
-
-            for (int i = 0; temp[i] != '\t'; i++)
-            {
-                operatorID += temp[i];
-            }
-
-            var objects = JArray.Parse(API.retrieveOneOperator(operatorID));
-            foreach (JObject root in objects)
-            {
-
-                this.operator_ID_Label.Text = root.GetValue("Operator_ID").ToString().Trim();
-                this.first_Name_Label.Text = root.GetValue("First_Name").ToString().Trim();
-                this.last_Name_Label.Text = root.GetValue("Last_Name").ToString().Trim();
-                this.position_Label.Text = root.GetValue("Position").ToString().Trim();
-                this.language_Label.Text = root.GetValue("Language").ToString().Trim();
-                this.email_Label.Text = root.GetValue("Email").ToString().Trim();
-                this.phone_Number_Label.Text = root.GetValue("Phone_Number").ToString().Trim();
-                
-            }
-        }
-
         private void delete_Button_Click(object sender, EventArgs e)
         {
             API.deleteOperator(Convert.ToInt16(this.operator_ID_Label.Text));
@@ -360,6 +341,5 @@ namespace Farm_Tracker
 
             return;
         }
-
     }
 }

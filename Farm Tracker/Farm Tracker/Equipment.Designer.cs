@@ -95,7 +95,6 @@
             this.equipment_PictureBox.Size = new System.Drawing.Size(286, 244);
             this.equipment_PictureBox.TabIndex = 1;
             this.equipment_PictureBox.TabStop = false;
-            this.equipment_PictureBox.Click += new System.EventHandler(this.equipment_PictureBox_Click);
             // 
             // label1
             // 
@@ -558,7 +557,6 @@
             this.Controls.Add(this.label10);
             this.Name = "Equipment";
             this.Text = "Equipment";
-            this.Load += new System.EventHandler(this.Equipment_Load);
             ((System.ComponentModel.ISupportInitialize)(this.equipment_PictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

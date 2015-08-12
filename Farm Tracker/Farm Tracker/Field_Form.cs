@@ -22,7 +22,7 @@ namespace Farm_Tracker
         private void new_Field_Button_Click(object sender, EventArgs e)
         {
 
-            map_WebBrowser.Document.InvokeScript("showMessage");
+            //map_WebBrowser.Document.InvokeScript("showMessage");
 
         }
 
@@ -30,14 +30,24 @@ namespace Farm_Tracker
         {
             try
             {
-            
-                map_WebBrowser.DocumentStream = new FileStream("../../HTMLPage1.html", FileMode.Open, FileAccess.Read); 
+                
+                map_WebBrowser.DocumentStream = new FileStream("../../HTMLPage2.html", FileMode.Open, FileAccess.Read); 
                 
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString(), "Error");
             }
+        }
+
+        private void map_WebKitBrowser_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void map_WebBrowser_DocumentCompleted_1(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+
         }
     }
 }

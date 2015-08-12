@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.map_WebBrowser = new System.Windows.Forms.WebBrowser();
             this.label1 = new System.Windows.Forms.Label();
             this.field_ID_Label = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,6 +50,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.notes_RichTextBox = new System.Windows.Forms.RichTextBox();
             this.new_Field_Button = new System.Windows.Forms.Button();
+            this.map_WebBrowser = new System.Windows.Forms.WebBrowser();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,17 +61,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(734, 630);
             this.panel1.TabIndex = 0;
-            // 
-            // map_WebBrowser
-            // 
-            this.map_WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.map_WebBrowser.Location = new System.Drawing.Point(0, 0);
-            this.map_WebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.map_WebBrowser.Name = "map_WebBrowser";
-            this.map_WebBrowser.ScrollBarsEnabled = false;
-            this.map_WebBrowser.Size = new System.Drawing.Size(734, 630);
-            this.map_WebBrowser.TabIndex = 0;
-            this.map_WebBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.map_WebBrowser_DocumentCompleted);
             // 
             // label1
             // 
@@ -258,6 +247,16 @@
             this.new_Field_Button.UseVisualStyleBackColor = true;
             this.new_Field_Button.Click += new System.EventHandler(this.new_Field_Button_Click);
             // 
+            // map_WebBrowser
+            // 
+            this.map_WebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.map_WebBrowser.Location = new System.Drawing.Point(0, 0);
+            this.map_WebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.map_WebBrowser.Name = "map_WebBrowser";
+            this.map_WebBrowser.Size = new System.Drawing.Size(734, 630);
+            this.map_WebBrowser.TabIndex = 0;
+            this.map_WebBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.map_WebBrowser_DocumentCompleted_1);
+            // 
             // Field_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -286,7 +285,7 @@
             this.Controls.Add(this.field_Name_Label);
             this.Controls.Add(this.legal_Land_Description_Label);
             this.Name = "Field_Form";
-            this.Text = "Field_Form";
+            this.Text = " ";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -296,7 +295,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.WebBrowser map_WebBrowser;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -318,5 +316,6 @@
         public System.Windows.Forms.Label status_Label;
         public System.Windows.Forms.ComboBox comboBox1;
         public System.Windows.Forms.RichTextBox notes_RichTextBox;
+        private System.Windows.Forms.WebBrowser map_WebBrowser;
     }
 }

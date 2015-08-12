@@ -61,57 +61,6 @@ namespace Farm_Tracker
             return cipherText;
         }
 
-        public static void queryExecute(string insertString, string queryMessage, string successMessage, string failMessage)
-        {
-
-            using (SqlConnection myconnection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
-            {
-
-                myconnection.Open();
-
-                SqlCommand mycommand = myconnection.CreateCommand();
-                SqlTransaction mytransaction;
-
-                mytransaction = myconnection.BeginTransaction(queryMessage);
-
-                mycommand.Connection = myconnection;
-                mycommand.Transaction = mytransaction;
-
-                try
-                {
-                    mycommand.CommandText = insertString;
-                    mycommand.ExecuteNonQuery();
-
-                    // Attempt to commit the transaction. 
-                    mytransaction.Commit();
-                    MessageBox.Show(successMessage);
-                    myconnection.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(failMessage);
-                    Console.WriteLine("Commit Exception Type: {0}", ex.GetType());
-                    Console.WriteLine("  Message: {0}", ex.Message);
-
-                    // Attempt to roll back the transaction.  
-                    try
-                    {
-                        mytransaction.Rollback();
-                    }
-                    catch (Exception ex2)
-                    {
-                        // This catch block will handle any errors that may have occurred  
-                        // on the server that would cause the rollback to fail, such as  
-                        // a closed connection. 
-                        Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
-                        Console.WriteLine("  Message: {0}", ex2.Message);
-                    }
-                }
-            }
-
-            return;
-        }
-
         public static byte[] ImageToByteArray(Image img, PictureBox picture)
         {
             System.IO.MemoryStream ms = new System.IO.MemoryStream();

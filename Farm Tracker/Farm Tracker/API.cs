@@ -72,15 +72,15 @@ namespace Farm_Tracker
             string querySuccess = "Operator has been created.";
             string queryFail = "There was a problem, the operator was not created.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public static string retrieveOperator()
+        public static string retrieveAllOperators()
         {
             String queryString = "select * from Operators ";
             string results = queryRetrieve(queryString);
             return results;
         }
-        public static string retrieveOneOperator(string ID)
+        public static string retrieveOperator(string ID)
         {
             String queryString = "select * from Operators where Operators.Operator_ID = " + ID;
             string results = queryRetrieve(queryString);
@@ -156,7 +156,7 @@ namespace Farm_Tracker
             string querySuccess = "Operator has been updated.";
             string queryFail = "There was a problem, the operator was not updated.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
 
         }
         public static void deleteOperator(int ID)
@@ -266,14 +266,20 @@ namespace Farm_Tracker
             string querySuccess = "Operator has been created.";
             string queryFail = "There was a problem, the operator was not created.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public static string retrieveEquipment()
+        public static string retrieveAllEquipment()
         {
             String queryString = "select * from Equipment ";
 
             string results = queryRetrieve(queryString);
-            MessageBox.Show(results);
+            return results;
+        }
+        public static string retrieveEquipment(string ID)
+        {
+            String queryString = "select * from Equipment where Equipment_ID = " + ID;
+
+            string results = queryRetrieve(queryString);
             return results;
         }
         public static void updateEquipment(farmEquipment equipmentToUpdate)
@@ -401,7 +407,7 @@ namespace Farm_Tracker
             string querySuccess = "Equipment has been updated.";
             string queryFail = "There was a problem, the equipment was not updated.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
         public static void deleteEquipment(int ID)
         {
@@ -440,7 +446,7 @@ namespace Farm_Tracker
                 notes = null;
             }
         }
-        public void createField(farmField newField)
+        public static void createField(farmField newField)
         {
             string queryString = "";
             string queryString1 = "insert into Fields (";
@@ -474,17 +480,16 @@ namespace Farm_Tracker
             string querySuccess = "Field has been created.";
             string queryFail = "There was a problem, the field was not created.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public string retreiveField()
+        public static string retreiveAllFields()
         {
             String queryString = "select * from Field ";
 
             string results = queryRetrieve(queryString);
-            MessageBox.Show(results);
             return results;
         }
-        public void updateField(farmField fieldToUpdate)
+        public static void updateField(farmField fieldToUpdate)
         {
             int count = 0;
 
@@ -564,9 +569,9 @@ namespace Farm_Tracker
             string querySuccess = "Field has been updated.";
             string queryFail = "There was a problem, the field was not updated.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public void deleteField(int ID)
+        public static void deleteField(int ID)
         {
             string queryString = "delete from Fields where Fields.Field_ID = '" + ID.ToString() + "'";
 
@@ -597,7 +602,7 @@ namespace Farm_Tracker
                 notes = null;
             }
         }
-        public void createCrop(farmCrop newCrop)
+        public static void createCrop(farmCrop newCrop)
         {
             string queryString = "";
             string queryString1 = "insert into Crops (";
@@ -625,17 +630,23 @@ namespace Farm_Tracker
             string querySuccess = "Crop has been created.";
             string queryFail = "There was a problem, the crop was not created.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public string retrieveCrop()
+        public static string retrieveAllCrops()
         {
             String queryString = "select * from Crop ";
 
             string results = queryRetrieve(queryString);
-            MessageBox.Show(results);
             return results;
         }
-        public void updateCrop(farmCrop cropToUpdate)
+        public static string retrieveOneCrop(string ID)
+        {
+            String queryString = "select * from Crop where Crop.Crop_ID = '" + ID + "'";
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static void updateCrop(farmCrop cropToUpdate)
         {
             int count = 0;
 
@@ -688,9 +699,9 @@ namespace Farm_Tracker
             string querySuccess = "Crop has been updated.";
             string queryFail = "There was a problem, the crop was not updated.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public void deleteCrop(int ID)
+        public static void deleteCrop(int ID)
         {
             string queryString = "delete from Crops where Crops.Crop_ID = '" + ID.ToString() + "'";
 
@@ -719,7 +730,7 @@ namespace Farm_Tracker
                 notes = null;
             }
         }
-        public void createChemical(farmChemical newChemical)
+        public static void createChemical(farmChemical newChemical)
         {
             string queryString = "";
             string queryString1 = "insert into Chemicals (";
@@ -745,17 +756,23 @@ namespace Farm_Tracker
             string querySuccess = "Chemical has been created.";
             string queryFail = "There was a problem, the chemical was not created.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public string retrieveChemical()
+        public static string retrieveAllChemicals()
         {
             String queryString = "select * from Chemical ";
 
             string results = queryRetrieve(queryString);
-            MessageBox.Show(results);
             return results;
         }
-        public void updateChemical(farmChemical chemicalToUpdate)
+        public static string retrieveOneChemical(string ID)
+        {
+            String queryString = "select * from Chemical where Chemical.Chemical_ID = '" + ID + "'";
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static void updateChemical(farmChemical chemicalToUpdate)
         {
             int count = 0;
 
@@ -800,9 +817,9 @@ namespace Farm_Tracker
             string querySuccess = "Chemical has been updated.";
             string queryFail = "There was a problem, the chemical was not updated.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public void deleteChemical(int ID)
+        public static void deleteChemical(int ID)
         {
             string queryString = "delete from Chemicals where Chemicals.Chemical_ID = '" + ID.ToString() + "'";
 
@@ -867,7 +884,7 @@ namespace Farm_Tracker
             planned = null;
             }
         }
-        public void createFarmEvent(farmEvent newEvent)
+        public static void createFarmEvent(farmEvent newEvent)
         {
             string queryString = "";
             string queryString1 = "insert into Farming_Events (";
@@ -980,17 +997,16 @@ namespace Farm_Tracker
             string querySuccess = "Farming event has been created.";
             string queryFail = "There was a problem, the farming event was not created.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public string retrieveFarmEvent()
+        public static string retrieveAllFarmEvents()
         {
             String queryString = "select * from Farming_Event ";
 
             string results = queryRetrieve(queryString);
-            MessageBox.Show(results);
             return results;
         }
-        public void updateFarmEvent(farmEvent eventToUpdate)
+        public static void updateFarmEvent(farmEvent eventToUpdate)
         {
             int count = 0;
 
@@ -1200,9 +1216,9 @@ namespace Farm_Tracker
             string querySuccess = "Event has been updated.";
             string queryFail = "There was a problem, the event was not updated.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public void deleteFarmEvent(int ID)
+        public static void deleteFarmEvent(int ID)
         {
             string queryString = "delete from Farming_Events where Farming_Events.Farming_Event_ID = '" + ID.ToString() + "'";
 
@@ -1237,7 +1253,7 @@ namespace Farm_Tracker
                 dateRepaired = null;
             }
         }
-        public void createBreakdown(farmBreakdowns newBreakdown)
+        public static void createBreakdown(farmBreakdowns newBreakdown)
         {
             string queryString = "";
             string queryString1 = "insert into Breakdowns (";
@@ -1274,17 +1290,23 @@ namespace Farm_Tracker
             string querySuccess = "Breakdown has been created.";
             string queryFail = "There was a problem, the breakdown was not created.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public string retrieveBreakdown()
+        public static string retrieveAllBreakdowns()
         {
             String queryString = "select * from Breakdowns ";
 
             string results = queryRetrieve(queryString);
-            MessageBox.Show(results);
             return results;
         }
-        public void updateBreakdown(farmBreakdowns breakdownToUpdate)
+        public static string retrieveOneEquipmentBreakdowns(string ID)
+        {
+            String queryString = "select * from Breakdowns where Equipment_ID = " + ID;
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static void updateBreakdown(farmBreakdowns breakdownToUpdate)
         {
             int count = 0;
 
@@ -1356,9 +1378,9 @@ namespace Farm_Tracker
             string querySuccess = "breakdown has been updated.";
             string queryFail = "There was a problem, the breakdown was not updated.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public void deleteBreakdown(int ID)
+        public static void deleteBreakdown(int ID)
         {
             string queryString = "delete from Breakdowns where Breakdowns.Breakdown_ID = '" + ID.ToString() + "'";
 
@@ -1391,7 +1413,7 @@ namespace Farm_Tracker
                  dateOfEmergence = null;
              }
         }
-        public void createHistory(farmHistory newHistory)
+        public static void createHistory(farmHistory newHistory)
         {
             string queryString = "";
             string queryString1 = "insert into History (";
@@ -1421,17 +1443,16 @@ namespace Farm_Tracker
             string querySuccess = "History has been created.";
             string queryFail = "There was a problem, the history was not created.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public string retrieveHistory()
+        public static string retrieveAllHistory()
         {
             String queryString = "select * from History ";
 
             string results = queryRetrieve(queryString);
-            MessageBox.Show(results);
             return results;
         }
-        public void updateHistory(farmHistory historyToUpdate)
+        public static void updateHistory(farmHistory historyToUpdate)
         {
             int count = 0;
 
@@ -1494,9 +1515,9 @@ namespace Farm_Tracker
             string querySuccess = "History has been updated.";
             string queryFail = "There was a problem, the history was not updated.";
 
-            Utility_Functions.queryExecute(queryString, queryMessage, querySuccess, queryFail);
+            queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public void deleteHistory(int ID)
+        public static void deleteHistory(int ID)
         {
             string queryString = "delete from History where History.History_ID = '" + ID.ToString() + "'";
 
@@ -1508,7 +1529,7 @@ namespace Farm_Tracker
         }
         //RAIN GUAGE
 
-        public static string queryRetrieve(string queryString)
+        private static string queryRetrieve(string queryString)
         {
             DataTable dt = new DataTable();
             List<object> searchItems = new List<object>();
@@ -1537,9 +1558,10 @@ namespace Farm_Tracker
             }
             return results;
         }
-
-        public static void queryExecute(string insertString, string queryMessage, string successMessage, string failMessage)
+        private static void queryExecute(string insertString, string queryMessage, string successMessage, string failMessage)
         {
+
+            MessageBox.Show("In queryExecute... - " + insertString);
 
             using (SqlConnection myconnection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
             {
@@ -1587,8 +1609,7 @@ namespace Farm_Tracker
             }
             return;
         }
-
-        public static void executeDelete(string queryString, string message, string success, string fail)
+        private static void executeDelete(string queryString, string message, string success, string fail)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to permanently remove this from the database?", message, MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
