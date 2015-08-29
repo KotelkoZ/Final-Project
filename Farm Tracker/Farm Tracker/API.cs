@@ -64,7 +64,7 @@ namespace Farm_Tracker
             }
 
             queryString1 += "Operators.Password)";
-            queryString2 += "'" + newOperator.password + "')";
+            queryString2 += "'" + Utility_Functions.Encrypt(newOperator.password) + "')";
 
             queryString = queryString1 + queryString2;
 
@@ -76,13 +76,25 @@ namespace Farm_Tracker
         }
         public static string retrieveAllOperators()
         {
-            String queryString = "select * from Operators ";
+            string queryString = "select * from Operators ";
             string results = queryRetrieve(queryString);
             return results;
         }
-        public static string retrieveOperator(string ID)
+        public static string retrieveOneOperator(string ID)
         {
-            String queryString = "select * from Operators where Operators.Operator_ID = " + ID;
+            string queryString = "select * from Operators where Operators.Operator_ID = " + ID;
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static string retrieveAllOperatorEmails()
+        {
+            string queryString = "select Email from Operators";
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static string retrieveAllOfOnePostionsEmails(string postion)
+        {
+            string queryString = "select Email from Operators where Operators.Position = '" + postion + "'";
             string results = queryRetrieve(queryString);
             return results;
         }
@@ -147,7 +159,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Operators.Password = '" + operatorToUpdate.password + "'";
+                queryString += "Operators.Password = '" + Utility_Functions.Encrypt(operatorToUpdate.password) + "'";
             }
 
             queryString += " Where Operators.Operator_ID = " + operatorToUpdate.ID; 
@@ -270,14 +282,14 @@ namespace Farm_Tracker
         }
         public static string retrieveAllEquipment()
         {
-            String queryString = "select * from Equipment ";
+            string queryString = "select * from Equipment ";
 
             string results = queryRetrieve(queryString);
             return results;
         }
-        public static string retrieveEquipment(string ID)
+        public static string retrieveOneEquipment(string ID)
         {
-            String queryString = "select * from Equipment where Equipment_ID = " + ID;
+            string queryString = "select * from Equipment where Equipment_ID = " + ID;
 
             string results = queryRetrieve(queryString);
             return results;
@@ -482,9 +494,9 @@ namespace Farm_Tracker
 
             queryExecute(queryString, queryMessage, querySuccess, queryFail);
         }
-        public static string retreiveAllFields()
+        public static string retrieveAllFields()
         {
-            String queryString = "select * from Field ";
+            string queryString = "select * from Fields ";
 
             string results = queryRetrieve(queryString);
             return results;
@@ -498,7 +510,7 @@ namespace Farm_Tracker
             if (fieldToUpdate.field_Name != null)
             {
                 count++;
-                queryString += "Equipment.Field_Name = '" + fieldToUpdate.field_Name + "'";
+                queryString += "Fields.Field_Name = '" + fieldToUpdate.field_Name + "'";
             }
             if (fieldToUpdate.latitude != null)
             {
@@ -506,7 +518,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += " Equipment.Latitude = '" + fieldToUpdate.latitude + "'";
+                queryString += " Fields.Latitude = '" + fieldToUpdate.latitude + "'";
                 count++;
             }
             if (fieldToUpdate.longitude != null)
@@ -515,7 +527,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Equipment.Longitude = '" + fieldToUpdate.longitude + "'";
+                queryString += "Fields.Longitude = '" + fieldToUpdate.longitude + "'";
                 count++;
             }
             if (fieldToUpdate.acres != null)
@@ -524,7 +536,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Equipment.Acres = '" + fieldToUpdate.acres + "'";
+                queryString += "Fields.Acres = '" + fieldToUpdate.acres + "'";
                 count++;
             }
             if (fieldToUpdate.legalLandDescription != null)
@@ -533,7 +545,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Equipment.Legal_Land_Description = '" + fieldToUpdate.legalLandDescription + "'";
+                queryString += "Fields.Legal_Land_Description = '" + fieldToUpdate.legalLandDescription + "'";
                 count++;
             }
             if (fieldToUpdate.fieldPerimeterCoordinates != null)
@@ -542,7 +554,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Equipment.Field_Perimeter_Coordinates = '" + fieldToUpdate.fieldPerimeterCoordinates + "'";
+                queryString += "Fields.Field_Perimeter_Coordinates = '" + fieldToUpdate.fieldPerimeterCoordinates + "'";
                 count++;
             }
             if (fieldToUpdate.owned != null)
@@ -551,7 +563,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Equipment.Owned = '" + fieldToUpdate.owned + "'";
+                queryString += "Fields.Owned = '" + fieldToUpdate.owned + "'";
                 count++;
             }
             if (fieldToUpdate.notes != null)
@@ -560,10 +572,10 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Equipment.Notes = '" + fieldToUpdate.notes + "'";
+                queryString += "Fields.Notes = '" + fieldToUpdate.notes + "'";
             }
 
-            queryString += " Where Equipment.Field_ID = " + fieldToUpdate.ID;
+            queryString += " Where Fields.Field_ID = " + fieldToUpdate.ID;
 
             string queryMessage = "Update field";
             string querySuccess = "Field has been updated.";
@@ -634,14 +646,14 @@ namespace Farm_Tracker
         }
         public static string retrieveAllCrops()
         {
-            String queryString = "select * from Crop ";
+            string queryString = "select * from Crops ";
 
             string results = queryRetrieve(queryString);
             return results;
         }
         public static string retrieveOneCrop(string ID)
         {
-            String queryString = "select * from Crop where Crop.Crop_ID = '" + ID + "'";
+            string queryString = "select * from Crops where Crops.Crop_ID = '" + ID + "'";
 
             string results = queryRetrieve(queryString);
             return results;
@@ -655,7 +667,7 @@ namespace Farm_Tracker
             if (cropToUpdate.cropName != null)
             {
                 count++;
-                queryString += "Crop.crop_Name = '" + cropToUpdate.cropName + "'";
+                queryString += "Crops.Crop_Name = '" + cropToUpdate.cropName + "'";
             }
             if (cropToUpdate.species != null)
             {
@@ -663,7 +675,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += " Crop.species = '" + cropToUpdate.species + "'";
+                queryString += " Crops.Species = '" + cropToUpdate.species + "'";
                 count++;
             }
             if (cropToUpdate.variety != null)
@@ -672,7 +684,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Crop.variety = '" + cropToUpdate.variety + "'";
+                queryString += "Crops.Variety = '" + cropToUpdate.variety + "'";
                 count++;
             }
             if (cropToUpdate.brand != null)
@@ -681,7 +693,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Crop.brand = '" + cropToUpdate.brand + "'";
+                queryString += "Crops.Brand = '" + cropToUpdate.brand + "'";
                 count++;
             }
             if (cropToUpdate.notes != null)
@@ -690,10 +702,10 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Crop.brand = '" + cropToUpdate.brand + "'";
+                queryString += "Crops.Notes = '" + cropToUpdate.notes + "'";
             }
            
-            queryString += " Where Crop.Crop_ID = " + cropToUpdate.ID;
+            queryString += " Where Crops.Crop_ID = " + cropToUpdate.ID;
 
             string queryMessage = "Update crop";
             string querySuccess = "Crop has been updated.";
@@ -737,10 +749,10 @@ namespace Farm_Tracker
             string queryString2 = " values (";
             queryString1 += "Chemicals.Chemical_Name, ";
             queryString2 += "'" + newChemical.chemicalName + "',";
-            queryString1 += "Chemicals.chemicalType, ";
+            queryString1 += "Chemicals.Chemical_Type, ";
             queryString2 += "'" + newChemical.chemicalType + "',";
-            queryString1 += "Chemicals.brand, ";
-            queryString2 += "'" + newChemical.brand + "',";
+            queryString1 += "Chemicals.Brand";
+            queryString2 += "'" + newChemical.brand + "'";
 
             if (newChemical.notes != null)
             {
@@ -749,6 +761,7 @@ namespace Farm_Tracker
             }
 
             queryString1 += ")";
+            queryString2 += ")";
 
             queryString = queryString1 + queryString2;
 
@@ -760,14 +773,14 @@ namespace Farm_Tracker
         }
         public static string retrieveAllChemicals()
         {
-            String queryString = "select * from Chemical ";
+            string queryString = "select * from Chemicals";
 
             string results = queryRetrieve(queryString);
             return results;
         }
         public static string retrieveOneChemical(string ID)
         {
-            String queryString = "select * from Chemical where Chemical.Chemical_ID = '" + ID + "'";
+            string queryString = "select * from Chemicals where Chemicals.Chemical_ID = '" + ID + "'";
 
             string results = queryRetrieve(queryString);
             return results;
@@ -776,12 +789,12 @@ namespace Farm_Tracker
         {
             int count = 0;
 
-            string queryString = "update chemicals set ";
+            string queryString = "update Chemicals set ";
 
             if (chemicalToUpdate.chemicalName != null)
             {
                 count++;
-                queryString += "Chemical.chemical_Name = '" + chemicalToUpdate.chemicalName + "'";
+                queryString += "Chemicals.Chemical_Name = '" + chemicalToUpdate.chemicalName + "'";
             }
             if (chemicalToUpdate.chemicalType != null)
             {
@@ -789,7 +802,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += " Chemical.chemicalType = '" + chemicalToUpdate.chemicalType + "'";
+                queryString += " Chemicals.Chemical_Type = '" + chemicalToUpdate.chemicalType + "'";
                 count++;
             }
             if (chemicalToUpdate.brand != null)
@@ -798,7 +811,7 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Chemical.brand = '" + chemicalToUpdate.brand + "'";
+                queryString += "Chemicals.Brand = '" + chemicalToUpdate.brand + "'";
                 count++;
             }
             if (chemicalToUpdate.notes != null)
@@ -807,11 +820,11 @@ namespace Farm_Tracker
                 {
                     queryString += ",";
                 }
-                queryString += "Chemical.notes = '" + chemicalToUpdate.notes + "'";
+                queryString += "Chemicals.Notes = '" + chemicalToUpdate.notes + "'";
                 count++;
             }
            
-            queryString += " Where Chemical.chemical_ID = " + chemicalToUpdate.ID;
+            queryString += " Where Chemicals.Chemical_ID = " + chemicalToUpdate.ID;
 
             string queryMessage = "Update chemical";
             string querySuccess = "Chemical has been updated.";
@@ -1001,7 +1014,7 @@ namespace Farm_Tracker
         }
         public static string retrieveAllFarmEvents()
         {
-            String queryString = "select * from Farming_Event ";
+            string queryString = "select * from Farming_Events ";
 
             string results = queryRetrieve(queryString);
             return results;
@@ -1258,13 +1271,12 @@ namespace Farm_Tracker
             string queryString = "";
             string queryString1 = "insert into Breakdowns (";
             string queryString2 = " values (";
-            queryString1 += "Breakdowns.Breakdown_ID, ";
-            queryString2 += "'" + newBreakdown.ID + "',";
+
             queryString1 += "Breakdowns.Equipment_ID, ";
             queryString2 += "'" + newBreakdown.equipmentID + "',";
             queryString1 += "Breakdowns.Operator_ID, ";
             queryString2 += "'" + newBreakdown.operatorID + "',";
-            queryString1 += "Breakdowns.Date ";
+            queryString1 += "Breakdowns.Date ,";
             queryString2 += "'" + newBreakdown.date + "',";
             queryString1 += "Breakdowns.Description ";
             queryString2 += "'" + newBreakdown.description + "'";
@@ -1283,7 +1295,8 @@ namespace Farm_Tracker
                 queryString1 += ", Breakdowns.Date_Repaired";
                 queryString2 += ",'" + newBreakdown.dateRepaired + "'";
             }
-
+            queryString1 += ")";
+            queryString2 += ")";
             queryString = queryString1 + queryString2;
 
             string queryMessage = "Create breakdown";
@@ -1294,14 +1307,35 @@ namespace Farm_Tracker
         }
         public static string retrieveAllBreakdowns()
         {
-            String queryString = "select * from Breakdowns ";
+            string queryString = "select * from Breakdowns ";
 
             string results = queryRetrieve(queryString);
             return results;
         }
         public static string retrieveOneEquipmentBreakdowns(string ID)
         {
-            String queryString = "select * from Breakdowns where Equipment_ID = " + ID;
+            string queryString = "select * from Breakdowns inner join Equipment on Breakdowns.Equipment_ID=Equipment.Equipment_ID where Breakdowns.Equipment_ID = " + ID;
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static string retrieveOneBreakdown(string ID)
+        {
+            string queryString = "select * from Breakdowns where Breakdown_ID = " + ID;
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static string retrieveActiveBreakdownsWithEquipment()
+        {
+            string queryString = "select * from Breakdowns inner join Equipment on Breakdowns.Equipment_ID=Equipment.Equipment_ID where Repaired = " + 0 + "order by date asc";
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static string retrieveBreakdownsWithEquipment()
+        {
+            string queryString = "select * from Breakdowns inner join Equipment on Breakdowns.Equipment_ID=Equipment.Equipment_ID;";
 
             string results = queryRetrieve(queryString);
             return results;
@@ -1447,7 +1481,7 @@ namespace Farm_Tracker
         }
         public static string retrieveAllHistory()
         {
-            String queryString = "select * from History ";
+            string queryString = "select * from History ";
 
             string results = queryRetrieve(queryString);
             return results;

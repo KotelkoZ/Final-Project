@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,13 +11,12 @@ using Newtonsoft.Json.Linq;
 
 namespace Farm_Tracker
 {
-    public partial class Equipment : Form
+    public partial class Equipment_UserControl : UserControl
     {
-
         bool updateEquipmentCheck = false;
         bool newEquipmentCheck = false;
 
-        public Equipment()
+        public Equipment_UserControl()
         {
             InitializeComponent();
 
@@ -46,24 +45,24 @@ namespace Farm_Tracker
         }
         private void set_Main_Button_Visibility(bool value)
         {
-            this.update_Equipment_Button.Visible = value;
-            this.new_Equipment_Button.Visible = value;
+            this.update_Button.Visible = value;
+            this.new_Button.Visible = value;
 
             return;
         }
-        private void set_Text_Visibility(bool value)
+        private void set_Text_Enabled(bool value)
         {
-            this.equipment_Type_TextBox.Visible = value;
-            this.year_TextBox.Visible = value;
-            this.brand_TextBox.Visible = value;
-            this.serial_Number_Textbox.Visible = value;
-            this.model_Number_TextBox.Visible = value;
-            this.hours_TextBox.Visible = value;
-            this.horsepower_TextBox.Visible = value;
-            this.number_Of_Tanks_TextBox.Visible = value;
-            this.tank_Size_TextBox.Visible = value;
-            this.width_TextBox.Visible = value;
-            this.shank_Spacing_TextBox.Visible = value;
+            this.equipment_Type_TextBox.Enabled = value;
+            this.year_TextBox.Enabled = value;
+            this.brand_TextBox.Enabled = value;
+            this.serial_Number_Textbox.Enabled = value;
+            this.model_Number_TextBox.Enabled = value;
+            this.hours_TextBox.Enabled = value;
+            this.horsepower_TextBox.Enabled = value;
+            this.number_Of_Tanks_TextBox.Enabled = value;
+            this.tank_Size_TextBox.Enabled = value;
+            this.width_TextBox.Enabled = value;
+            this.shank_Spacing_TextBox.Enabled = value;
 
             return;
         }
@@ -72,22 +71,6 @@ namespace Farm_Tracker
             this.save_Button.Visible = value;
             this.cancel_Button.Visible = value;
             this.add_Image_Button.Visible = value;
-
-            return;
-        }
-        private void set_Label_Visibility(bool value)
-        {
-            this.equipment_Type_Label.Visible = value;
-            this.year_Label.Visible = value;
-            this.brand_Label.Visible = value;
-            this.serial_Number_Label.Visible = value;
-            this.model_Number_Label.Visible = value;
-            this.hours_Label.Visible = value;
-            this.horsepower_Label.Visible = value;
-            this.number_Of_Tanks_Label.Visible = value;
-            this.tank_Size_Label.Visible = value;
-            this.width_Label.Visible = value;
-            this.shank_Spacing_Label.Visible = value;
 
             return;
         }
@@ -100,11 +83,11 @@ namespace Farm_Tracker
             {
                 StringBuilder equipmentString = new StringBuilder();
 
-                equipmentString.Append(root.GetValue("Equipment_ID"));
-                equipmentString.Append("\t");
-                equipmentString.Append(root.GetValue("Equipment_Type"));
-                equipmentString.Append(" ");
-                equipmentString.Append(root.GetValue("Brand"));
+                equipmentString.Append(root.GetValue("Equipment_ID").ToString().Trim());
+                equipmentString.Append(" - ");
+                equipmentString.Append(root.GetValue("Model_Number").ToString().Trim());
+                equipmentString.Append(" - ");
+                equipmentString.Append(root.GetValue("Brand").ToString().Trim());
 
                 this.equipment_ListBox.Items.Add(equipmentString);
             }
@@ -118,11 +101,11 @@ namespace Farm_Tracker
             {
                 if ((bool)root.GetValue("Repaired"))
                 {
-                    this.repairs_ListBox.Items.Add(Convert.ToDateTime(root.GetValue("Date").ToString().Trim()).ToShortDateString() + "\tFixed");
+                    this.repairs_ListBox.Items.Add(Convert.ToDateTime(root.GetValue("Date").ToString().Trim()).ToShortDateString() + " - Fixed");
                 }
                 else
                 {
-                    this.repairs_ListBox.Items.Add(Convert.ToDateTime(root.GetValue("Date").ToString().Trim()).ToShortDateString() + "\tBroken");
+                    this.repairs_ListBox.Items.Add(Convert.ToDateTime(root.GetValue("Date").ToString().Trim()).ToShortDateString() + " - Not Fixed");
                 }
             }
         }
@@ -136,28 +119,25 @@ namespace Farm_Tracker
             string operatorID = "";
             string temp = this.equipment_ListBox.SelectedItem.ToString().Trim();
 
-            for (int i = 0; temp[i] != '\t'; i++)
-            {
-                operatorID += temp[i];
-            }
+            operatorID += temp.Split('-')[0].Trim();
 
-            var objects = JArray.Parse(API.retrieveEquipment(operatorID));
+            var objects = JArray.Parse(API.retrieveOneEquipment(operatorID));
             foreach (JObject root in objects)
             {
                 StringBuilder equipmentString = new StringBuilder();
 
                 this.equipment_ID_Label.Text = root.GetValue("Equipment_ID").ToString().Trim();
-                this.equipment_Type_Label.Text = root.GetValue("Equipment_Type").ToString().Trim();
-                this.year_Label.Text = root.GetValue("Year").ToString().Trim();
-                this.brand_Label.Text = root.GetValue("Brand").ToString().Trim();
-                this.serial_Number_Label.Text = root.GetValue("Serial_Number").ToString().Trim();
-                this.model_Number_Label.Text = root.GetValue("Model_Number").ToString().Trim();
-                this.hours_Label.Text = root.GetValue("Hours").ToString().Trim();
-                this.horsepower_Label.Text = root.GetValue("Horsepower").ToString().Trim();
-                this.number_Of_Tanks_Label.Text = root.GetValue("Number_Of_Tanks").ToString().Trim();
-                this.tank_Size_Label.Text = root.GetValue("Tank_Size").ToString().Trim();
-                this.width_Label.Text = root.GetValue("Width").ToString().Trim();
-                this.shank_Spacing_Label.Text = root.GetValue("Shank_Spacing").ToString().Trim();
+                this.equipment_Type_TextBox.Text = root.GetValue("Equipment_Type").ToString().Trim();
+                this.year_TextBox.Text = root.GetValue("Year").ToString().Trim();
+                this.brand_TextBox.Text = root.GetValue("Brand").ToString().Trim();
+                this.serial_Number_Textbox.Text = root.GetValue("Serial_Number").ToString().Trim();
+                this.model_Number_TextBox.Text = root.GetValue("Model_Number").ToString().Trim();
+                this.hours_TextBox.Text = root.GetValue("Hours").ToString().Trim();
+                this.horsepower_TextBox.Text = root.GetValue("Horsepower").ToString().Trim();
+                this.number_Of_Tanks_TextBox.Text = root.GetValue("Number_Of_Tanks").ToString().Trim();
+                this.tank_Size_TextBox.Text = root.GetValue("Tank_Size").ToString().Trim();
+                this.width_TextBox.Text = root.GetValue("Width").ToString().Trim();
+                this.shank_Spacing_TextBox.Text = root.GetValue("Shank_Spacing").ToString().Trim();
 
                 //byte[] arr = (byte[])root.GetValue("Image");
 
@@ -174,35 +154,21 @@ namespace Farm_Tracker
         {
             updateEquipmentCheck = true;
 
-            set_Label_Visibility(false);
-            set_Text_Visibility(true);
+            set_Text_Enabled(true);
             set_Save_Cancel_Visibility(true);
             set_Main_Button_Visibility(false);
             this.delete_Button.Visible = true;
-
-            this.equipment_Type_TextBox.Text = this.equipment_Type_Label.Text;
-            this.year_TextBox.Text = this.year_Label.Text;
-            this.brand_TextBox.Text = this.brand_Label.Text;
-            this.serial_Number_Textbox.Text = this.serial_Number_Label.Text;
-            this.model_Number_TextBox.Text = this.model_Number_Label.Text;
-            this.hours_TextBox.Text = this.hours_Label.Text;
-            this.horsepower_TextBox.Text = this.horsepower_Label.Text;
-            this.number_Of_Tanks_TextBox.Text = this.number_Of_Tanks_Label.Text;
-            this.tank_Size_TextBox.Text = this.tank_Size_Label.Text;
-            this.width_TextBox.Text = this.width_Label.Text;
-            this.shank_Spacing_TextBox.Text = this.shank_Spacing_Label.Text;
 
             this.equipment_ListBox.Enabled = false;
 
             return;
         }
-        private void new_Equipment_Button_Click(object sender, EventArgs e)
+        private void new_Button_Click(object sender, EventArgs e)
         {
             newEquipmentCheck = true;
 
             clear_Text_Fields();
-            set_Label_Visibility(false);
-            set_Text_Visibility(true);
+            set_Text_Enabled(true);
             set_Save_Cancel_Visibility(true);
             set_Main_Button_Visibility(false);
 
@@ -218,8 +184,7 @@ namespace Farm_Tracker
             updateEquipmentCheck = false;
 
             clear_Text_Fields();
-            set_Label_Visibility(true);
-            set_Text_Visibility(false);
+            set_Text_Enabled(false);
             set_Save_Cancel_Visibility(false);
             set_Main_Button_Visibility(true);
             this.delete_Button.Visible = false;
@@ -240,12 +205,12 @@ namespace Farm_Tracker
         }
         private void save_Button_Click(object sender, EventArgs e)
         {
-                if (this.equipment_Type_TextBox.Text.Trim().Equals("") ||
-                    this.year_TextBox.Text.Trim().Equals("") ||
-                    this.brand_TextBox.Text.Trim().Equals("") ||
-                    this.serial_Number_Textbox.Text.Trim().Equals("") ||
-                    this.model_Number_TextBox.Text.Trim().Equals("") ||
-                    this.hours_TextBox.Text.Trim().Equals("")
+                if (equipment_Type_TextBox.Text.Trim().Equals("") ||
+                    year_TextBox.Text.Trim().Equals("") ||
+                    brand_TextBox.Text.Trim().Equals("") ||
+                    serial_Number_Textbox.Text.Trim().Equals("") ||
+                    model_Number_TextBox.Text.Trim().Equals("") ||
+                    hours_TextBox.Text.Trim().Equals("")
                     )
                 {
                     MessageBox.Show("Please enter the required information. (Equipment Type, Year, Brand, Serial Number, Model Number, Hours)");
@@ -254,56 +219,56 @@ namespace Farm_Tracker
 
                 API.farmEquipment equip = new API.farmEquipment();
 
-                if (this.equipment_Type_TextBox.Modified)
+                if (equipment_Type_TextBox.Modified)
                 {
-                    equip.equipmentType = this.equipment_Type_TextBox.Text.ToString().Trim();
+                    equip.equipmentType = equipment_Type_TextBox.Text.ToString().Trim();
                 }
-                if (this.year_TextBox.Modified)
+                if (year_TextBox.Modified)
                 {
-                    equip.year = Convert.ToInt16(this.year_TextBox.Text);
+                    equip.year = Convert.ToInt16(year_TextBox.Text);
                 }
-                if (this.brand_TextBox.Modified)
+                if (brand_TextBox.Modified)
                 {
-                    equip.brand = this.brand_TextBox.Text.ToString().Trim();
+                    equip.brand = brand_TextBox.Text.ToString().Trim();
                 }
-                if (this.serial_Number_Textbox.Modified)
+                if (serial_Number_Textbox.Modified)
                 {
-                    equip.serialNumber = this.serial_Number_Textbox.Text.ToString().Trim();
+                    equip.serialNumber = serial_Number_Textbox.Text.ToString().Trim();
                 }
-                if (this.model_Number_TextBox.Modified)
+                if (model_Number_TextBox.Modified)
                 {
-                    equip.modelNumber = this.model_Number_TextBox.Text.ToString().Trim();
+                    equip.modelNumber = model_Number_TextBox.Text.ToString().Trim();
                 }
-                if (this.hours_TextBox.Modified)
+                if (hours_TextBox.Modified)
                 {
-                    equip.hours = Convert.ToInt16(this.hours_TextBox.Text.ToString().Trim());
+                    equip.hours = Convert.ToInt16(hours_TextBox.Text.ToString().Trim());
                 }
-                if (this.horsepower_TextBox.Modified)
+                if (horsepower_TextBox.Modified)
                 {
-                    equip.horsepower = Convert.ToInt16(this.horsepower_TextBox.Text.ToString().Trim());
+                    equip.horsepower = Convert.ToInt16(horsepower_TextBox.Text.ToString().Trim());
                 }
-                if (this.number_Of_Tanks_TextBox.Modified)
+                if (number_Of_Tanks_TextBox.Modified)
                 {
-                    equip.numberOfTanks = Convert.ToInt16(this.number_Of_Tanks_TextBox.Text.ToString().Trim());
+                    equip.numberOfTanks = Convert.ToInt16(number_Of_Tanks_TextBox.Text.ToString().Trim());
                 }
-                if (this.tank_Size_TextBox.Modified)
+                if (tank_Size_TextBox.Modified)
                 {
-                    equip.tankSize = Convert.ToInt16(this.tank_Size_TextBox.Text.ToString().Trim());
+                    equip.tankSize = Convert.ToInt16(tank_Size_TextBox.Text.ToString().Trim());
                 }
-                if (this.width_TextBox.Modified)
+                if (width_TextBox.Modified)
                 {
-                    equip.width = Convert.ToInt16(this.width_TextBox.Text.ToString().Trim());
+                    equip.width = Convert.ToInt16(width_TextBox.Text.ToString().Trim());
                 }
-                if (this.shank_Spacing_TextBox.Modified)
+                if (shank_Spacing_TextBox.Modified)
                 {
-                    equip.shank_Spacing = Convert.ToInt16(this.shank_Spacing_TextBox.Text.ToString().Trim());
+                    equip.shank_Spacing = Convert.ToInt16(shank_Spacing_TextBox.Text.ToString().Trim());
                 }
                 //Image update
                 //updateEquipment.image = Utility_Functions.ImageToByteArray(this.equipment_PictureBox.Image, this.equipment_PictureBox);
 
             if (updateEquipmentCheck)
             {
-                equip.ID = Convert.ToInt16(this.equipment_ID_Label.Text.ToString().Trim());
+                equip.ID = Convert.ToInt16(equipment_ID_Label.Text.ToString().Trim());
                 API.updateEquipment(equip);
             }
             else if (newEquipmentCheck)
@@ -311,21 +276,20 @@ namespace Farm_Tracker
                 API.createEquipment(equip);
             }
 
-                set_Text_Visibility(false);
-                set_Label_Visibility(true);
+                set_Text_Enabled(false);
 
                 set_Save_Cancel_Visibility(false);
                 clear_Text_Fields();
                 set_Main_Button_Visibility(true);
                 delete_Button.Visible = false;
 
-                this.equipment_ListBox.Enabled = true;
+                equipment_ListBox.Enabled = true;
 
                 populate_Equipment_List();
 
-                if (this.equipment_ListBox.Items.Count != 0)
+                if (equipment_ListBox.Items.Count != 0)
                 {
-                    this.equipment_ListBox.SelectedIndex = 0;
+                    equipment_ListBox.SelectedIndex = 0;
                 }
 
                 populate_Equipment_Info();
@@ -342,14 +306,13 @@ namespace Farm_Tracker
 
             populate_Equipment_List();
 
-            set_Text_Visibility(false);
-            set_Label_Visibility(true);
+            set_Text_Enabled(false);
             set_Save_Cancel_Visibility(false);
-            this.delete_Button.Visible = false;
+            delete_Button.Visible = false;
             clear_Text_Fields();
             set_Main_Button_Visibility(true);
 
-            this.equipment_ListBox.Enabled = true;
+            equipment_ListBox.Enabled = true;
 
             newEquipmentCheck = false;
             updateEquipmentCheck = false;

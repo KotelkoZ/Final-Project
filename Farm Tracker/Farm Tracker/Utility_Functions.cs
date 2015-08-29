@@ -12,6 +12,9 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Net.Mail;
+using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace Farm_Tracker
 {
@@ -109,6 +112,57 @@ namespace Farm_Tracker
 
             return destImage;
         }
+        public static void createEmailMessage(string subjectString, string messageString, List<string> emails)
+        {
+            string server = "mail.highlandbeef.com";
+            
+            string to = "";
+            string from = "postmaster@highlandbeef.com";
 
+            for (int i = 0; i < emails.Count; i++)
+            {
+                to = emails[i].ToString().Trim();
+
+                MailMessage message = new MailMessage(from, to);
+                
+                message.Subject = subjectString;
+                message.Body = messageString;
+                SmtpClient client = new SmtpClient(server);
+                // Credentials are necessary if the server requires the client  
+                // to authenticate before it will send e-mail on the client's behalf.
+                client.Port = 2525;
+                client.Credentials = CredentialCache.DefaultNetworkCredentials;
+
+                try
+                {
+                    client.Send(message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Exception caught in createEmailMessage(): {0}",
+                          ex.ToString());
+                }
+            }
+        }
+        public static List<string> get_Email_List()
+        {
+            List<string> emails = new List<string>();
+            var objects = JArray.Parse(API.retrieveAllOperatorEmails());
+            foreach (JObject root in objects)
+            {
+                emails.Add(root.GetValue("Email").ToString().Trim());
+            }
+            return emails;
+        }        
+        public static List<string> get_Email_List(string postion)
+        {
+            List<string> emails = new List<string>();
+            var objects = JArray.Parse(API.retrieveAllOfOnePostionsEmails(postion));
+            foreach (JObject root in objects)
+            {
+                emails.Add(root.GetValue("Email").ToString().Trim());
+            }
+            return emails;
+        }        
     }
 }

@@ -57,34 +57,52 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API.cs" />
-    <Compile Include="Chemical_Form.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Chemical_UserControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Chemical_Form.Designer.cs">
-      <DependentUpon>Chemical_Form.cs</DependentUpon>
+    <Compile Include="Chemical_UserControl.Designer.cs">
+      <DependentUpon>Chemical_UserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Crop_Form.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Crop_UserControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Crop_Form.Designer.cs">
-      <DependentUpon>Crop_Form.cs</DependentUpon>
+    <Compile Include="Crop_UserControl.Designer.cs">
+      <DependentUpon>Crop_UserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Equipment.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Equipment_UserControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Equipment.Designer.cs">
-      <DependentUpon>Equipment.cs</DependentUpon>
+    <Compile Include="Equipment_UserControl.Designer.cs">
+      <DependentUpon>Equipment_UserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Farming_Event_UserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Farming_Event_UserControl.Designer.cs">
+      <DependentUpon>Farming_Event_UserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Farm_TrackerDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Farm_TrackerDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Field_Form.cs">
-      <SubType>Form</SubType>
+    <Compile Include="FE_Crop_Checking_UserControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Field_Form.Designer.cs">
-      <DependentUpon>Field_Form.cs</DependentUpon>
+    <Compile Include="FE_Crop_Checking_UserControl.Designer.cs">
+      <DependentUpon>FE_Crop_Checking_UserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FE_Spraying_UserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FE_Spraying_UserControl.Designer.cs">
+      <DependentUpon>FE_Spraying_UserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Field_UserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Field_UserControl.Designer.cs">
+      <DependentUpon>Field_UserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Login_Form.cs">
       <SubType>Form</SubType>
@@ -92,51 +110,63 @@
     <Compile Include="Login_Form.Designer.cs">
       <DependentUpon>Login_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="main_Menu.cs">
+    <Compile Include="MainApp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_Menu.Designer.cs">
-      <DependentUpon>main_Menu.cs</DependentUpon>
+    <Compile Include="MainApp.Designer.cs">
+      <DependentUpon>MainApp.cs</DependentUpon>
     </Compile>
-    <Compile Include="managementOverview.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Breakdown_UserControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="managementOverview.Designer.cs">
-      <DependentUpon>managementOverview.cs</DependentUpon>
+    <Compile Include="Breakdown_UserControl.Designer.cs">
+      <DependentUpon>Breakdown_UserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operators_UserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Operators_UserControl.Designer.cs">
+      <DependentUpon>Operators_UserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="testUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="testUserControl.Designer.cs">
+      <DependentUpon>testUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility_Functions.cs" />
-    <Compile Include="Operator_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Operator_Form.Designer.cs">
-      <DependentUpon>Operator_Form.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Global_Variables.cs" />
-    <EmbeddedResource Include="Chemical_Form.resx">
-      <DependentUpon>Chemical_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Chemical_UserControl.resx">
+      <DependentUpon>Chemical_UserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Crop_Form.resx">
-      <DependentUpon>Crop_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Crop_UserControl.resx">
+      <DependentUpon>Crop_UserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Equipment.resx">
-      <DependentUpon>Equipment.cs</DependentUpon>
+    <EmbeddedResource Include="Equipment_UserControl.resx">
+      <DependentUpon>Equipment_UserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Field_Form.resx">
-      <DependentUpon>Field_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Farming_Event_UserControl.resx">
+      <DependentUpon>Farming_Event_UserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FE_Crop_Checking_UserControl.resx">
+      <DependentUpon>FE_Crop_Checking_UserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FE_Spraying_UserControl.resx">
+      <DependentUpon>FE_Spraying_UserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Field_UserControl.resx">
+      <DependentUpon>Field_UserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login_Form.resx">
       <DependentUpon>Login_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="main_Menu.resx">
-      <DependentUpon>main_Menu.cs</DependentUpon>
+    <EmbeddedResource Include="MainApp.resx">
+      <DependentUpon>MainApp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="managementOverview.resx">
-      <DependentUpon>managementOverview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Operator_Form.resx">
-      <DependentUpon>Operator_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Operators_UserControl.resx">
+      <DependentUpon>Operators_UserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -147,6 +177,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Breakdown_UserControl.resx">
+      <DependentUpon>Breakdown_UserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="testUserControl.resx">
+      <DependentUpon>testUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Farm_TrackerDataSet.xsc">
       <DependentUpon>Farm_TrackerDataSet.xsd</DependentUpon>
     </None>

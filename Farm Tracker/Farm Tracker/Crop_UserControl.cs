@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 
 namespace Farm_Tracker
 {
-    public partial class Crop_Form : Form
+    public partial class Crop_UserControl : UserControl
     {
         private bool newCropCheck = false;
         private bool updateCropCheck = false;
 
-        public Crop_Form()
+        public Crop_UserControl()
         {
             InitializeComponent();
 
@@ -41,17 +40,17 @@ namespace Farm_Tracker
         }
         private void set_Main_Button_Visibility(bool value)
         {
-            this.update_Crop_Button.Visible = value;
-            this.new_Crop_Button.Visible = value;
+            this.update_Button.Visible = value;
+            this.new_Button.Visible = value;
 
             return;
         }
-        private void set_Text_Visibility(bool value)
+        private void set_Text_Enabled(bool value)
         {
-            this.crop_Name_TextBox.Visible = value;
-            this.species_TextBox.Visible = value;
-            this.variety_TextBox.Visible = value;
-            this.brand_TextBox.Visible = value;
+            this.crop_Name_TextBox.Enabled = value;
+            this.species_TextBox.Enabled = value;
+            this.variety_TextBox.Enabled = value;
+            this.brand_TextBox.Enabled = value;
             this.notes_RichTextBox.Enabled = value;
 
             return;
@@ -60,15 +59,6 @@ namespace Farm_Tracker
         {
             this.save_Button.Visible = value;
             this.cancel_Button.Visible = value;
-
-            return;
-        }
-        private void set_Label_Visibility(bool value)
-        {
-            this.crop_Name_Label.Visible = value;
-            this.species_Label.Visible = value;
-            this.variety_Label.Visible = value;
-            this.brand_Label.Visible = value;
 
             return;
         }
@@ -81,13 +71,11 @@ namespace Farm_Tracker
             {
                 StringBuilder cropString = new StringBuilder();
 
-                cropString.Append(root.GetValue("Crop_ID"));
-                cropString.Append("\t");
-                cropString.Append(root.GetValue("Crop_Name"));
-                cropString.Append("\t");
-                cropString.Append(root.GetValue("Chemical_Type"));
-                cropString.Append("\t");
-                cropString.Append(root.GetValue("Brand"));
+                cropString.Append(root.GetValue("Crop_ID").ToString().Trim());
+                cropString.Append(" - ");
+                cropString.Append(root.GetValue("Crop_Name").ToString().Trim());
+                cropString.Append(" - ");
+                cropString.Append(root.GetValue("Brand").ToString().Trim());
 
                 this.crop_ListBox.Items.Add(cropString);
             }
@@ -97,19 +85,16 @@ namespace Farm_Tracker
             string cropID = "";
             string temp = this.crop_ListBox.SelectedItem.ToString().Trim();
 
-            for (int i = 0; temp[i] != '\t'; i++)
-            {
-                cropID += temp[i];
-            }
-
+            cropID += temp.Split('-')[0].Trim();
+            
             var objects = JArray.Parse(API.retrieveOneCrop(cropID));
             foreach (JObject root in objects)
             {
                 this.crop_ID_Label.Text = root.GetValue("Crop_ID").ToString().Trim();
-                this.crop_Name_Label.Text = root.GetValue("Crop_Name").ToString().Trim();
-                this.species_Label.Text = root.GetValue("Species").ToString().Trim();
-                this.variety_Label.Text = root.GetValue("Variety").ToString().Trim();
-                this.brand_Label.Text = root.GetValue("Brand").ToString().Trim();
+                this.crop_Name_TextBox.Text = root.GetValue("Crop_Name").ToString().Trim();
+                this.species_TextBox.Text = root.GetValue("Species").ToString().Trim();
+                this.variety_TextBox.Text = root.GetValue("Variety").ToString().Trim();
+                this.brand_TextBox.Text = root.GetValue("Brand").ToString().Trim();
                 this.notes_RichTextBox.Text = root.GetValue("Notes").ToString().Trim();
             }
         }
@@ -119,8 +104,7 @@ namespace Farm_Tracker
 
             populate_Crop_List();
 
-            set_Text_Visibility(false);
-            set_Label_Visibility(true);
+            set_Text_Enabled(false);
             set_Save_Cancel_Visibility(false);
             this.delete_Button.Visible = false;
             clear_Text_Fields();
@@ -177,8 +161,7 @@ namespace Farm_Tracker
             newCropCheck = false;
             updateCropCheck = false;
 
-            set_Text_Visibility(false);
-            set_Label_Visibility(true);
+            set_Text_Enabled(false);
             set_Save_Cancel_Visibility(false);
             clear_Text_Fields();
             set_Main_Button_Visibility(true);
@@ -194,34 +177,26 @@ namespace Farm_Tracker
 
             return;
         }
-        private void update_Crop_Button_Click(object sender, EventArgs e)
+        private void update_Button_Click(object sender, EventArgs e)
         {
             updateCropCheck = true;
             newCropCheck = false;
 
-            set_Label_Visibility(false);
-            set_Text_Visibility(true);
+            set_Text_Enabled(true);
             set_Save_Cancel_Visibility(true);
             set_Main_Button_Visibility(false);
             this.delete_Button.Visible = true;
-
-            this.crop_Name_TextBox.Text = this.crop_Name_Label.Text;
-            this.species_TextBox.Text = this.species_Label.Text;
-            this.variety_TextBox.Text = this.variety_Label.Text;
-            this.brand_TextBox.Text = this.brand_Label.Text;
-            this.notes_RichTextBox.Enabled = true;
 
             this.crop_ListBox.Enabled = false;
 
             return;
         }
-        private void new_Crop_Button_Click(object sender, EventArgs e)
+        private void new_Button_Click(object sender, EventArgs e)
         {
             newCropCheck = true;
             updateCropCheck = false;
 
-            set_Label_Visibility(false);
-            set_Text_Visibility(true);
+            set_Text_Enabled(true);
             set_Save_Cancel_Visibility(true);
             set_Main_Button_Visibility(false);
             clear_Text_Fields();
@@ -238,8 +213,7 @@ namespace Farm_Tracker
             updateCropCheck = false;
 
             clear_Text_Fields();
-            set_Label_Visibility(true);
-            set_Text_Visibility(false);
+            set_Text_Enabled(false);
             set_Save_Cancel_Visibility(false);
             set_Main_Button_Visibility(true);
             this.delete_Button.Visible = false;
@@ -260,6 +234,11 @@ namespace Farm_Tracker
         private void crop_ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             populate_Crop_Info();
+        }
+
+        private void Crop_UserControl_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

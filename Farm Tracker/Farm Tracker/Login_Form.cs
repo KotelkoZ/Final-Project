@@ -23,12 +23,15 @@ namespace Farm_Tracker
 
         private void login_Button_Click(object sender, EventArgs e)
         {
-
-            main_Menu mainWindow = new main_Menu();
+            MainApp mainWindow = new MainApp();
             mainWindow.Owner = this;
             mainWindow.Visible = true;
 
-            this.Visible = false;
+            //main_Menu mainWindow = new main_Menu();
+            //mainWindow.Owner = this;
+            //mainWindow.Visible = true;
+
+            //this.Visible = false;
 
             return;
 
@@ -108,7 +111,7 @@ namespace Farm_Tracker
 
         private void button1_Click(object sender, EventArgs e)
         {
-            API.retrieveAllOperators();
+            //Utility_Functions.createEmailMessage("Test subject", "Test message body.");
         }
     }
 }
