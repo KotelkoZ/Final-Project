@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Data.SqlClient;
+using Newtonsoft.Json.Linq;
 
 namespace Farm_Tracker
 {
@@ -16,102 +17,53 @@ namespace Farm_Tracker
     {
         public Login_Form()
         {
-            //Put some stuff here. Ok ill put some stuff here. ZK Zak
             InitializeComponent();
-
         }
 
         private void login_Button_Click(object sender, EventArgs e)
         {
-            MainApp mainWindow = new MainApp();
-            mainWindow.Owner = this;
-            mainWindow.Visible = true;
 
-            //main_Menu mainWindow = new main_Menu();
-            //mainWindow.Owner = this;
-            //mainWindow.Visible = true;
-
-            //this.Visible = false;
-
-            return;
-
-            //String password
-
-            String queryString = "select Operators.Operator_ID, Operators.Password, Operators.Position from Operators where Operators.Operator_ID = '" + this.operator_ID_Textbox.Text.ToString().Trim() + "'";
-
-            using (SqlConnection connection = new SqlConnection(Global_Variables.CONNECTIONSTRING))
+            if (operator_ID_Textbox.Text.ToString().Trim() == "" || password_TextBox.Text.ToString().Trim() == "")
             {
-
-                connection.Open();
-
-                using (SqlCommand command = new SqlCommand(queryString, connection))
-                {
-                    try
-                    {
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            reader.Read();
-
-                            MessageBox.Show(reader[2].ToString().Trim() + "\n" + reader[0].ToString());
-
-                            if (Utility_Functions.Decrypt(reader[1].ToString().Trim()) == this.password_TextBox.Text.ToString().Trim())
-                            {
-
-                                //MessageBox.Show(reader[2].ToString().Trim() + "\n" + reader[2].ToString().Equals("Manager"));
-
-                                if (reader[2].ToString().Trim() == "Manager")
-                                {
-
-                                    //main_Menu mainWindow = new main_Menu();
-                                    //mainWindow.Owner = this;
-                                    //mainWindow.Visible = true;
-
-                                    //this.Visible = false;
-                                    //Management_Form managementForm = new Management_Form();
-                                    //managementForm.Visible = true;
-                                }
-                                if (reader[2].ToString().Trim() == "Operator")
-                                {
-                                    //Check_InOut_Form checkInWindow = new Check_InOut_Form();
-                                    //checkInWindow.Visible = true;
-                                }
-                                if (reader[2].ToString().Trim() == "Mechanic")
-                                {
-                                    //Maid_Service_Form newMaidForm = new Maid_Service_Form();
-                                    //newMaidForm.Visible = true;
-                                }
-
-                            }
-                            else
-                            {
-                                MessageBox.Show("Incorrect username or password. Please try again.");
-                            }
-
-                            reader.Close();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("The username or password are not correct.");
-                    }
-
-                }
-                connection.Close();
+                MessageBox.Show("Please enter an operator ID and password.");
+                return;
             }
 
+            var objects = JArray.Parse(API.retrieveOneOperator(operator_ID_Textbox.Text.ToString().Trim()));
 
-
-
-
-
+            if (objects.Count > 0)
+            {
+                foreach (JObject root in objects)
+                {
+                    string password = Utility_Functions.Decrypt(root.GetValue("Password").ToString().Trim());
+                    if (password == password_TextBox.Text.ToString().Trim())
+                    {
+                        MainApp mainWindow = new MainApp(root.GetValue("Position").ToString().Trim());
+                        mainWindow.Visible = true;
+                        this.Visible = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("The operator ID or password are incorrect.\nPlease try again.");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("The operator ID or password are incorrect.\nPlease try again.");
+            }
             
-
             return;
         }
-
+        private void Login_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
         private void button1_Click(object sender, EventArgs e)
         {
-            //Utility_Functions.createEmailMessage("Test subject", "Test message body.");
+            MainApp mainWindow = new MainApp("Manager");
+            mainWindow.Visible = true;
+            this.Visible = false;
         }
     }
 }

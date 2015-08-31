@@ -35,6 +35,7 @@ namespace Farm_Tracker
             acres_TextBox.Clear();
             owned_ComboBox.SelectedIndex = 0;
             notes_RichTextBox.Clear();
+            field_ID_Label.Text = "X";
 
             return;
         }
@@ -77,15 +78,25 @@ namespace Farm_Tracker
 
                 field_ListBox.Items.Add(fieldString);
             }
+            if (field_ListBox.Items.Count != 0)
+            {
+                field_ListBox.SelectedIndex = 0;
+            }
         }
         private void populate_Field_Info()
         {
-            string cropID = "";
+            if (field_ListBox.SelectedIndex == -1)
+            {
+                clear_Text_Fields();
+                return;
+            }
+
+            string fieldID = "";
             string temp = this.field_ListBox.SelectedItem.ToString().Trim();
 
-            cropID += temp.Split('-')[0].Trim();
+            fieldID += temp.Split('-')[0].Trim();
             
-            var objects = JArray.Parse(API.retrieveOneCrop(cropID));
+            var objects = JArray.Parse(API.retrieveOneField(fieldID));
             foreach (JObject root in objects)
             {
                 field_ID_Label.Text = root.GetValue("Field_ID").ToString().Trim();
@@ -166,6 +177,7 @@ namespace Farm_Tracker
             }
             else if (updateFieldCheck)
             {
+                field.ID = Convert.ToInt16(field_ID_Label.Text.ToString().Trim());
                 API.updateField(field);
             }
 
@@ -182,14 +194,22 @@ namespace Farm_Tracker
 
             populate_Field_List();
 
-            field_ListBox.SelectedIndex = 0;
-
-            populate_Field_Info();
+            if (field_ListBox.Items.Count > 0)
+            {
+                field_ListBox.SelectedIndex = 0;
+                populate_Field_Info();
+            }
 
             return;
         }
         private void update_Button_Click(object sender, EventArgs e)
         {
+            if (field_ListBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a field to update.");
+                return;
+            }
+
             updateFieldCheck = true;
             newFieldCheck = false;
 
@@ -246,6 +266,24 @@ namespace Farm_Tracker
         {
             populate_Field_Info();
         }
-
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            update_Button_Click(sender, e);
+        }
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            delete_Button_Click(sender, e);
+        }
+        private void field_ListBox_RightClick(object sender, MouseEventArgs e)
+        {
+            field_ListBox.SelectedIndex = field_ListBox.IndexFromPoint(e.X, e.Y);
+        }
+        private void field_ListBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (field_ListBox.SelectedIndex == -1)
+            {
+                field_ContextMenuStrip.Close();
+            }
+        }
     }
 }

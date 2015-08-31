@@ -86,18 +86,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Farm_TrackerDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="FE_Crop_Checking_UserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FE_Crop_Checking_UserControl.Designer.cs">
-      <DependentUpon>FE_Crop_Checking_UserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FE_Spraying_UserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FE_Spraying_UserControl.Designer.cs">
-      <DependentUpon>FE_Spraying_UserControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Field_UserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -128,12 +116,6 @@
     <Compile Include="Operators_UserControl.Designer.cs">
       <DependentUpon>Operators_UserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="testUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="testUserControl.Designer.cs">
-      <DependentUpon>testUserControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Utility_Functions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,12 +131,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Farming_Event_UserControl.resx">
       <DependentUpon>Farming_Event_UserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FE_Crop_Checking_UserControl.resx">
-      <DependentUpon>FE_Crop_Checking_UserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FE_Spraying_UserControl.resx">
-      <DependentUpon>FE_Spraying_UserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Field_UserControl.resx">
       <DependentUpon>Field_UserControl.cs</DependentUpon>
@@ -179,9 +155,6 @@
     </Compile>
     <EmbeddedResource Include="Breakdown_UserControl.resx">
       <DependentUpon>Breakdown_UserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="testUserControl.resx">
-      <DependentUpon>testUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Farm_TrackerDataSet.xsc">
       <DependentUpon>Farm_TrackerDataSet.xsd</DependentUpon>

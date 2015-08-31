@@ -30,41 +30,42 @@ namespace Farm_Tracker
         }
         private void clear_Text_Fields()
         {
-            this.crop_Name_TextBox.Clear();
-            this.species_TextBox.Clear();
-            this.variety_TextBox.Clear();
-            this.brand_TextBox.Clear();
-            this.notes_RichTextBox.Clear();
+            crop_Name_TextBox.Clear();
+            species_TextBox.Clear();
+            variety_TextBox.Clear();
+            brand_TextBox.Clear();
+            notes_RichTextBox.Clear();
+            crop_ID_Label.Text = "X";
 
             return;
         }
         private void set_Main_Button_Visibility(bool value)
         {
-            this.update_Button.Visible = value;
-            this.new_Button.Visible = value;
+            update_Button.Visible = value;
+            new_Button.Visible = value;
 
             return;
         }
         private void set_Text_Enabled(bool value)
         {
-            this.crop_Name_TextBox.Enabled = value;
-            this.species_TextBox.Enabled = value;
-            this.variety_TextBox.Enabled = value;
-            this.brand_TextBox.Enabled = value;
-            this.notes_RichTextBox.Enabled = value;
+            crop_Name_TextBox.Enabled = value;
+            species_TextBox.Enabled = value;
+            variety_TextBox.Enabled = value;
+            brand_TextBox.Enabled = value;
+            notes_RichTextBox.Enabled = value;
 
             return;
         }
         private void set_Save_Cancel_Visibility(bool value)
         {
-            this.save_Button.Visible = value;
-            this.cancel_Button.Visible = value;
+            save_Button.Visible = value;
+            cancel_Button.Visible = value;
 
             return;
         }
         private void populate_Crop_List()
         {
-            this.crop_ListBox.Items.Clear();
+            crop_ListBox.Items.Clear();
 
             var objects = JArray.Parse(API.retrieveAllCrops());
             foreach (JObject root in objects)
@@ -77,25 +78,35 @@ namespace Farm_Tracker
                 cropString.Append(" - ");
                 cropString.Append(root.GetValue("Brand").ToString().Trim());
 
-                this.crop_ListBox.Items.Add(cropString);
+                crop_ListBox.Items.Add(cropString);
+            }
+            if (crop_ListBox.Items.Count != 0)
+            {
+                crop_ListBox.SelectedIndex = 0;
             }
         }
         private void populate_Crop_Info()
         {
+            if (crop_ListBox.SelectedIndex == -1)
+            {
+                clear_Text_Fields();
+                return;
+            }
+
             string cropID = "";
-            string temp = this.crop_ListBox.SelectedItem.ToString().Trim();
+            string temp = crop_ListBox.SelectedItem.ToString().Trim();
 
             cropID += temp.Split('-')[0].Trim();
             
             var objects = JArray.Parse(API.retrieveOneCrop(cropID));
             foreach (JObject root in objects)
             {
-                this.crop_ID_Label.Text = root.GetValue("Crop_ID").ToString().Trim();
-                this.crop_Name_TextBox.Text = root.GetValue("Crop_Name").ToString().Trim();
-                this.species_TextBox.Text = root.GetValue("Species").ToString().Trim();
-                this.variety_TextBox.Text = root.GetValue("Variety").ToString().Trim();
-                this.brand_TextBox.Text = root.GetValue("Brand").ToString().Trim();
-                this.notes_RichTextBox.Text = root.GetValue("Notes").ToString().Trim();
+                crop_ID_Label.Text = root.GetValue("Crop_ID").ToString().Trim();
+                crop_Name_TextBox.Text = root.GetValue("Crop_Name").ToString().Trim();
+                species_TextBox.Text = root.GetValue("Species").ToString().Trim();
+                variety_TextBox.Text = root.GetValue("Variety").ToString().Trim();
+                brand_TextBox.Text = root.GetValue("Brand").ToString().Trim();
+                notes_RichTextBox.Text = root.GetValue("Notes").ToString().Trim();
             }
         }
         private void delete_Button_Click(object sender, EventArgs e)
@@ -106,20 +117,20 @@ namespace Farm_Tracker
 
             set_Text_Enabled(false);
             set_Save_Cancel_Visibility(false);
-            this.delete_Button.Visible = false;
+            delete_Button.Visible = false;
             clear_Text_Fields();
             set_Main_Button_Visibility(true);
 
-            this.crop_ListBox.Enabled = true;
+            crop_ListBox.Enabled = true;
 
             return;
         }
         private void save_Button_Click(object sender, EventArgs e)
         {
-            if (this.crop_Name_TextBox.Text.Trim().Equals("") ||
-                this.species_TextBox.Text.Trim().Equals("") ||
-                this.variety_TextBox.Text.Trim().Equals("") ||
-                this.brand_TextBox.Text.Trim().Equals("")
+            if (crop_Name_TextBox.Text.Trim().Equals("") ||
+                species_TextBox.Text.Trim().Equals("") ||
+                variety_TextBox.Text.Trim().Equals("") ||
+                brand_TextBox.Text.Trim().Equals("")
                 )
             {
                 MessageBox.Show("Please enter the required information. (Crop Name, Species, Variety and Brand)");
@@ -128,23 +139,23 @@ namespace Farm_Tracker
             
             API.farmCrop crop = new API.farmCrop();
 
-            if (this.crop_Name_TextBox.Modified)
+            if (crop_Name_TextBox.Modified)
             {
                 crop.cropName = crop_Name_TextBox.Text.ToString().Trim();
             }
-            if (this.species_TextBox.Modified)
+            if (species_TextBox.Modified)
             {
                 crop.species = species_TextBox.Text.ToString().Trim();
             }
-            if (this.variety_TextBox.Modified)
+            if (variety_TextBox.Modified)
             {
                 crop.variety = variety_TextBox.Text.ToString().Trim();
             }
-            if (this.brand_TextBox.Modified)
+            if (brand_TextBox.Modified)
             {
                 crop.brand = brand_TextBox.Text.ToString().Trim();
             }
-            if (this.notes_RichTextBox.Modified)
+            if (notes_RichTextBox.Modified)
             {
                 crop.notes = notes_RichTextBox.Text.ToString().Trim();
             }
@@ -165,13 +176,13 @@ namespace Farm_Tracker
             set_Save_Cancel_Visibility(false);
             clear_Text_Fields();
             set_Main_Button_Visibility(true);
-            this.delete_Button.Visible = false;
+            delete_Button.Visible = false;
 
-            this.crop_ListBox.Enabled = true;
+            crop_ListBox.Enabled = true;
 
             populate_Crop_List();
 
-            this.crop_ListBox.SelectedIndex = 0;
+            crop_ListBox.SelectedIndex = 0;
 
             populate_Crop_Info();
 
@@ -179,15 +190,21 @@ namespace Farm_Tracker
         }
         private void update_Button_Click(object sender, EventArgs e)
         {
+            if (crop_ListBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a crop to update.");
+                return;
+            }
+
             updateCropCheck = true;
             newCropCheck = false;
 
             set_Text_Enabled(true);
             set_Save_Cancel_Visibility(true);
             set_Main_Button_Visibility(false);
-            this.delete_Button.Visible = true;
+            delete_Button.Visible = true;
 
-            this.crop_ListBox.Enabled = false;
+            crop_ListBox.Enabled = false;
 
             return;
         }
@@ -201,9 +218,9 @@ namespace Farm_Tracker
             set_Main_Button_Visibility(false);
             clear_Text_Fields();
 
-            this.crop_ListBox.Enabled = false;
+            crop_ListBox.Enabled = false;
 
-            this.crop_ID_Label.Text = "X";
+            crop_ID_Label.Text = "X";
 
             return;
         }
@@ -216,17 +233,17 @@ namespace Farm_Tracker
             set_Text_Enabled(false);
             set_Save_Cancel_Visibility(false);
             set_Main_Button_Visibility(true);
-            this.delete_Button.Visible = false;
+            delete_Button.Visible = false;
 
-            this.crop_ListBox.Enabled = true;
+            crop_ListBox.Enabled = true;
 
-            if (this.crop_ListBox.Items.Count != 0)
+            if (crop_ListBox.Items.Count != 0)
             {
                 populate_Crop_Info();
             }
             else
             {
-                this.crop_ID_Label.Text = "Crop ID";
+                crop_ID_Label.Text = "Crop ID";
             }
 
             return;
@@ -235,10 +252,24 @@ namespace Farm_Tracker
         {
             populate_Crop_Info();
         }
-
-        private void Crop_UserControl_Load(object sender, EventArgs e)
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            update_Button_Click(sender, e);
+        }
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            delete_Button_Click(sender, e);
+        }
+        private void crop_ListBox_RightClick(object sender, MouseEventArgs e)
+        {
+            crop_ListBox.SelectedIndex = crop_ListBox.IndexFromPoint(e.X, e.Y);
+        }
+        private void crop_ListBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (crop_ListBox.SelectedIndex == -1)
+            {
+                crop_ContextMenuStrip.Close();
+            }
         }
     }
 }

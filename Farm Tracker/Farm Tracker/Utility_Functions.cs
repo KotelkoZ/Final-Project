@@ -41,7 +41,6 @@ namespace Farm_Tracker
             }
             return clearText;
         }
-
         public static string Decrypt(string cipherText)
         {
             string EncryptionKey = "MAKV2SPBNI99212";
@@ -63,7 +62,6 @@ namespace Farm_Tracker
             }
             return cipherText;
         }
-
         public static byte[] ImageToByteArray(Image img, PictureBox picture)
         {
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
@@ -73,7 +71,6 @@ namespace Farm_Tracker
             }
             return ms.ToArray();
         }
-
         public static Image GetDataToImage(byte[] pData)
         {
             try
@@ -87,7 +84,6 @@ namespace Farm_Tracker
                 return null;
             }
         }
-
         public static Bitmap ResizeImage(Image image, int width, int height)
         {
             var destRect = new Rectangle(0, 0, width, height);
@@ -162,6 +158,11 @@ namespace Farm_Tracker
             {
                 emails.Add(root.GetValue("Email").ToString().Trim());
             }
+            //objects = JArray.Parse(API.retrieveAllOfOnePostionsEmails("Owner"));
+            //foreach (JObject root in objects)
+            //{
+            //    emails.Add(root.GetValue("Email").ToString().Trim());
+            //}
             return emails;
         }        
     }

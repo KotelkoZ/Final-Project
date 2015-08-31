@@ -31,6 +31,7 @@ namespace Farm_Tracker
             type_TextBox.Clear();
             brand_TextBox.Clear();
             notes_RichTextBox.Clear();
+            chemical_ID_Label.Text = "X";
 
             return;
         }
@@ -78,8 +79,9 @@ namespace Farm_Tracker
         }
         private void populate_Chemical_Info()
         {
-            if (chemical_ListBox.SelectedIndex == null)
+            if (chemical_ListBox.SelectedIndex == -1)
             {
+                clear_Text_Fields();
                 return;
             }
 
@@ -208,6 +210,12 @@ namespace Farm_Tracker
         }
         private void update_Button_Click(object sender, EventArgs e)
         {
+            if (chemical_ListBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a chemical to update.");
+                return;
+            }
+
             updateChemicalCheck = true;
             newChemicalCheck = false;
 
@@ -235,6 +243,25 @@ namespace Farm_Tracker
             this.chemical_ID_Label.Text = "X";
 
             return;
+        }
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            update_Button_Click(sender, e);
+        }
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            delete_Button_Click(sender, e);
+        }
+        private void chemical_ListBox_RightClick(object sender, MouseEventArgs e)
+        {
+            chemical_ListBox.SelectedIndex = chemical_ListBox.IndexFromPoint(e.X, e.Y);
+        }
+        private void chemical_ListBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (chemical_ListBox.SelectedIndex == -1)
+            {
+                chemicals_ContextMenuStrip.Close();
+            }
         }
     }
 }

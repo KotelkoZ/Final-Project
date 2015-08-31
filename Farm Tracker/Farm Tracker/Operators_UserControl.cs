@@ -41,6 +41,7 @@ namespace Farm_Tracker
             phone_Number_TextBox.Clear();
             password_TextBox.Clear();
             confirm_Password_TextBox.Clear();
+            operator_ID_Label.Text = "X";
 
             return;
         }
@@ -100,6 +101,12 @@ namespace Farm_Tracker
         }
         private void populate_Operator_Info()
         {
+            if (operator_ListBox.SelectedIndex == -1)
+            {
+                clear_Text_Fields();
+                return;
+            }
+
             string operatorID = "";
             if (operator_ListBox.SelectedItems.Count == 0)
             {
@@ -135,13 +142,21 @@ namespace Farm_Tracker
         }
         private void update_Button_Click(object sender, EventArgs e)
         {
+            if (operator_ListBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an operator to update.");
+                return;
+            }
+
             updateOperatorCheck = true;
             newOperatorCheck = false;
 
             set_Text_Enabled(true);
             set_Save_Cancel_Delete_Visibility(true);
             set_Main_Button_Visibility(false);
-            delete_Button.Visible = true;
+            update_Password_Button.Visible = true;
+
+            update_Password_Button.Visible = true;
 
             operator_ListBox.Enabled = false;
 
@@ -151,6 +166,8 @@ namespace Farm_Tracker
         {
             newOperatorCheck = true;
             updateOperatorCheck = false;
+
+            clear_Text_Fields();
 
             set_Text_Enabled(true);
             set_Password_Visibility(true);
@@ -176,6 +193,8 @@ namespace Farm_Tracker
             set_Save_Cancel_Delete_Visibility(false);
             set_Main_Button_Visibility(true);
             delete_Button.Visible = false;
+
+            update_Password_Button.Visible = false;
 
             operator_ListBox.Enabled = true;
 
@@ -268,6 +287,8 @@ namespace Farm_Tracker
             set_Main_Button_Visibility(true);
             delete_Button.Visible = false;
 
+            update_Password_Button.Visible = false;
+
             operator_ListBox.Enabled = true;
 
             populate_Operator_List();
@@ -291,6 +312,8 @@ namespace Farm_Tracker
             clear_Text_Fields();
             set_Main_Button_Visibility(true);
 
+            update_Password_Button.Visible = false;
+
             operator_ListBox.Enabled = true;
 
             return;
@@ -298,6 +321,25 @@ namespace Farm_Tracker
         private void operator_ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             populate_Operator_Info();
+        }
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            update_Button_Click(sender, e);
+        }
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            delete_Button_Click(sender, e);
+        }
+        private void operator_ListBox_RightClick(object sender, MouseEventArgs e)
+        {
+            operator_ListBox.SelectedIndex = operator_ListBox.IndexFromPoint(e.X, e.Y);
+        }
+        private void operator_ListBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (operator_ListBox.SelectedIndex == -1)
+            {
+                operator_ContextMenuStrip.Close();
+            }
         }
     }
 }

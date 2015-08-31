@@ -287,6 +287,20 @@ namespace Farm_Tracker
             string results = queryRetrieve(queryString);
             return results;
         }
+        public static string retrieveAllTractorEquipment()
+        {
+            string queryString = "select * from Equipment where Equipment.Equipment_Type = 'Tractor' or Equipment.Equipment_Type = 'Combine' or Equipment.Equipment_Type = 'Sprayer' or Equipment.Equipment_Type = 'Harvester'";
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static string retrieveAllTrailerEquipment()
+        {
+            string queryString = "select * from Equipment where Equipment.Equipment_Type = 'Air Seeder' or Equipment.Equipment_Type = 'Spray Trailer' or Equipment.Equipment_Type = 'Disker' or Equipment.Equipment_Type = 'Haro'";
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
         public static string retrieveOneEquipment(string ID)
         {
             string queryString = "select * from Equipment where Equipment_ID = " + ID;
@@ -465,16 +479,16 @@ namespace Farm_Tracker
             string queryString2 = " values (";
             queryString1 += "Fields.Field_Name, ";
             queryString2 += "'" + newField.field_Name + "',";
-            queryString1 += "Fields.Latitude, ";
-            queryString2 += "'" + newField.latitude + "',";
-            queryString1 += "Fields.Longitude, ";
-            queryString2 += "'" + newField.longitude + "',";
+            //queryString1 += "Fields.Latitude, ";
+            //queryString2 += "'" + newField.latitude + "',";
+            //queryString1 += "Fields.Longitude, ";
+            //queryString2 += "'" + newField.longitude + "',";
             queryString1 += "Fields.Acres, ";
             queryString2 += "'" + newField.acres + "',";
             queryString1 += "Fields.Legal_Land_Description, ";
             queryString2 += "'" + newField.legalLandDescription + "',";
-            queryString1 += "Fields.Field_Perimeter_Coodinates, ";
-            queryString2 += "'" + newField.fieldPerimeterCoordinates + "',";
+            //queryString1 += "Fields.Field_Perimeter_Coodinates, ";
+            //queryString2 += "'" + newField.fieldPerimeterCoordinates + "',";
             queryString1 += "Fields.Owned";
             queryString2 += "'" + newField.owned + "'";
 
@@ -485,6 +499,7 @@ namespace Farm_Tracker
             }
 
             queryString1 += ")";
+            queryString2 += ")";
 
             queryString = queryString1 + queryString2;
 
@@ -497,6 +512,13 @@ namespace Farm_Tracker
         public static string retrieveAllFields()
         {
             string queryString = "select * from Fields ";
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static string retrieveOneField(string fieldID)
+        {
+            string queryString = "select * from Fields where Fields.Field_ID = " + fieldID;
 
             string results = queryRetrieve(queryString);
             return results;
@@ -852,7 +874,7 @@ namespace Farm_Tracker
             public int? operatorID { get; set; }
             public string activity{ get; set; }
             public int? tractorID { get; set; }
-            public int? trailorID { get; set; }
+            public int? trailerID { get; set; }
             public int? acresWorked { get; set; }
             public int? primaryMediaID { get; set; }
             public int? primaryMediaQuantity { get; set; }
@@ -878,7 +900,7 @@ namespace Farm_Tracker
             operatorID = null;
             activity = null;
             tractorID = null;
-            trailorID = null;
+            trailerID = null;
             acresWorked = null;
             primaryMediaID = null;
             primaryMediaQuantity = null;
@@ -915,10 +937,10 @@ namespace Farm_Tracker
                 queryString1 += ", Farming_Events.Tractor_Equipment_ID";
                 queryString2 += ",'" + newEvent.tractorID + "'";
             }
-            if (newEvent.trailorID != null)
+            if (newEvent.trailerID != null)
             {
                 queryString1 += ", Farming_Events.Trailor_Equipment_ID";
-                queryString2 += ",'" + newEvent.trailorID + "'";
+                queryString2 += ",'" + newEvent.trailerID + "'";
             }
             if (newEvent.acresWorked != null)
             {
@@ -1019,6 +1041,27 @@ namespace Farm_Tracker
             string results = queryRetrieve(queryString);
             return results;
         }
+        public static string retrieveOneFarmEvent(string ID)
+        {
+            string queryString = "select * from Farming_Events where Farming_Events.Farming_Event_ID = " + ID;
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static string retrievePlannedFarmEventsWithFields() 
+        {
+            string queryString = "select * from Farming_Events inner join Fields on Farming_Events.Field_ID = Fields.Field_ID where Farming_Events.Planned = 'True'";
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
+        public static string retrieveActualFarmEventsWithFields()
+        {
+            string queryString = "select * from Farming_Events inner join Fields on Farming_Events.Field_ID = Fields.Field_ID where Farming_Events.Planned = 'False'";
+
+            string results = queryRetrieve(queryString);
+            return results;
+        }
         public static void updateFarmEvent(farmEvent eventToUpdate)
         {
             int count = 0;
@@ -1066,13 +1109,13 @@ namespace Farm_Tracker
                 queryString += "Farming_Events.Tractor_Equipment_ID = '" + eventToUpdate.tractorID + "'";
                 count++;
             }
-            if (eventToUpdate.trailorID != null)
+            if (eventToUpdate.trailerID != null)
             {
                 if (count >= 1)
                 {
                     queryString += ",";
                 }
-                queryString += "Farming_Events.Trailor_Equipment_ID = '" + eventToUpdate.trailorID + "'";
+                queryString += "Farming_Events.Trailor_Equipment_ID = '" + eventToUpdate.trailerID + "'";
                 count++;
             }
             if (eventToUpdate.acresWorked != null)
